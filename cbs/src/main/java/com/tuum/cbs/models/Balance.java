@@ -3,6 +3,7 @@ package com.tuum.cbs.models;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -10,7 +11,8 @@ import java.math.BigDecimal;
 @Builder
 public class Balance {
 
-    private Long balanceId;
+    @Generated
+    private UUID balanceId = UUID.randomUUID();
     private BigDecimal amount;
     private Currency currency;
 }
