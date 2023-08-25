@@ -11,10 +11,10 @@ import java.util.UUID;
 @Builder
 public class Balance {
 
-    private UUID balanceId;
+    private Long balanceId;
     private BigDecimal amount;
     private Currency currency;
-    private Long accountId;
+    private UUID accountId;
 
 //  public void setBalanceId() {
 //        this.balanceId = UUID.randomUUID();

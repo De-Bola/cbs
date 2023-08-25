@@ -1,8 +1,7 @@
-package com.tuum.cbs.common.exceptions.handlers;
+package com.tuum.cbs.common.handlers;
 
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
-import org.apache.ibatis.type.MappedJdbcTypes;
 import org.apache.ibatis.type.MappedTypes;
 
 import java.sql.CallableStatement;
