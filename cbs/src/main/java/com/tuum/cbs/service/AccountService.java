@@ -7,6 +7,7 @@ import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -16,11 +17,13 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class AccountService {
 
     private final AccountRepository repo;
 
     public Account save(AccountDao accountDao) {
+        // todo : how to guarantee uniqueness of accounts
         final Long accountId = generateRandomId();
         Account account = Account.builder()
                         .accountId(accountId)
@@ -32,7 +35,7 @@ public class AccountService {
         List<Balance> balList = new ArrayList<>();
         for (Currency currency :
                 accountDao.getCurrencies()) {
-            Balance bal = new Balance(UUID.randomUUID(), new BigDecimal(0.00), currency, accountId);
+            Balance bal = new Balance(UUID.randomUUID(), new BigDecimal("0.00"), currency, accountId);
             balList.add(bal);
         }
 
