@@ -1,15 +1,55 @@
 package com.tuum.cbs.repositories;
 
+import com.tuum.cbs.common.exceptions.handlers.UuidTypeHandler;
 import com.tuum.cbs.models.Account;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
+import com.tuum.cbs.models.Balance;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Mapper
 @Repository
 public interface AccountRepository {
 
-    @Insert("INSERT INTO a_b(accountId, customerId, description, page, price) " +
-            " VALUES (#{title}, #{isbn}, #{description}, #{page}, #{price})")
+    @Insert("INSERT INTO accounts (account_id, customer_id) " +
+            " VALUES (#{accountId}, #{customerId})")
     void insert(Account account);
+
+//    @Insert("INSERT INTO a_b(account_id, customer_id, balance_id, amount, currency) " +
+//            "SELECT a.account_id, a.customer_id, b.balance_id, b.amount, b.currency" +
+//            "FROM accounts a LEFT OUTER JOIN balances b ON a.account_id = b.account_id" +
+//            " VALUES (#{Account.accountId}, #{Account.customerId}, #{Balance.balanceId}, #{Balance.amount}, #{Balance.currency})")
+//    void save(Account account);
+
+    @Select("SELECT * FROM accounts WHERE account_id = #{accountId}")
+    @Results(id = "accountResultMap", value = {
+            @Result(property = "customerId", column = "customer_id"),
+            @Result(property = "accountId", column = "account_id"),
+            @Result(property = "balances", column = "account_id", many = @Many(select = "getAccountBalance"))
+    })
+    Account getAccountById(@Param("accountId") Long accountId);
+
+
+    /**
+     * Gets account balance using accountId
+     * */
+    @Select("SELECT * FROM balances WHERE account_id = #{accountId}")
+    @Results(value = {
+            @Result(property = "balanceId", column = "balance_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
+            @Result(property = "amount", column = "amount"),
+            @Result(property = "accountId", column = "account_id"),
+            @Result(property = "currency", column = "currency")
+    })
+    List<Balance> getAccountBalance(@Param("accountId")Long accountId);
+
+    @Insert("INSERT INTO balances (amount, currency, account_id)" +
+            "VALUES (#{amount},#{currency},#{accountId})")
+    void insertBalance(Balance balance);
+
+    @Insert({"<script>","INSERT INTO balances (amount, currency, account_id) VALUES",
+            "<foreach collection = 'list' item='Balance' open='(' separator = '),(' close=')'>",
+            "#{amount},#{currency},#{accountId} </foreach>", "</script>"})
+    void insertBalances(@Param("list") List<Balance> balanceList, @Param("accountId") Long id);
 }

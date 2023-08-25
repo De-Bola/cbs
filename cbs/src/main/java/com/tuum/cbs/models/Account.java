@@ -1,11 +1,11 @@
 package com.tuum.cbs.models;
 
 import lombok.*;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
 
-import java.math.BigInteger;
 import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Data
 @AllArgsConstructor
@@ -14,11 +14,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Account {
 
     private Long accountId;
-    @Generated
-    private String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
+    private String customerId;
     private List<Balance> balanceList;
 
-//    public void setAccountId() {
-//        this.accountId = ThreadLocalRandom.current().nextLong(1000000L, 9999999L);
-//    }
 }

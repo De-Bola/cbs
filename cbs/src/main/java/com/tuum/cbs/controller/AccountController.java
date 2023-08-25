@@ -3,6 +3,7 @@ package com.tuum.cbs.controller;
 import com.tuum.cbs.common.exceptions.BadRequestException;
 import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Account;
+import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -22,12 +23,12 @@ public class AccountController {
     private final AccountService service;
 
     @PostMapping("/account-open")
-    public ResponseEntity<SuccessResponse> createAccount(@RequestBody Account account) throws BadRequestException {
-        if(!ObjectUtils.isEmpty(account.getAccountId())){
-            throw new BadRequestException("New payloads don't have ID");
-        }
+    public ResponseEntity<SuccessResponse> createAccount(@RequestBody AccountDao accountDao){
+        System.out.println(accountDao);
+        Account account = service.save(accountDao);
+        System.out.println(account);
         return new ResponseEntity<>(
-                new SuccessResponse(service.save(account), "Account created!"),
+                new SuccessResponse(account, "Account created!"),
                 HttpStatus.CREATED
         );
     }
