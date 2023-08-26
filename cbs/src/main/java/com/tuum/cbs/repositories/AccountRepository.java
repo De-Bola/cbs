@@ -5,7 +5,6 @@ import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Balance;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
-import org.mybatis.spring.annotation.MapperScans;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,13 +30,13 @@ public interface AccountRepository {
             @Result(property = "customerId", column = "customer_id"),
             @Result(property = "accountId", column = "account_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
             @Result(property = "country", column = "country"),
-            @Result(property = "balances", column = "account_id", many = @Many(select = "getAccountBalance"))
+            //@Result(property = "balances", column = "account_id", many = @Many(select = "getAccountBalance"))
     })
     Account getAccountById(@Param("accountId") UUID accountId);
 
 
     /**
-     * Gets account balance using accountId
+     * Gets account balance list using accountId
      * */
     @Select("SELECT * FROM balances WHERE account_id = #{accountId}")
     @Results(value = {
@@ -46,7 +45,7 @@ public interface AccountRepository {
             @Result(property = "accountId", column = "account_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
             @Result(property = "currency", column = "currency")
     })
-    List<Balance> getAccountBalance(@Param("accountId")UUID accountId);
+    List<Balance> getAccountBalance(@Param("accountId") UUID accountId);
 
     @Insert("INSERT INTO balances (amount, currency, account_id)" +
             "VALUES (#{amount},#{currency},#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})")
@@ -56,4 +55,19 @@ public interface AccountRepository {
             "<foreach collection = 'list' item='Balance' open='(' separator = '),(' close=')'>",
             "#{Balance.balanceId}, #{Balance.amount},#{Balance.currency},#{Balance.accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler} </foreach>", "</script>"})
     int insertBalances(@Param("list") List<Balance> balanceList);
+
+    @Update("")
+    int updateBalance(Balance balance);
+
+    /**
+     * Gets account balance using accountId
+     * */
+    @Select("SELECT * FROM balances WHERE account_id = #{accountId} and currency = #{currency}")
+    @Results(value = {
+            @Result(property = "balanceId", column = "balance_id"),
+            @Result(property = "amount", column = "amount"),
+            @Result(property = "accountId", column = "account_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
+            @Result(property = "currency", column = "currency")
+    })
+    Balance getAccountBalance(@Param("accountId") UUID accountId, @Param("currency") String currency);
 }

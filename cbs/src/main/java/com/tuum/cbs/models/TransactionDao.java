@@ -6,14 +6,14 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class Balance {
-
-    private Long balanceId;
+@ToString
+public class TransactionDao {
+    private UUID accountId;
     private BigDecimal amount;
     private Currency currency;
-    private UUID accountId;
-
+    private TransactionType trxType;
+    private String description;
 }

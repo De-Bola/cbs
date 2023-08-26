@@ -22,6 +22,9 @@ public class AccountService {
 
     private final AccountRepository repo;
 
+    /**
+     * for creating a new account
+     * */
     public Account save(AccountDao accountDao) {
         // todo : validate currency
         final UUID accountId = UUID.randomUUID();
@@ -37,12 +40,16 @@ public class AccountService {
         }
         account.setBalanceList(new ArrayList<Balance>(balList));
         repo.insertAccount(account);
-        repo.insertBalances(balList);
+        //repo.insertBalances(balList);
+        createBalance(balList);
 
         System.out.println("Service: " + account);
         return account;
     }
 
+    /**
+     * for generating random ids of type Long
+     * */
     private Long generateRandomId() {
         // made an active decision to be generating uuid for account_id and
         // balance_id generation will be here
@@ -54,6 +61,29 @@ public class AccountService {
         return Long.valueOf(format);
     }
 
-    // todo: get account api
+    /**
+     * for creating new list balances
+     * */
+    public void createBalance(List<Balance> balances){
+        repo.insertBalances(balances);
+    }
 
+    public Account getByAccountId(String accountId) {
+        UUID accId = UUID.fromString(accountId);
+        Account account = repo.getAccountById(accId);
+        if (account != null) {
+            List<Balance> foundBalances = getBalanceByAccountId(accId);
+            account.setBalanceList(new ArrayList<Balance>(foundBalances));
+        }
+        return account;
+    }
+
+    public List<Balance> getBalanceByAccountId(UUID accId) {
+        return repo.getAccountBalance(accId);
+    }
+
+    public Balance getBalanceByAccountId(UUID accountId, Currency currency) {
+        return repo.getAccountBalance(accountId, currency.name());
+    }
+    //todo : on Sunday, rabbitmq and docker stuff
 }

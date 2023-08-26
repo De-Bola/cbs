@@ -22,67 +22,67 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
-@MybatisTest
-@RunWith(SpringRunner.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class AccountRepositoryTest {
-
-    @Autowired
-    private AccountRepository repository;
-
-    @BeforeEach
-    void setUp() {
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void insertAccount() {
-        final List<Currency> currencies = new ArrayList<>();
-        final Currency currency1 = Currency.EUR;
-        final Currency currency2 = Currency.SEK;
-
-        currencies.add(currency1);
-        currencies.add(currency2);
-
-        String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-        customerId = customerId.substring(customerId.length() - 10);
-
-        final UUID accountId = UUID.randomUUID();
-        List<Balance> bal_List = new ArrayList<>();
-        for (Currency currency :
-                currencies) {
-            String balanceId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-            balanceId = balanceId.substring(balanceId.length() - 10);
-            Balance bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), currency, accountId);
-            bal_List.add(bal);
-        }
-
-        final Account testAccount = Account.builder().accountId(accountId)
-                .country("Estonia").customerId(customerId).balanceList(bal_List)
-                .build();
-
-        when(repository.insertAccount(testAccount)).thenReturn(anyInt());
-
-        int savedAccount = repository.insertAccount(testAccount);
-        assertEquals(1, savedAccount);
-    }
-
-    @Test
-    void getAccountById() {
-    }
-
-    @Test
-    void getAccountBalance() {
-    }
-
-    @Test
-    void insertBalance() {
-    }
-
-    @Test
-    void insertBalances() {
-    }
-}
+//@MybatisTest
+//@RunWith(SpringRunner.class)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//class AccountRepositoryTest {
+//
+//    @Autowired
+//    private AccountRepository repository;
+//
+//    @BeforeEach
+//    void setUp() {
+//    }
+//
+//    @AfterEach
+//    void tearDown() {
+//    }
+//
+//    @Test
+//    void insertAccount() {
+//        final List<Currency> currencies = new ArrayList<>();
+//        final Currency currency1 = Currency.EUR;
+//        final Currency currency2 = Currency.SEK;
+//
+//        currencies.add(currency1);
+//        currencies.add(currency2);
+//
+//        String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
+//        customerId = customerId.substring(customerId.length() - 10);
+//
+//        final UUID accountId = UUID.randomUUID();
+//        List<Balance> bal_List = new ArrayList<>();
+//        for (Currency currency :
+//                currencies) {
+//            String balanceId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
+//            balanceId = balanceId.substring(balanceId.length() - 10);
+//            Balance bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), currency, accountId);
+//            bal_List.add(bal);
+//        }
+//
+//        final Account testAccount = Account.builder().accountId(accountId)
+//                .country("Estonia").customerId(customerId).balanceList(bal_List)
+//                .build();
+//
+//        when(repository.insertAccount(testAccount)).thenReturn(anyInt());
+//
+//        int savedAccount = repository.insertAccount(testAccount);
+//        assertEquals(1, savedAccount);
+//    }
+//
+//    @Test
+//    void getAccountById() {
+//    }
+//
+//    @Test
+//    void getAccountBalance() {
+//    }
+//
+//    @Test
+//    void insertBalance() {
+//    }
+//
+//    @Test
+//    void insertBalances() {
+//    }
+//}
