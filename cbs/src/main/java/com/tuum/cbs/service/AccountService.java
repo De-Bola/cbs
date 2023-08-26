@@ -31,7 +31,7 @@ public class AccountService {
                         .customerId(accountDao.getCustomerId())
                         .build();
 
-        int numberOfNewAccountEntries = repo.insert(account);
+        int numberOfNewAccountEntries = repo.insertAccount(account);
 
         List<Balance> balList = new ArrayList<>();
         for (Currency currency :

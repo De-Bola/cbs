@@ -1,6 +1,6 @@
 package com.tuum.cbs.common.exceptions;
 
-public class BadRequestException extends Throwable {
+public class BadRequestException extends RuntimeException {
 
     public BadRequestException() {
         super();

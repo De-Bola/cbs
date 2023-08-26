@@ -18,7 +18,7 @@ public interface AccountRepository {
     @Insert("INSERT INTO accounts (account_id, country, customer_id) " +
             " VALUES (#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler}, #{country}, #{customerId})")
     @Options(keyProperty = "accountId", keyColumn = "account_id")
-    int insert(Account account);
+    int insertAccount(Account account);
 
 //    @Insert("INSERT INTO a_b(account_id, customer_id, balance_id, amount, currency) " +
 //            "SELECT a.account_id, a.customer_id, b.balance_id, b.amount, b.currency" +
