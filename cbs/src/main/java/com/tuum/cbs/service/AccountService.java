@@ -1,9 +1,6 @@
 package com.tuum.cbs.service;
 
-import com.tuum.cbs.models.Account;
-import com.tuum.cbs.models.AccountDao;
-import com.tuum.cbs.models.Balance;
-import com.tuum.cbs.models.Currency;
+import com.tuum.cbs.models.*;
 import com.tuum.cbs.repositories.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +18,7 @@ import java.util.UUID;
 public class AccountService {
 
     private final AccountRepository repo;
+    private final BalanceService balService;
 
     /**
      * for creating a new account
@@ -68,24 +66,18 @@ public class AccountService {
         repo.insertBalances(balances);
     }
 
+    /**
+     * get account by accountId
+     * */
     public Account getByAccountId(String accountId) {
         UUID accId = UUID.fromString(accountId);
         Account account = repo.getAccountById(accId);
         if (account != null) {
-            List<Balance> foundBalances = getBalanceByAccountId(accId);
+            List<Balance> foundBalances = balService.getBalanceByAccountId(accId);
             account.setBalanceList(new ArrayList<Balance>(foundBalances));
         }
         return account;
     }
 
-    public List<Balance> getBalanceByAccountId(UUID accId) {
-        return repo.getAccountBalance(accId);
-    }
-
-    public Balance getBalanceByAccountId(UUID accountId, Currency currency) {
-
-        return repo.getAccountBalanceByIdAndCurrency(accountId, currency.name());
-        //return new Balance();
-    }
     //todo : on Sunday, rabbitmq and docker stuff
 }

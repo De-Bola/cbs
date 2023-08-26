@@ -36,6 +36,9 @@ class AccountServiceTest {
     @Mock
     private AccountRepository repo;
 
+    @Mock
+    private BalanceService balService;
+
     @Captor
     private ArgumentCaptor<Account> captor;
 
@@ -75,7 +78,7 @@ class AccountServiceTest {
                 .country("Estonia").customerId(customerId).balanceList(bal_List)
                 .build();
         repo = mock(AccountRepository.class);
-        uut = new AccountService(repo);
+        uut = new AccountService(repo, balService);
     }
 
     @Test
