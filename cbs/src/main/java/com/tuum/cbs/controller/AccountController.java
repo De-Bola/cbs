@@ -73,7 +73,7 @@ public class AccountController {
         if (balance == null) throw new BalanceNotFoundException("Balance not found!");
         System.out.println(balance);
         return new ResponseEntity<>(
-                new SuccessResponse(balance, "Account found!"),
+                new SuccessResponse(balance, "Balance found!"),
                 HttpStatus.OK
         );
     }
@@ -85,7 +85,7 @@ public class AccountController {
         if (balances.isEmpty()) throw new BalanceNotFoundException("Balances not found for this account!");
         System.out.println(balances);
         return new ResponseEntity<>(
-                new SuccessResponse(balances, "Account found!"),
+                new SuccessResponse(balances, "Balance list found!"),
                 HttpStatus.OK
         );
     }

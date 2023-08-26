@@ -83,7 +83,9 @@ public class AccountService {
     }
 
     public Balance getBalanceByAccountId(UUID accountId, Currency currency) {
-        return repo.getAccountBalance(accountId, currency.name());
+
+        return repo.getAccountBalanceByIdAndCurrency(accountId, currency.name());
+        //return new Balance();
     }
     //todo : on Sunday, rabbitmq and docker stuff
 }

@@ -39,7 +39,7 @@ public interface AccountRepository {
      * Gets account balance list using accountId
      * */
     @Select("SELECT * FROM balances WHERE account_id = #{accountId}")
-    @Results(value = {
+    @Results(id = "balanceResultMap", value = {
             @Result(property = "balanceId", column = "balance_id"),
             @Result(property = "amount", column = "amount"),
             @Result(property = "accountId", column = "account_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
@@ -62,12 +62,7 @@ public interface AccountRepository {
     /**
      * Gets account balance using accountId
      * */
-    @Select("SELECT * FROM balances WHERE account_id = #{accountId} and currency = #{currency}")
-    @Results(value = {
-            @Result(property = "balanceId", column = "balance_id"),
-            @Result(property = "amount", column = "amount"),
-            @Result(property = "accountId", column = "account_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
-            @Result(property = "currency", column = "currency")
-    })
-    Balance getAccountBalance(@Param("accountId") UUID accountId, @Param("currency") String currency);
+    @Select("SELECT balance_id, amount, currency, account_id FROM balances WHERE account_id = #{accountId} and currency = #{currency}")
+    @ResultMap("balanceResultMap")
+    Balance getAccountBalanceByIdAndCurrency(@Param("accountId") UUID accountId, @Param("currency") String currency);
 }
