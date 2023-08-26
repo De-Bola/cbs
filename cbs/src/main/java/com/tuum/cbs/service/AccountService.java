@@ -30,20 +30,16 @@ public class AccountService {
                         .country(accountDao.getCountry())
                         .customerId(accountDao.getCustomerId())
                         .build();
-
-        int numberOfNewAccountEntries = repo.insertAccount(account);
-
         List<Balance> balList = new ArrayList<>();
-        for (Currency currency :
-                accountDao.getCurrencies()) {
+        for (Currency currency : accountDao.getCurrencies()) {
             Balance bal = new Balance(generateRandomId(), new BigDecimal("0.00"), currency, accountId);
             balList.add(bal);
         }
-
         account.setBalanceList(new ArrayList<Balance>(balList));
+        repo.insertAccount(account);
+        repo.insertBalances(balList);
 
-        int numberOfBalanceEntries = repo.insertBalances(balList);
-        System.out.println("Service:" + account);
+        System.out.println("Service: " + account);
         return account;
     }
 

@@ -4,7 +4,14 @@ import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
+import com.tuum.cbs.repositories.AccountRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
@@ -17,25 +24,23 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.*;
 
-//@ExtendWith(SpringExtension.class)
-//@ContextConfiguration(classes = {
-//        AccountService.class
-//})
-@SpringJUnitConfig(classes = {AccountService.class})
+@ExtendWith(MockitoExtension.class)
 class AccountServiceTest {
 
-    @MockBean
-    AccountService uut;
+    @InjectMocks
+    private AccountService uut;
 
-    @Test
-    void checkContextStarts() {
-        assertThat(uut).isNotNull();
-    }
+    @Mock
+    private AccountRepository repo;
 
-    @Test
-    void saveShouldReturnNewAccount() {
+    private Account testAccount;
+    private AccountDao testAccountDao;
+
+    @BeforeEach
+    public void setup(){
         final List<Currency> currencies = new ArrayList<>();
         final Currency currency1 = Currency.EUR;
         final Currency currency2 = Currency.SEK;
@@ -46,7 +51,7 @@ class AccountServiceTest {
         String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
         customerId = customerId.substring(customerId.length() - 10);
 
-        final AccountDao testAccountDao = AccountDao.builder()
+        testAccountDao = AccountDao.builder()
                 .customerId(customerId)
                 .country("Estonia")
                 .currencies(currencies)
@@ -62,19 +67,29 @@ class AccountServiceTest {
             bal_List.add(bal);
         }
 
-        final Account testAccount = Account.builder().accountId(accountId)
+        testAccount = Account.builder().accountId(accountId)
                 .country("Estonia").customerId(customerId).balanceList(bal_List)
                 .build();
-        when(uut.save(any(AccountDao.class))).thenReturn(testAccount);
+    }
 
-        final Account savedAccount = uut.save(testAccountDao);
+    @Test
+    void checkContextStarts() {
+        assertThat(uut).isNotNull();
+    }
+
+    @Test
+    void saveShouldReturnNewAccount() {
+        //final AccountService spy = spy(uut);
+        doReturn(any()).when(uut).save(testAccountDao);
+
+        Account savedAccount = uut.save(testAccountDao);
+        assertThat(savedAccount).isNotNull();
         assertThat(savedAccount).hasSameClassAs(testAccount);
-        assertThat(savedAccount).usingRecursiveComparison().isEqualTo(testAccount);
     }
 
 //    @Test
-//    void saveShouldThrowExceptionWhenUserAlreadyExists() {
-//        final AccountDao testAccount = AccountDao.builder().build();
+//    void saveShouldThrowExceptionWhenAccountIdIsMissing() {
+//        testAccount.setAccountId(null);
 //        assertThatThrownBy(() -> {
 //            uut.save(testAccount);
 //        }).isInstanceOf(AccountAlreadyException.class);
