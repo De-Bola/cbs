@@ -125,4 +125,19 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
         assertThat(Long.valueOf(balanceId)).isEqualByComparingTo(foundBalance.getBalanceId());
         verify(repo, times(1)).getAccountBalanceByBalanceId(Long.valueOf(balanceId));
     }
+
+    @Test
+    void updateBalanceByAccountIdShouldReturnUpdatedBalanceObj() {
+        Balance newBal = new Balance(Long.valueOf(balanceId), new BigDecimal("5.00"), Currency.EUR, bal.getAccountId());
+
+        when(repo.getAccountBalanceByIdAndCurrency(bal.getAccountId(), bal.getCurrency().name())).thenReturn(newBal);
+        given(repo.updateBalanceAmount(any(BigDecimal.class), any(Long.class))).willReturn(1);
+
+        Balance updatedBalance = uut.updateBalanceByAccountId(newBal.getAccountId(), newBal.getCurrency(), newBal.getAmount());
+        System.out.println("Service test: " + updatedBalance);
+        assertThat(updatedBalance).isNotNull();
+        assertThat(Long.valueOf(balanceId)).isEqualByComparingTo(updatedBalance.getBalanceId());
+        assertThat(bal.getAmount()).isNotEqualByComparingTo(updatedBalance.getAmount());
+        verify(repo, times(1)).getAccountBalanceByIdAndCurrency(newBal.getAccountId(), newBal.getCurrency().name());
+    }
 }

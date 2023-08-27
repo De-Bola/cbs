@@ -84,5 +84,18 @@ public interface CbsRepository {
             "#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})")
     int insertTransaction(Transaction transaction);
 
-    Transaction getTrxByAccountId(@Param("accountId") UUID accountId);
+    /**
+     * Gets account balance list using accountId
+     * */
+    @Select("SELECT * FROM transactions WHERE account_id = #{accountId}")
+    @Results(id = "transactionResultMap", value = {
+            @Result(property = "trxId", column = "trx_id"),
+            @Result(property = "trxType", column = "trx_type"),
+            @Result(property = "amount", column = "amount"),
+            @Result(property = "balanceAfterTrx", column = "balanceAfterTrx"),
+            @Result(property = "accountId", column = "account_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
+            @Result(property = "currency", column = "currency"),
+            @Result(property = "description", column = "description")
+    })
+    List<Transaction> getTrxByAccountId(@Param("accountId") UUID accountId);
 }

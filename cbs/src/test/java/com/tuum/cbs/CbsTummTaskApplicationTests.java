@@ -18,21 +18,21 @@ class CbsTummTaskApplicationTests {
 	void contextLoads() {
 	}
 
-	@LocalServerPort
-	private int port;
-
-	private String baseUrl = "http://localhost";
-	private static RestTemplate restTemplate;
-	private
-
-	@BeforeAll
-	static void init(){
-		restTemplate = new RestTemplate();
-	}
-
-	@BeforeEach
-	public void setup(){
-		baseUrl = baseUrl + ":" + port + "/api";
-	}
+//	@LocalServerPort
+//	private int port;
+//
+//	private String baseUrl = "http://localhost";
+//	private static RestTemplate restTemplate;
+//	private
+//
+//	@BeforeAll
+//	static void init(){
+//		restTemplate = new RestTemplate();
+//	}
+//
+//	@BeforeEach
+//	public void setup(){
+//		baseUrl = baseUrl + ":" + port + "/api";
+//	}
 
 }

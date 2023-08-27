@@ -8,6 +8,7 @@ import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.CbsRepository;
 import com.tuum.cbs.service.AccountService;
 import com.tuum.cbs.service.BalanceService;
+import com.tuum.cbs.service.TransactionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,8 +45,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
-@ExtendWith(MockitoExtension.class)
-@RunWith(SpringJUnit4ClassRunner.class)
 class AccountControllerTest {
 
     @Autowired
@@ -53,9 +52,6 @@ class AccountControllerTest {
 
     @MockBean
     private AccountService accountService;
-
-    @MockBean
-    private BalanceService balanceService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -108,8 +104,6 @@ class AccountControllerTest {
         }
 
         accountService = mock(AccountService.class);
-        balanceService = mock(BalanceService.class);
-
     }
 
     @Test

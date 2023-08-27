@@ -1,19 +1,22 @@
 package com.tuum.cbs.controller;
 
+import com.tuum.cbs.common.exceptions.AccountNotFoundException;
 import com.tuum.cbs.common.exceptions.BadRequestException;
+import com.tuum.cbs.common.exceptions.TrxNotFoundException;
+import com.tuum.cbs.common.exceptions.TrxZeroSumException;
 import com.tuum.cbs.controller.response.SuccessResponse;
+import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Transaction;
 import com.tuum.cbs.models.TransactionDao;
 import com.tuum.cbs.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -26,6 +29,10 @@ public class TransactionController {
 
         if (trxDao.getAmount().compareTo(BigDecimal.ZERO) < 0) {
             throw new BadRequestException("Invalid amount: amount cannot be negative");
+        }
+
+        if (trxDao.getAmount().compareTo(BigDecimal.ZERO) == 0) {
+            throw new TrxZeroSumException("Invalid amount: can't post zero");
         }
 
         if (trxDao.getCurrency() == null ){
@@ -50,6 +57,18 @@ public class TransactionController {
         return new ResponseEntity<>(
                 new SuccessResponse(newTrx, "Transaction created!"),
                 HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<SuccessResponse> getTransactions(@RequestParam(name = "id") String accountId){
+        System.out.println(accountId);
+        List<Transaction> transactions = transactionService.getTrxByAccountId(UUID.fromString(accountId));
+        if (transactions.isEmpty()) throw new TrxNotFoundException("No Transactions found!");
+        System.out.println("Number of Trx found: " + transactions.size());
+        return new ResponseEntity<>(
+                new SuccessResponse(transactions, "Transactions found!"),
+                HttpStatus.OK
         );
     }
 }

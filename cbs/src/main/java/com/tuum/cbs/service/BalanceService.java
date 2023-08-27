@@ -1,5 +1,6 @@
 package com.tuum.cbs.service;
 
+import com.tuum.cbs.common.exceptions.InsufficientFundsException;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.CbsRepository;
@@ -56,7 +57,26 @@ public class BalanceService {
             balance.setAmount(updatedAmount);
             repo.updateBalanceAmount(updatedAmount, balanceId);
         }
-        // same concern here
+
+        return balance;
+    }
+
+    //Trx layer calls this
+    public Balance updateBalanceByAccountId(UUID accountId, Currency currency, BigDecimal amount){
+        // get init balance
+        Balance balance = getBalanceByAccountId(accountId, currency);
+        // do addition {always because sign changes in trx service already}
+        BigDecimal updatedAmount = balance.getAmount().add(amount);
+
+        // insufficient funds is only valid for outgoing trx at this point
+        if (updatedAmount.compareTo(BigDecimal.ZERO) < 0 &&
+                amount.compareTo(BigDecimal.ZERO) < 0){
+            throw new InsufficientFundsException("Insufficient funds: account balance shouldn't goto negative");
+        }
+
+        balance.setAmount(updatedAmount);
+        repo.updateBalanceAmount(updatedAmount, balance.getBalanceId());
+
         return balance;
     }
 
