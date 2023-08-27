@@ -32,3 +32,5 @@ public class UuidTypeHandler extends BaseTypeHandler<UUID> {
         return cs.getObject(columnIndex, UUID.class);
     }
 }
+
+// copied from stackoverflow here : https://stackoverflow.com/questions/60613619/how-to-use-uuid-type-handler-with-many-annotation-in-mybatis

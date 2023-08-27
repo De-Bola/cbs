@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Mapper
 @Repository
-public interface AccountRepository {
+public interface CbsRepository {
 
     @Insert("INSERT INTO accounts (account_id, country, customer_id) " +
             " VALUES (#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler}, #{country}, #{customerId})")

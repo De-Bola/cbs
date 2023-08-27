@@ -1,7 +1,7 @@
 package com.tuum.cbs.service;
 
 import com.tuum.cbs.models.*;
-import com.tuum.cbs.repositories.AccountRepository;
+import com.tuum.cbs.repositories.CbsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @Transactional
 public class AccountService {
 
-    private final AccountRepository repo;
+    private final CbsRepository repo;
     private final BalanceService balService;
 
     /**

@@ -2,30 +2,21 @@ package com.tuum.cbs.service;
 
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
-import com.tuum.cbs.repositories.AccountRepository;
-import org.apache.ibatis.session.SqlSession;
-import org.junit.After;
+import com.tuum.cbs.repositories.CbsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -44,23 +35,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     private BalanceService uut;
 
     @Mock
-    private AccountRepository repo;
-
-//    @Autowired
-//    DataSourceTransactionManager transactionManager;
-//
-//    @Autowired
-//    SqlSession sqlSession;
-//
-//    @Autowired
-//    DataSource dataSource;
-//
-//    //@Autowired
-//    Connection connection;
-//    Statement statement;
-//
-//    @Captor
-//    private ArgumentCaptor<Balance> captor;
+    private CbsRepository repo;
 
     private Balance bal;
     private List<Balance> bal_List;
@@ -69,36 +44,21 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
 
 
     @BeforeEach
-    void setUp() throws SQLException {
-        balanceId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
+    void setUp() {
+        balanceId = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
         balanceId = balanceId.substring(balanceId.length() - 10);
         final UUID accountId = UUID.randomUUID();
         bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), Currency.EUR, accountId);
         bal_List = new ArrayList<>();
         bal_List.add(bal);
-        repo = mock(AccountRepository.class);
+        repo = mock(CbsRepository.class);
         uut = new BalanceService(repo);
-//        connection = sqlSession.getConnection();
-//        statement = connection.createStatement();
-//        String stmt = "DROP TABLE IF EXISTS balances CASCADE;\n" +
-//                "CREATE TABLE IF NOT EXISTS balances\n" +
-//                "(\n" +
-//                "    amount numeric(38,2),\n" +
-//                "    balance_id bigint NOT NULL,\n" +
-//                "    currency VARCHAR (255),\n" +
-//                "    account_id uuid NOT NULL,\n" +
-//                "    PRIMARY KEY (balance_id)\n" +
-//                "    --CONSTRAINT FK_account_balances FOREIGN KEY (account_id) REFERENCES accounts (account_id)\n" +
-//                ");";
-//        statement.execute(stmt);
     }
 
-//    @After
-//    public void tearDown() throws SQLException {
-//        statement.close();
-//        connection.close();
-//        sqlSession.close();
-//    }
+    @Test
+    void checkContextStarts() {
+        assertThat(uut).isNotNull();
+    }
 
     @Test
     void getBalanceByAccountIdShouldReturnBalance() {
@@ -131,7 +91,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
         given(repo.updateBalanceObj(any(Balance.class))).willReturn(anyInt());
 
         Balance updatedBalance = uut.updateBalanceObj(newBal);
-        //sqlSession.update("com.tuum.cbs.repositories.AccountRepository.updateBalanceObj", bal);
+        //sqlSession.update("com.tuum.cbs.repositories.CbsRepository.updateBalanceObj", bal);
 
         System.out.println("Service test: " + updatedBalance);
 

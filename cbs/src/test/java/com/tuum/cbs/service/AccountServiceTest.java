@@ -5,7 +5,7 @@ import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
-import com.tuum.cbs.repositories.AccountRepository;
+import com.tuum.cbs.repositories.CbsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class AccountServiceTest {
     private AccountService uut;
 
     @Mock
-    private AccountRepository repo;
+    private CbsRepository repo;
 
     @Mock
     private BalanceService balService;
@@ -77,7 +77,7 @@ class AccountServiceTest {
         testAccount = Account.builder().accountId(accountId)
                 .country("Estonia").customerId(customerId).balanceList(bal_List)
                 .build();
-        repo = mock(AccountRepository.class);
+        repo = mock(CbsRepository.class);
         uut = new AccountService(repo, balService);
     }
 

@@ -2,7 +2,7 @@ package com.tuum.cbs.service;
 
 import com.tuum.cbs.models.Transaction;
 import com.tuum.cbs.models.TransactionDao;
-import com.tuum.cbs.repositories.AccountRepository;
+import com.tuum.cbs.repositories.CbsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TransactionService {
 
-    private final AccountRepository repo;
+    private final CbsRepository repo;
 
     // business logic for transactions
     /**

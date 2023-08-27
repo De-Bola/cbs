@@ -2,7 +2,7 @@ package com.tuum.cbs.service;
 
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
-import com.tuum.cbs.repositories.AccountRepository;
+import com.tuum.cbs.repositories.CbsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +16,7 @@ import java.util.UUID;
 @Transactional
 public class BalanceService {
 
-    private final AccountRepository repo;
+    private final CbsRepository repo;
 
     // business logic for balances
     public List<Balance> getBalanceByAccountId(UUID accId) {
