@@ -8,7 +8,9 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 
-@ComponentScan(basePackages = {"com.tuum.cbs"})
+import static org.assertj.core.api.Assertions.assertThat;
+
+//@ComponentScan(basePackages = {"com.tuum.cbs"})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CbsTummTaskApplicationTests {
 

@@ -4,7 +4,6 @@ import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
 import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
-import com.tuum.cbs.service.AccountService;
 import com.tuum.cbs.service.BalanceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

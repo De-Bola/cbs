@@ -5,15 +5,23 @@ import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
+import com.tuum.cbs.repositories.CbsRepository;
 import com.tuum.cbs.service.AccountService;
+import com.tuum.cbs.service.BalanceService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -35,6 +43,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
+@ExtendWith(MockitoExtension.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 class AccountControllerTest {
 
     @Autowired
@@ -42,6 +52,9 @@ class AccountControllerTest {
 
     @MockBean
     private AccountService accountService;
+
+    @MockBean
+    private BalanceService balanceService;
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -52,31 +65,53 @@ class AccountControllerTest {
     @Captor
     private ArgumentCaptor<AccountDao> captor;
 
+    private AccountDao testAccountDao;
+    private Account testAccount;
+
     @Test
     void checkContextStarts() {
         assertThat(mockMvc).isNotNull();
     }
 
-    @Test
-    @DisplayName("Verifies that AccountDao is sent to Service layer")
-    void createAccountShouldReturnAccountDao() throws Exception {
+    @BeforeEach
+    void setUp(){
 
+        final UUID accountId = UUID.randomUUID();
         final List<Currency> currencies = new ArrayList<>();
         final Currency currency1 = Currency.EUR;
         final Currency currency2 = Currency.SEK;
+        String balanceId1 = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
+        balanceId1 = balanceId1.substring(balanceId1.length() - 10);
+        String customerId = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
+        customerId = customerId.substring(customerId.length() - 10);
+        Balance bal1 = new Balance(Long.valueOf(balanceId1), new BigDecimal("0.00"), Currency.EUR, accountId);
+        List<Balance> bal_List = new ArrayList<>();
 
+        bal_List.add(bal1);
         currencies.add(currency1);
         currencies.add(currency2);
-
-        String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-        customerId = customerId.substring(customerId.length() - 10);
-
-        final AccountDao testAccount = AccountDao.builder()
+        testAccountDao = AccountDao.builder()
                 .customerId(customerId)
                 .country("Estonia")
                 .currencies(currencies)
                 .build();
-        final String jsonBody = objectMapper.writeValueAsString(testAccount);
+        testAccount = Account.builder().accountId(accountId)
+                .country("Estonia").customerId(customerId).balanceList(bal_List)
+                .build();
+
+        for (Currency currency : currencies) {
+            String balanceId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
+            balanceId = balanceId.substring(balanceId.length() - 10);
+            Balance bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), currency, accountId);
+            bal_List.add(bal);
+        }
+
+    }
+
+    @Test
+    @DisplayName("Verifies that AccountDao is sent to Service layer")
+    void createAccountShouldReturnAccountDao() throws Exception {
+        final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
 
         mockMvc.perform(
                 post("/api/accounts/account-open")
@@ -84,12 +119,11 @@ class AccountControllerTest {
                         .content(jsonBody)
         ).andExpect(status().isCreated());
 
-
         verify(accountService, times(1)).save(captor.capture());
 
         final Object capturedValue = captor.getValue();
 
-        assertThat(capturedValue).usingRecursiveComparison().ignoringFields("accountId").isEqualTo(testAccount);
+        assertThat(capturedValue).usingRecursiveComparison().ignoringFields("accountId").isEqualTo(testAccountDao);
         System.out.println(capturedValue);
         System.out.println(testAccount);
     }
@@ -97,36 +131,8 @@ class AccountControllerTest {
     @Test
     @DisplayName("Verifies that AccountDetails is returned from Service layer")
     void createAccountShouldReturnAccountDetails() throws Exception {
-        final List<Currency> currencies = new ArrayList<>();
-        final Currency currency1 = Currency.EUR;
-        final Currency currency2 = Currency.SEK;
-
-        currencies.add(currency1);
-        currencies.add(currency2);
-
-        String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-        customerId = customerId.substring(customerId.length() - 10);
-
-        final AccountDao testAccountDao = AccountDao.builder()
-                .customerId(customerId)
-                .country("Estonia")
-                .currencies(currencies)
-                .build();
         final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
 
-        final UUID accountId = UUID.randomUUID();
-        List<Balance> bal_List = new ArrayList<>();
-        for (Currency currency :
-                currencies) {
-            String balanceId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-            balanceId = balanceId.substring(balanceId.length() - 10);
-            Balance bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), currency, accountId);
-            bal_List.add(bal);
-        }
-
-        final Account testAccount = Account.builder().accountId(accountId)
-                .country("Estonia").customerId(customerId).balanceList(bal_List)
-                .build();
         when(accountService.save(captor.capture())).thenReturn(testAccount);
 
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
@@ -147,21 +153,7 @@ class AccountControllerTest {
     @DisplayName("Verifies that error response is given when something goes wrong")
     void createAccountShouldReturnErrorResponse() throws Exception {
 
-        final List<Currency> currencies = new ArrayList<>();
-        final Currency currency1 = Currency.EUR;
-        final Currency currency2 = Currency.SEK;
-
-        currencies.add(currency1);
-        currencies.add(currency2);
-
-        String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-        customerId = customerId.substring(customerId.length() - 10);
-
-        final AccountDao testAccountDao = AccountDao.builder()
-                //.customerId(customerId)
-                .country("Estonia")
-                .currencies(currencies)
-                .build();
+        testAccountDao.setCustomerId(null);
         final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         mockMvc.perform(

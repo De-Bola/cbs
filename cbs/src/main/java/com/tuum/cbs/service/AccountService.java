@@ -24,7 +24,7 @@ public class AccountService {
      * for creating a new account
      * */
     public Account save(AccountDao accountDao) {
-        // todo : validate currency
+
         final UUID accountId = UUID.randomUUID();
         Account account = Account.builder()
                         .accountId(accountId)
@@ -38,7 +38,6 @@ public class AccountService {
         }
         account.setBalanceList(new ArrayList<Balance>(balList));
         repo.insertAccount(account);
-        //repo.insertBalances(balList);
         createBalance(balList);
 
         System.out.println("Service: " + account);
@@ -48,7 +47,7 @@ public class AccountService {
     /**
      * for generating random ids of type Long
      * */
-    private Long generateRandomId() {
+    public Long generateRandomId() {
         // made an active decision to be generating uuid for account_id and
         // balance_id generation will be here
         // not for customer_id since its provided

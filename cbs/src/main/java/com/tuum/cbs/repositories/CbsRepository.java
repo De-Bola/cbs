@@ -3,6 +3,7 @@ package com.tuum.cbs.repositories;
 import com.tuum.cbs.common.handlers.UuidTypeHandler;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Balance;
+import com.tuum.cbs.models.Transaction;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.stereotype.Repository;
@@ -77,4 +78,10 @@ public interface CbsRepository {
     @Select("SELECT balance_id, amount, currency, account_id FROM balances WHERE balance_id = #{balanceId}")
     @ResultMap("balanceResultMap")
     Balance getAccountBalanceByBalanceId(Long balanceId);
+
+    @Insert("INSERT INTO transactions (trx_id, amount, currency, trx_type, description, account_id)" +
+            "VALUES (#{balanceId}, #{transaction.balanceAfterTrx.amount},#{transaction.balanceAfterTrx.currency},#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})")
+    int insertTransaction(Transaction transaction);
+
+    Transaction getTrxByAccountId(@Param("accountId") UUID accountId);
 }

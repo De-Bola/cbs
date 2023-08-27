@@ -30,7 +30,7 @@ public class MyBatisDataSourceConfig {
 
     @Bean
     public DataSourceTransactionManager transactionManager(){
-        return new DataSourceTransactionManager();
+        return new DataSourceTransactionManager(dataSource());
     }
 
     @Bean

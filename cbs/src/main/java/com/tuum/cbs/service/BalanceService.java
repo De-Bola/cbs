@@ -29,8 +29,7 @@ public class BalanceService {
 
     public Balance updateBalanceObj(Balance balance){
         repo.updateBalanceObj(balance);
-        Balance updatedBalance = getBalanceByBalanceId(balance.getBalanceId());
-        return updatedBalance;
+        return getBalanceByBalanceId(balance.getBalanceId());
     }
 
     public Balance updateBalance(Long balanceId, BigDecimal amount){
