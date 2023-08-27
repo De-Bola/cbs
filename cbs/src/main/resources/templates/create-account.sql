@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS transactions
     currency VARCHAR (255),
     trx_type VARCHAR (255),
     description VARCHAR (255),
+    balanceAfterTrx numeric(38,2),
     account_id uuid NOT NULL,
     PRIMARY KEY (trx_id),
     CONSTRAINT FK_account_transaction FOREIGN KEY (account_id) REFERENCES accounts (account_id)

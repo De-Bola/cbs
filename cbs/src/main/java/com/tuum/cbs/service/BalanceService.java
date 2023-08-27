@@ -28,13 +28,36 @@ public class BalanceService {
     }
 
     public Balance updateBalanceObj(Balance balance){
-        repo.updateBalanceObj(balance);
-        return getBalanceByBalanceId(balance.getBalanceId());
+        Balance initBalance = getBalanceByBalanceId(balance.getBalanceId());
+        BigDecimal updatedAmount = initBalance.getAmount().add(balance.getAmount());
+
+        if (updatedAmount.compareTo(initBalance.getAmount()) == 0) {
+            // do nothing
+            return initBalance;
+        } else {
+            balance.setAmount(updatedAmount);
+            repo.updateBalanceObj(balance);
+        }
+        // not sure the difference between putting return outside if/else statement
+        // and putting it inside it; for now I'll leave it outside
+        return balance;
     }
 
     public Balance updateBalance(Long balanceId, BigDecimal amount){
-        repo.updateBalanceAmount(amount, balanceId);
-        return getBalanceByBalanceId(balanceId);
+        // get init balance
+        Balance balance = getBalanceByBalanceId(balanceId);
+        // do addition {always because sign changes in trx service already}
+        BigDecimal updatedAmount = balance.getAmount().add(amount);
+
+        if (updatedAmount.compareTo(balance.getAmount()) == 0) {
+            // do nothing, maybe early return is better here
+            return balance;
+        } else {
+            balance.setAmount(updatedAmount);
+            repo.updateBalanceAmount(updatedAmount, balanceId);
+        }
+        // same concern here
+        return balance;
     }
 
     public Balance getBalanceByBalanceId(Long balanceId) {

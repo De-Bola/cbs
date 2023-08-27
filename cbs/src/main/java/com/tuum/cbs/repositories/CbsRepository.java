@@ -59,10 +59,10 @@ public interface CbsRepository {
     int insertBalances(@Param("list") List<Balance> balanceList);
 
     // decided to handle additions/subtractions in service layer
-    @Update("UPDATE balances SET amount = amount + #{amount} WHERE balance_id = #{balanceId}")
+    @Update("UPDATE balances SET amount = #{amount} WHERE balance_id = #{balanceId}")
     int updateBalanceObj(Balance balance);
 
-    @Update("UPDATE balances SET amount = amount + #{amount} WHERE balance_id = #{balanceId}")
+    @Update("UPDATE balances SET amount = #{amount} WHERE balance_id = #{balanceId}")
     int updateBalanceAmount(@Param("amount") BigDecimal amount, @Param("balanceId") Long balanceId);
 
     /**
@@ -79,8 +79,9 @@ public interface CbsRepository {
     @ResultMap("balanceResultMap")
     Balance getAccountBalanceByBalanceId(Long balanceId);
 
-    @Insert("INSERT INTO transactions (trx_id, amount, currency, trx_type, description, account_id)" +
-            "VALUES (#{balanceId}, #{transaction.balanceAfterTrx.amount},#{transaction.balanceAfterTrx.currency},#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})")
+    @Insert("INSERT INTO transactions (trx_id, amount, currency, trx_type, description, balanceAfterTrx, account_id)" +
+            "VALUES (#{trxId}, #{amount}, #{currency}, #{trxType}, #{description}, #{balanceAfterTrx}, " +
+            "#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})")
     int insertTransaction(Transaction transaction);
 
     Transaction getTrxByAccountId(@Param("accountId") UUID accountId);

@@ -80,7 +80,7 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         testTrx = Transaction.builder().accountId(testTrxDao.getAccountId())
                 .trxId(Long.valueOf(trxId)).trxType(testTrxDao.getTrxType())
-                .amount(testTrxDao.getAmount()).balanceAfterTrx(balanceAfterTrx)
+                .amount(testTrxDao.getAmount()).balanceAfterTrx(balanceAfterTrx.getAmount())
                 .currency(currency).description(testTrxDao.getDescription())
                 .build();
 
@@ -108,7 +108,7 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         assertThat(createdTrx).isNotNull();
         assertThat(createdTrx).hasSameClassAs(testTrx);
         assertThat(createdTrx.getBalanceAfterTrx()).isNotNull();
-        assertThat(createdTrx.getBalanceAfterTrx().getAmount()).isNotEqualByComparingTo(testTrxDao.getAmount());
+        assertThat(createdTrx.getAmount()).isNotEqualByComparingTo(testTrxDao.getAmount());
         assertThat(captor.getValue()).usingRecursiveComparison().isEqualTo(createdTrx);
     }
 
@@ -127,7 +127,7 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         verify(repo, times(1)).insertTransaction(captor.capture());
         assertThat(createdTrx.getTrxType()).isEqualByComparingTo(testTrx.getTrxType());
 
-        assertThat(createdTrx.getBalanceAfterTrx().getAmount()).isGreaterThan(initBalance);
+        assertThat(createdTrx.getAmount()).isGreaterThan(initBalance);
         assertThat(captor.getValue()).usingRecursiveComparison().isEqualTo(createdTrx);
     }
 
@@ -148,7 +148,7 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         verify(repo, times(1)).insertTransaction(captor.capture());
         assertThat(createdTrx.getTrxType()).isEqualByComparingTo(testTrx.getTrxType());
 
-        assertThat(createdTrx.getBalanceAfterTrx().getAmount()).isLessThan(initBalance);
+        assertThat(createdTrx.getAmount()).isLessThan(initBalance);
         assertThat(captor.getValue()).usingRecursiveComparison().isEqualTo(createdTrx);
     }
 

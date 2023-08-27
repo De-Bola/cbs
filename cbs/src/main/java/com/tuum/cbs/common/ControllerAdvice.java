@@ -3,6 +3,7 @@ package com.tuum.cbs.common;
 import com.tuum.cbs.common.exceptions.BadRequestException;
 import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
 import com.tuum.cbs.common.exceptions.InsufficientFundsException;
+import com.tuum.cbs.common.exceptions.TrxZeroSumException;
 import com.tuum.cbs.controller.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class ControllerAdvice {
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({BadRequestException.class, InsufficientFundsException.class})
+    @ExceptionHandler({BadRequestException.class, InsufficientFundsException.class, TrxZeroSumException.class})
     public ErrorResponse badRequestException(Exception e){
         LOGGER.debug(e.getMessage(), e.getCause());
         return new ErrorResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage(),TIMESTAMP);
