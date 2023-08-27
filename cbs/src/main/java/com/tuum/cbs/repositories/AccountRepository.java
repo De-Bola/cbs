@@ -48,8 +48,8 @@ public interface AccountRepository {
     })
     List<Balance> getAccountBalance(@Param("accountId") UUID accountId);
 
-    @Insert("INSERT INTO balances (amount, currency, account_id)" +
-            "VALUES (#{amount},#{currency},#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})")
+    @Insert("INSERT INTO balances (balance_id, amount, currency, account_id)" +
+            "VALUES (#{balanceId}, #{amount},#{currency},#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})")
     void insertBalance(Balance balance);
 
     @Insert({"<script>","INSERT INTO balances (balance_id, amount, currency, account_id) VALUES",
