@@ -4,8 +4,6 @@ import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
 import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.jdbc.ScriptRunner;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +13,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
-import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Connection;
@@ -27,12 +24,9 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 
 @MybatisTest
 @RunWith(SpringRunner.class)
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Sql({"/templates/accounts.sql", "/templates/balance.sql"})
 class CbsRepositoryTest {
 

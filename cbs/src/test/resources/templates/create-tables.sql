@@ -18,7 +18,6 @@ CREATE TABLE IF NOT EXISTS balances
     currency VARCHAR (255),
     account_id uuid NOT NULL,
     PRIMARY KEY (balance_id)
-    --CONSTRAINT FK_account_balance FOREIGN KEY (account_id) REFERENCES accounts (account_id)
 );
 -- little changes to data types here
 
@@ -33,7 +32,6 @@ CREATE TABLE IF NOT EXISTS transactions
     description VARCHAR (255),
     account_id uuid NOT NULL,
     PRIMARY KEY (trx_id)
-    --CONSTRAINT FK_account_transaction FOREIGN KEY (account_id) REFERENCES accounts (account_id)
 );
 -- no need to add 'balance' item to trx table.
 -- Just write an update query using account_id as key and where currency = currency.

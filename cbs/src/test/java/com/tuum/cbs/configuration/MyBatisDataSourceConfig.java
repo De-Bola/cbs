@@ -3,22 +3,16 @@ package com.tuum.cbs.configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.test.context.ActiveProfiles;
 
 import javax.sql.DataSource;
 
-
-
 @Configuration
 @MapperScan("com.tuum.cbs.repositories")
-//@ActiveProfiles("test")
-//@EnableAutoConfiguration
 public class MyBatisDataSourceConfig {
     @Bean
     public DataSource dataSource() {

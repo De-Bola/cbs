@@ -37,6 +37,9 @@ class AccountServiceTest {
     private CbsRepository repo;
 
     @Mock
+    private RabbitMQDESender rabbitMQDESender;
+
+    @Mock
     private BalanceService balService;
 
     @Captor
@@ -78,7 +81,7 @@ class AccountServiceTest {
                 .country("Estonia").customerId(customerId).balanceList(bal_List)
                 .build();
         repo = mock(CbsRepository.class);
-        uut = new AccountService(repo, balService);
+        uut = new AccountService(repo, balService, rabbitMQDESender);
     }
 
     @Test

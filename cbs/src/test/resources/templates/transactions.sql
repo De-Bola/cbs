@@ -9,7 +9,6 @@ CREATE TABLE IF NOT EXISTS transactions
     description VARCHAR (255),
     account_id uuid NOT NULL,
     PRIMARY KEY (trx_id)
-    --CONSTRAINT FK_account_transaction FOREIGN KEY (account_id) REFERENCES accounts (account_id)
 );
 
 insert into transactions (account_id, trx_id, currency, amount, description, trx_type) values ('3eeaf1ab-e103-4e0a-b69f-2bce91e758be', '0322797225', 'EUR', 52.83, 'dui nec nisi', 'IN');

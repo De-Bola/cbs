@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  cbs:
+    build: .
+     #dockerfile: Dockerfile
+    container_name: core-banking-system
+    image: 'docker-spring-boot-postgres:latest'
+    ports:
+      - "8080:8080"
+    working_dir: /cbs
+    volumes:
+      - ./cbs:/cbs
+    depends_on:
+      - rabbitmq
+      - postgres
+    links:
+      - postgres
+      - rabbitmq
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://cbs-db-postgres:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+
+  postgres:
+    container_name: cbs-db-postgres
+    image: postgres
+    restart: always
+    volumes:
+      - ./cbs/create-tables.sql:/docker-entrypoint-initdb.d/10-create-tables.sql
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+
+volumes:
+  cbs:
+

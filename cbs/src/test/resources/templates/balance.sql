@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS balances
     currency VARCHAR (255),
     account_id uuid NOT NULL,
     PRIMARY KEY (balance_id)
-    --CONSTRAINT FK_account_balances FOREIGN KEY (account_id) REFERENCES accounts (account_id)
 );
 insert into balances (account_id, balance_id, currency, amount) values ('c3fabe6c-d5d9-40f8-b575-51bf1042e963', '0914631632', 'SEK', 12.73);
 insert into balances (account_id, balance_id, currency, amount) values ('c3fabe6c-d5d9-40f8-b575-51bf1042e963', '7480963955', 'SEK', 3.88);

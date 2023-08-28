@@ -37,6 +37,9 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Mock
     private CbsRepository repo;
 
+    @Mock
+    private RabbitMQDESender mqDeSender;
+
     private Balance bal;
     private List<Balance> bal_List;
     private String balanceId;
@@ -52,7 +55,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
         bal_List = new ArrayList<>();
         bal_List.add(bal);
         repo = mock(CbsRepository.class);
-        uut = new BalanceService(repo);
+        uut = new BalanceService(repo, mqDeSender);
     }
 
     @Test

@@ -21,12 +21,6 @@ public interface CbsRepository {
     @Options(keyProperty = "accountId", keyColumn = "account_id")
     int insertAccount(Account account);
 
-//    @Insert("INSERT INTO a_b(account_id, customer_id, balance_id, amount, currency) " +
-//            "SELECT a.account_id, a.customer_id, b.balance_id, b.amount, b.currency" +
-//            "FROM accounts a LEFT OUTER JOIN balances b ON a.account_id = b.account_id" +
-//            " VALUES (#{Account.accountId}, #{Account.customerId}, #{Balance.balanceId}, #{Balance.amount}, #{Balance.currency})")
-//    void save(Account account);
-
     // handling inserts and get operations for account and balances separately
     @Select("SELECT * FROM accounts WHERE account_id = #{accountId}")
     @Results(id = "accountResultMap", value = {
