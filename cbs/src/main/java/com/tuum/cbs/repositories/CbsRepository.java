@@ -51,7 +51,7 @@ public interface CbsRepository {
 
     @Insert("INSERT INTO balances (balance_id, amount, currency, account_id)" +
             "VALUES (#{balanceId}, #{amount},#{currency},#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})")
-    void insertBalance(Balance balance);
+    int insertBalance(Balance balance);
 
     @Insert({"<script>","INSERT INTO balances (balance_id, amount, currency, account_id) VALUES",
             "<foreach collection = 'list' item='Balance' open='(' separator = '),(' close=')'>",

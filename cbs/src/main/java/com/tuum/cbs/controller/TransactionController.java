@@ -1,13 +1,12 @@
 package com.tuum.cbs.controller;
 
-import com.tuum.cbs.common.exceptions.AccountNotFoundException;
 import com.tuum.cbs.common.exceptions.BadRequestException;
 import com.tuum.cbs.common.exceptions.TrxNotFoundException;
 import com.tuum.cbs.common.exceptions.TrxZeroSumException;
 import com.tuum.cbs.controller.response.SuccessResponse;
-import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Transaction;
 import com.tuum.cbs.models.TransactionDao;
+import com.tuum.cbs.service.RabbitMQDESender;
 import com.tuum.cbs.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +22,7 @@ import java.util.UUID;
 @RequestMapping("/api/transactions")
 public class TransactionController {
     private final TransactionService transactionService;
+    private final RabbitMQDESender rabbitMQDESender;
 
     @PostMapping("/transaction-create")
     public ResponseEntity<SuccessResponse> createTransaction(@RequestBody TransactionDao trxDao) {
@@ -54,6 +54,12 @@ public class TransactionController {
         System.out.println("Trx params: " + trxDao);
         Transaction newTrx = transactionService.createTransaction(trxDao);
         System.out.println(newTrx);
+
+        // publish to queue for consumers
+        if (newTrx.getTrxType().name().equalsIgnoreCase("IN")){
+            rabbitMQDESender.publishToTrxCreditQueue(newTrx.toString());
+        } else rabbitMQDESender.publishToTrxDebitQueue(newTrx.toString());
+
         return new ResponseEntity<>(
                 new SuccessResponse(newTrx, "Transaction created!"),
                 HttpStatus.CREATED

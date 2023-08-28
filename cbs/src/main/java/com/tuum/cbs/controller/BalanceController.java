@@ -5,6 +5,7 @@ import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.service.BalanceService;
+import com.tuum.cbs.service.RabbitMQDESender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.UUID;
 public class BalanceController {
 
     private final BalanceService service;
+    private final RabbitMQDESender mqDeSender;
 
     @GetMapping("/balance")
     public ResponseEntity<SuccessResponse> getBalance(@RequestParam(name = "accountId") String accountId, @RequestParam(name = "currency") Currency currency) {
@@ -63,6 +65,10 @@ public class BalanceController {
         Balance balance = service.updateBalance(balanceId, amount);
         if (balance == null) throw new BalanceNotFoundException("Balance not found!");
         System.out.println(balance);
+
+        // publish to queue for consumer
+        mqDeSender.publishToUpdateBalanceQueue(balance.toString());
+
         return new ResponseEntity<>(
                 new SuccessResponse(balance, "Balance updated!"),
                 HttpStatus.OK

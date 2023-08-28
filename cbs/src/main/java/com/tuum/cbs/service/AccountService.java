@@ -19,6 +19,7 @@ public class AccountService {
 
     private final CbsRepository repo;
     private final BalanceService balService;
+    private final RabbitMQDESender mqDeSender;
 
     /**
      * for creating a new account
@@ -39,6 +40,8 @@ public class AccountService {
         account.setBalanceList(new ArrayList<Balance>(balList));
         repo.insertAccount(account);
         createBalance(balList);
+        // notify consumers
+        mqDeSender.publishToCreateBalanceQueue(balList.toString());
 
         System.out.println("Service: " + account);
         return account;

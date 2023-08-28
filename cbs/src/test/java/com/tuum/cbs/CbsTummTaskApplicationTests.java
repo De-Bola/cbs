@@ -10,29 +10,12 @@ import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-//@ComponentScan(basePackages = {"com.tuum.cbs"})
-@SpringBootTest//(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
+@SpringBootTest
 class CbsTummTaskApplicationTests {
 
 	@Test
 	void contextLoads() {
 	}
-
-//	@LocalServerPort
-//	private int port;
-//
-//	private String baseUrl = "http://localhost";
-//	private static RestTemplate restTemplate;
-//	private
-//
-//	@BeforeAll
-//	static void init(){
-//		restTemplate = new RestTemplate();
-//	}
-//
-//	@BeforeEach
-//	public void setup(){
-//		baseUrl = baseUrl + ":" + port + "/api";
-//	}
 
 }

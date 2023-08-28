@@ -17,13 +17,14 @@ import javax.sql.DataSource;
 
 @Configuration
 @MapperScan("com.tuum.cbs.repositories")
-@ActiveProfiles("test")
-@EnableAutoConfiguration
+//@ActiveProfiles("test")
+//@EnableAutoConfiguration
 public class MyBatisDataSourceConfig {
     @Bean
     public DataSource dataSource() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
+                .addScript("/templates/create-tables.sql")
                 .addScript("/templates/balance.sql")
                 .build();
     }

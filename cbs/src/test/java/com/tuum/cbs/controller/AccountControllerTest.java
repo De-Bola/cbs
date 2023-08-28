@@ -1,6 +1,8 @@
 package com.tuum.cbs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tuum.cbs.messaging.RabbitMQDEConfig;
+import com.tuum.cbs.messaging.RabbitMQFOConfig;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
@@ -8,7 +10,9 @@ import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.CbsRepository;
 import com.tuum.cbs.service.AccountService;
 import com.tuum.cbs.service.BalanceService;
+import com.tuum.cbs.service.RabbitMQFOSender;
 import com.tuum.cbs.service.TransactionService;
+import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,11 +23,14 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -44,7 +51,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+//@ContextConfiguration(classes = {RabbitMQDEConfig.class, RabbitMQFOConfig.class})
+//@ExtendWith(MockitoExtension.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+@WebMvcTest(AccountController.class)
 class AccountControllerTest {
 
     @Autowired
@@ -103,7 +113,6 @@ class AccountControllerTest {
             bal_List.add(bal);
         }
 
-        accountService = mock(AccountService.class);
     }
 
     @Test
@@ -111,6 +120,7 @@ class AccountControllerTest {
     void createAccountShouldReturnAccountDao() throws Exception {
         final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
 
+        when(accountService.save(testAccountDao)).thenReturn(testAccount);
         mockMvc.perform(
                 post("/api/accounts/account-open")
                         .contentType(MediaType.APPLICATION_JSON)

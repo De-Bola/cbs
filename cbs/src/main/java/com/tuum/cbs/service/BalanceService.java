@@ -18,6 +18,7 @@ import java.util.UUID;
 public class BalanceService {
 
     private final CbsRepository repo;
+    private final RabbitMQDESender mqDeSender;
 
     // business logic for balances
     public List<Balance> getBalanceByAccountId(UUID accId) {
@@ -38,6 +39,8 @@ public class BalanceService {
         } else {
             balance.setAmount(updatedAmount);
             repo.updateBalanceObj(balance);
+            // notify consumers
+            mqDeSender.publishToUpdateBalanceQueue(balance.toString());
         }
         // not sure the difference between putting return outside if/else statement
         // and putting it inside it; for now I'll leave it outside
@@ -56,6 +59,8 @@ public class BalanceService {
         } else {
             balance.setAmount(updatedAmount);
             repo.updateBalanceAmount(updatedAmount, balanceId);
+            // notify consumers
+            mqDeSender.publishToUpdateBalanceQueue(balance.toString());
         }
 
         return balance;
@@ -76,6 +81,8 @@ public class BalanceService {
 
         balance.setAmount(updatedAmount);
         repo.updateBalanceAmount(updatedAmount, balance.getBalanceId());
+        // notify consumers
+        mqDeSender.publishToUpdateBalanceQueue(balance.toString());
 
         return balance;
     }

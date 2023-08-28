@@ -6,18 +6,23 @@ import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.service.AccountService;
-import lombok.RequiredArgsConstructor;
+import com.tuum.cbs.service.RabbitMQFOSender;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
 
     private final AccountService service;
+    private final RabbitMQFOSender mqFoSender;
+
+    public AccountController(AccountService service, RabbitMQFOSender mqFoSender) {
+        this.service = service;
+        this.mqFoSender = mqFoSender;
+    }
 
     @PostMapping("/account-open")
     public ResponseEntity<SuccessResponse> createAccount(@RequestBody AccountDao accountDao) {
@@ -43,6 +48,9 @@ public class AccountController {
         System.out.println(accountDao);
         Account account = service.save(accountDao);
         System.out.println(account);
+        // publish to queue for consumers
+        mqFoSender.sendToFanoutXchange(account.toString());
+
         return new ResponseEntity<>(
                 new SuccessResponse(account, "Account created!"),
                 HttpStatus.CREATED

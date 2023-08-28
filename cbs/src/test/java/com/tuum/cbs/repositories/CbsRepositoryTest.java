@@ -3,22 +3,29 @@ package com.tuum.cbs.repositories;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.sql.DataSource;
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
@@ -26,26 +33,25 @@ import static org.mockito.Mockito.when;
 @MybatisTest
 @RunWith(SpringRunner.class)
 //@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-//@Sql({"/templates/balance.sql"})
+@Sql({"/templates/accounts.sql", "/templates/balance.sql"})
 class CbsRepositoryTest {
 
     @Autowired
     private CbsRepository repository;
 
     @Autowired
+    SqlSession sqlSession;
+
+    @Autowired
     DataSource dataSource;
+
+    Connection connection;
+    Statement statement;
+    Account testAccount;
 
     @BeforeEach
     void setUp() throws SQLException {
 
-    }
-
-    @AfterEach
-    void tearDown() {
-    }
-
-    @Test
-    void insertAccount() {
         final List<Currency> currencies = new ArrayList<>();
         final Currency currency1 = Currency.EUR;
         final Currency currency2 = Currency.SEK;
@@ -66,29 +72,46 @@ class CbsRepositoryTest {
             bal_List.add(bal);
         }
 
-        final Account testAccount = Account.builder().accountId(accountId)
+        testAccount = Account.builder().accountId(accountId)
                 .country("Estonia").customerId(customerId).balanceList(bal_List)
                 .build();
 
-        when(repository.insertAccount(testAccount)).thenReturn(anyInt());
+        connection = sqlSession.getConnection();
+        statement = connection.createStatement();
+    }
 
+    @Test
+    void insertAccount() {
         int savedAccount = repository.insertAccount(testAccount);
         assertEquals(1, savedAccount);
     }
 
     @Test
     void getAccountById() {
+        int savedAccount = repository.insertAccount(testAccount);
+        assertEquals(1, savedAccount);
+        Account foundAccount = repository.getAccountById(testAccount.getAccountId());
+        assertThat(foundAccount.getAccountId()).isEqualByComparingTo(testAccount.getAccountId());
     }
 
     @Test
     void getAccountBalance() {
+        int savedBalances = repository.insertBalances(testAccount.getBalanceList());
+        assertEquals(testAccount.getBalanceList().size(), savedBalances);
+        List<Balance> foundAccountBalances = repository.getAccountBalance(testAccount.getAccountId());
+        assertEquals(foundAccountBalances.size(), testAccount.getBalanceList().size());
+        assertThat(foundAccountBalances.get(0).getAccountId()).isEqualByComparingTo(testAccount.getAccountId());
     }
 
     @Test
     void insertBalance() {
+        int savedBalance = repository.insertBalance(testAccount.getBalanceList().get(0));
+        assertEquals(1, savedBalance);
     }
 
     @Test
     void insertBalances() {
+        int savedBalances = repository.insertBalances(testAccount.getBalanceList());
+        assertEquals(testAccount.getBalanceList().size(), savedBalances);
     }
 }
