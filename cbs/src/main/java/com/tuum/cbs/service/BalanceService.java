@@ -1,5 +1,6 @@
 package com.tuum.cbs.service;
 
+import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
 import com.tuum.cbs.common.exceptions.InsufficientFundsException;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -26,7 +28,9 @@ public class BalanceService {
     }
 
     public Balance getBalanceByAccountId(UUID accountId, Currency currency) {
-        return repo.getAccountBalanceByIdAndCurrency(accountId, currency.name());
+        Optional<Balance> optionalBalance = repo.getAccountBalanceByIdAndCurrency(accountId, currency.name());
+        if (optionalBalance.isEmpty()) throw new BalanceNotFoundException("Balance for account with id - " + accountId + " not found!");
+        return optionalBalance.get();
     }
 
     public Balance updateBalanceObj(Balance balance){
@@ -88,6 +92,8 @@ public class BalanceService {
     }
 
     public Balance getBalanceByBalanceId(Long balanceId) {
-        return repo.getAccountBalanceByBalanceId(balanceId);
+        Optional<Balance> optionalBalance = repo.getAccountBalanceByBalanceId(balanceId);
+        if (optionalBalance.isEmpty()) throw new BalanceNotFoundException("Balance with id - " + balanceId + " not found!");
+        return optionalBalance.get();
     }
 }

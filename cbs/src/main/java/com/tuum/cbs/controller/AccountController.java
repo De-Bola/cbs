@@ -61,7 +61,7 @@ public class AccountController {
     public ResponseEntity<SuccessResponse> getAccount(@RequestParam(name = "id") String accountId) {
         System.out.println(accountId);
         Account account = service.getByAccountId(accountId);
-        if (account == null) throw new AccountNotFoundException("Account not found!");
+        if (account == null) throw new AccountNotFoundException("Account with id - " + accountId + " not found!");
         System.out.println(account);
         return new ResponseEntity<>(
                 new SuccessResponse(account, "Account found!"),

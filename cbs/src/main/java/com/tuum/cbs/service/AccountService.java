@@ -1,5 +1,6 @@
 package com.tuum.cbs.service;
 
+import com.tuum.cbs.common.exceptions.AccountNotFoundException;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -77,13 +79,15 @@ public class AccountService {
      * */
     public Account getByAccountId(String accountId) {
         UUID accId = UUID.fromString(accountId);
-        Account account = repo.getAccountById(accId);
-        if (account != null) {
+        Optional<Account> optionalAccount = repo.getAccountById(accId);
+        // if (optionalAccount.isEmpty()) throw new AccountNotFoundException("Account with id - " + accId + " not found!");
+        if (optionalAccount.isPresent()) {
+            Account foundAccount = optionalAccount.get();
             List<Balance> foundBalances = balService.getBalanceByAccountId(accId);
-            account.setBalanceList(new ArrayList<Balance>(foundBalances));
+            foundAccount.setBalanceList(new ArrayList<Balance>(foundBalances));
+            return foundAccount;
         }
-        return account;
+        return null;
     }
 
-    //todo : on Sunday, rabbitmq and docker stuff
 }

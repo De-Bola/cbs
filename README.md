@@ -1,7 +1,48 @@
-# cbs
+# CBS APP
 ## A mini Core Banking System
 
-# run gradle clean build
-# run docker build -t cbs .
-# docker-compose up --build
-# tables are created automatically
+## Table of Contents
+
+- [Features](#features)
+- [Building and Running the application](#building-and-running-the-application)
+- [Endpoints Overview](#Endpoints Overview)
+
+## Features
+
+- **A core banking system**: Make and keep track of monetary transactions.
+- **Asynchronous architecture**: Never lose any updates, guaranteed alerts.
+
+## Building and Running the application
+
+1. Navigate to the project root and execute:
+   ```bash
+   gradle clean build
+   ```
+
+2. To run the packaged jar:
+   ```bash
+   docker build -t cbs .
+   ```
+
+3. To build a Docker image for the application:
+   ```bash
+   docker-compose up --build
+   ```
+
+4. To start the application using Docker Compose:
+   ```bash
+   docker-compose down -v
+   ```
+   Database tables will be created automatically
+
+## Endpoints Overview
+
+1. To see the documentation use the following link when app is running:
+   [http://localhost:8080/swagger-ui/index.html](http://localhost:15672/#/queues)
+
+2. To see the async notifications/messages use the following link when app is running:
+   [http://localhost:15672/#/queues](http://localhost:15672/#/queues)
+
+   Here are the login details if you are asked for it:
+   username: `guest`
+   password: `guest`

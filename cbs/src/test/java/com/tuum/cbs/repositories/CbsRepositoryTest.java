@@ -20,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -84,8 +85,9 @@ class CbsRepositoryTest {
     void getAccountById() {
         int savedAccount = repository.insertAccount(testAccount);
         assertEquals(1, savedAccount);
-        Account foundAccount = repository.getAccountById(testAccount.getAccountId());
-        assertThat(foundAccount.getAccountId()).isEqualByComparingTo(testAccount.getAccountId());
+        Optional<Account> foundAccount = repository.getAccountById(testAccount.getAccountId());
+        assertThat(foundAccount.isPresent()).isTrue();
+        assertThat(foundAccount.get().getAccountId()).isEqualByComparingTo(testAccount.getAccountId());
     }
 
     @Test

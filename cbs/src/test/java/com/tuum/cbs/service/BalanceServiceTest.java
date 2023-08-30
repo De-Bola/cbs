@@ -78,7 +78,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Test
     void getBalanceByAccountIdAndCurrencyShouldReturnBalance() {
         UUID accountId = UUID.fromString("eb01ed99-59fc-48f2-8bcc-5f245e3a17bd");
-        given(repo.getAccountBalanceByIdAndCurrency(accountId, "EUR")).willReturn(bal);
+        given(repo.getAccountBalanceByIdAndCurrency(accountId, "EUR")).willReturn(java.util.Optional.ofNullable(bal));
         Balance foundBalance = uut.getBalanceByAccountId(accountId, Currency.EUR);
         System.out.println("Service test: " + foundBalance);
         assertThat(foundBalance).isNotNull();
@@ -90,7 +90,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     void updateBalanceObjShouldReturnUpdatedBalanceObj() throws SQLException {
         Balance newBal = new Balance(Long.valueOf(balanceId), new BigDecimal("5.00"), Currency.EUR, bal.getAccountId());
 
-        when(repo.getAccountBalanceByBalanceId(bal.getBalanceId())).thenReturn(newBal);
+        when(repo.getAccountBalanceByBalanceId(bal.getBalanceId())).thenReturn(java.util.Optional.of(newBal));
         given(repo.updateBalanceObj(any(Balance.class))).willReturn(anyInt());
 
         Balance updatedBalance = uut.updateBalanceObj(newBal);
@@ -108,7 +108,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     void updateBalanceShouldReturnUpdatedBalanceObj() {
         Balance newBal = new Balance(Long.valueOf(balanceId), new BigDecimal("5.00"), Currency.EUR, bal.getAccountId());
 
-        when(repo.getAccountBalanceByBalanceId(bal.getBalanceId())).thenReturn(newBal);
+        when(repo.getAccountBalanceByBalanceId(bal.getBalanceId())).thenReturn(java.util.Optional.of(newBal));
         given(repo.updateBalanceAmount(any(BigDecimal.class), any(Long.class))).willReturn(1);
 
         Balance updatedBalance = uut.updateBalance(newBal.getBalanceId(), newBal.getAmount());
@@ -121,7 +121,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Test
     void getBalanceByBalanceIdShouldReturnBalance() {
-        given(repo.getAccountBalanceByBalanceId(Long.valueOf(balanceId))).willReturn(bal);
+        given(repo.getAccountBalanceByBalanceId(Long.valueOf(balanceId))).willReturn(java.util.Optional.ofNullable(bal));
         Balance foundBalance = uut.getBalanceByBalanceId(Long.valueOf(balanceId));
         System.out.println("Service test: " + foundBalance);
         assertThat(foundBalance).isNotNull();
@@ -133,7 +133,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     void updateBalanceByAccountIdShouldReturnUpdatedBalanceObj() {
         Balance newBal = new Balance(Long.valueOf(balanceId), new BigDecimal("5.00"), Currency.EUR, bal.getAccountId());
 
-        when(repo.getAccountBalanceByIdAndCurrency(bal.getAccountId(), bal.getCurrency().name())).thenReturn(newBal);
+        when(repo.getAccountBalanceByIdAndCurrency(bal.getAccountId(), bal.getCurrency().name())).thenReturn(java.util.Optional.of(newBal));
         given(repo.updateBalanceAmount(any(BigDecimal.class), any(Long.class))).willReturn(1);
 
         Balance updatedBalance = uut.updateBalanceByAccountId(newBal.getAccountId(), newBal.getCurrency(), newBal.getAmount());

@@ -116,7 +116,7 @@ class AccountServiceTest {
     @Test
     void getAccountByIdShouldReturnAccount() {
         String accountId = String.valueOf(testAccount.getAccountId());
-        when(repo.getAccountById(testAccount.getAccountId())).thenReturn(testAccount);
+        when(repo.getAccountById(testAccount.getAccountId())).thenReturn(java.util.Optional.ofNullable(testAccount));
         Account foundAccount = uut.getByAccountId(accountId);
 
         verify(repo, times(1)).getAccountById(testAccount.getAccountId());

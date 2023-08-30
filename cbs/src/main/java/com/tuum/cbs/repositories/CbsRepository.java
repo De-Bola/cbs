@@ -1,5 +1,7 @@
 package com.tuum.cbs.repositories;
 
+import com.tuum.cbs.common.exceptions.AccountNotFoundException;
+import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
 import com.tuum.cbs.common.handlers.UuidTypeHandler;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Balance;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Mapper
@@ -28,7 +31,7 @@ public interface CbsRepository {
             @Result(property = "accountId", column = "account_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
             @Result(property = "country", column = "country"),
     })
-    Account getAccountById(@Param("accountId") UUID accountId);
+    Optional<Account> getAccountById(@Param("accountId") UUID accountId) throws AccountNotFoundException;
 
 
     /**
@@ -64,14 +67,14 @@ public interface CbsRepository {
      * */
     @Select("SELECT balance_id, amount, currency, account_id FROM balances WHERE account_id = #{accountId} and currency = #{currency}")
     @ResultMap("balanceResultMap")
-    Balance getAccountBalanceByIdAndCurrency(@Param("accountId") UUID accountId, @Param("currency") String currency);
+    Optional<Balance> getAccountBalanceByIdAndCurrency(@Param("accountId") UUID accountId, @Param("currency") String currency) throws BalanceNotFoundException;
 
     /**
      * Gets account balance using accountId
      * */
     @Select("SELECT balance_id, amount, currency, account_id FROM balances WHERE balance_id = #{balanceId}")
     @ResultMap("balanceResultMap")
-    Balance getAccountBalanceByBalanceId(Long balanceId);
+    Optional<Balance> getAccountBalanceByBalanceId(Long balanceId) throws BalanceNotFoundException;
 
     @Insert("INSERT INTO transactions (trx_id, amount, currency, trx_type, description, balanceAfterTrx, account_id)" +
             "VALUES (#{trxId}, #{amount}, #{currency}, #{trxType}, #{description}, #{balanceAfterTrx}, " +
