@@ -5,7 +5,8 @@
 
 - [Features](#features)
 - [Building and Running the application](#building-and-running-the-application)
-- [Endpoints Overview](#endpoints-verview)
+- [Endpoints Overview](#endpoints-overview)
+- [Test Reports](#test-reports)
 
 ## Features
 
@@ -48,3 +49,6 @@
    Here are the login details if you are asked for it:
    username: `guest`
    password: `guest`
+
+## Test Reports
+![](./build/reports/tests/test/index.html) 
