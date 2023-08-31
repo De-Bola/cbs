@@ -5,7 +5,7 @@
 
 - [Features](#features)
 - [Building and Running the application](#building-and-running-the-application)
-- [Endpoints Overview](#Endpoints Overview)
+- [Endpoints Overview](#endpoints-verview)
 
 ## Features
 
