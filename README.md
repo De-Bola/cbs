@@ -38,6 +38,7 @@
 ## Endpoints Overview
 
 1. To see the documentation use the following link when app is running:
+
    [http://localhost:8080/swagger-ui/index.html](http://localhost:15672/#/queues)
 
 2. To see the async notifications/messages use the following link when app is running:
