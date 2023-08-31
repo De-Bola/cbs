@@ -38,15 +38,10 @@
 
 ## Endpoints Overview
 
-1. To see the documentation use the following link when the app is running:
+1. To see the API doc use the following [link](http://localhost:8080/swagger-ui/index.html) when the app is running.
 
-
-   [http://localhost:8080/swagger-ui/index.html](http://localhost:15672/#/queues)
-
-3. To see the async notifications/messages use the following link when the app is running:
-   [http://localhost:15672/#/queues](http://localhost:15672/#/queues)
-
-   Here are the login details if you are asked for it:
+2. To see the message queues use the following [link](http://localhost:15672/#/queues) when the app is running.
+   Here are the rabbitmq login details (if you're asked for it):
    username: `guest`
    password: `guest`
 
