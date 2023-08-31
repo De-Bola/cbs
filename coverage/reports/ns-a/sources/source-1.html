@@ -1,0 +1,201 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CbsRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.tuum.cbs.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: CbsRepository (com.tuum.cbs.repositories)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$6sjuESWZ</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$6sjuESWZ$auxiliary$inM0BKG5</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$6sjuESWZ$auxiliary$mFTFQ2Ww</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$GIEf917K</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$GIEf917K$auxiliary$JO6EbjZj</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$GIEf917K$auxiliary$ononTV7x</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$TNBb2bz5</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$TNBb2bz5$auxiliary$f36tjVLh</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$TNBb2bz5$auxiliary$ZgPI7G0y</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$U2XU00ta</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$U2XU00ta$auxiliary$3FGPTVBE</td>
+  </tr>
+  <tr>
+    <td class="name">CbsRepository$MockitoMock$U2XU00ta$auxiliary$7CwX7POG</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.tuum.cbs.repositories;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.tuum.cbs.common.handlers.UuidTypeHandler;
+<i class="no-highlight">4</i>&nbsp;import com.tuum.cbs.models.Account;
+<i class="no-highlight">5</i>&nbsp;import com.tuum.cbs.models.Balance;
+<i class="no-highlight">6</i>&nbsp;import com.tuum.cbs.models.Transaction;
+<i class="no-highlight">7</i>&nbsp;import org.apache.ibatis.annotations.*;
+<i class="no-highlight">8</i>&nbsp;import org.apache.ibatis.type.JdbcType;
+<i class="no-highlight">9</i>&nbsp;import org.springframework.stereotype.Repository;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;import java.math.BigDecimal;
+<i class="no-highlight">12</i>&nbsp;import java.util.List;
+<i class="no-highlight">13</i>&nbsp;import java.util.Optional;
+<i class="no-highlight">14</i>&nbsp;import java.util.UUID;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;@Mapper
+<i class="no-highlight">17</i>&nbsp;@Repository
+<i class="no-highlight">18</i>&nbsp;public interface CbsRepository {
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    @Insert(&quot;INSERT INTO accounts (account_id, country, customer_id) &quot; +
+<i class="no-highlight">21</i>&nbsp;            &quot; VALUES (#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler}, #{country}, #{customerId})&quot;)
+<i class="no-highlight">22</i>&nbsp;    @Options(keyProperty = &quot;accountId&quot;, keyColumn = &quot;account_id&quot;)
+<i class="no-highlight">23</i>&nbsp;    int insertAccount(Account account);
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    // handling inserts and get operations for account and balances separately
+<i class="no-highlight">26</i>&nbsp;    @Select(&quot;SELECT * FROM accounts WHERE account_id = #{accountId}&quot;)
+<i class="no-highlight">27</i>&nbsp;    @Results(id = &quot;accountResultMap&quot;, value = {
+<i class="no-highlight">28</i>&nbsp;            @Result(property = &quot;customerId&quot;, column = &quot;customer_id&quot;),
+<i class="no-highlight">29</i>&nbsp;            @Result(property = &quot;accountId&quot;, column = &quot;account_id&quot;, jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
+<i class="no-highlight">30</i>&nbsp;            @Result(property = &quot;country&quot;, column = &quot;country&quot;),
+<i class="no-highlight">31</i>&nbsp;    })
+<i class="no-highlight">32</i>&nbsp;    Optional&lt;Account&gt; getAccountById(@Param(&quot;accountId&quot;) UUID accountId);
+<i class="no-highlight">33</i>&nbsp;
+<i class="no-highlight">34</i>&nbsp;
+<i class="no-highlight">35</i>&nbsp;    /**
+<i class="no-highlight">36</i>&nbsp;     * Gets account balance list using accountId
+<i class="no-highlight">37</i>&nbsp;     * */
+<i class="no-highlight">38</i>&nbsp;    @Select(&quot;SELECT * FROM balances WHERE account_id = #{accountId}&quot;)
+<i class="no-highlight">39</i>&nbsp;    @Results(id = &quot;balanceResultMap&quot;, value = {
+<i class="no-highlight">40</i>&nbsp;            @Result(property = &quot;balanceId&quot;, column = &quot;balance_id&quot;),
+<i class="no-highlight">41</i>&nbsp;            @Result(property = &quot;amount&quot;, column = &quot;amount&quot;),
+<i class="no-highlight">42</i>&nbsp;            @Result(property = &quot;accountId&quot;, column = &quot;account_id&quot;, jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
+<i class="no-highlight">43</i>&nbsp;            @Result(property = &quot;currency&quot;, column = &quot;currency&quot;)
+<i class="no-highlight">44</i>&nbsp;    })
+<i class="no-highlight">45</i>&nbsp;    List&lt;Balance&gt; getAccountBalance(@Param(&quot;accountId&quot;) UUID accountId);
+<i class="no-highlight">46</i>&nbsp;
+<i class="no-highlight">47</i>&nbsp;    @Insert(&quot;INSERT INTO balances (balance_id, amount, currency, account_id)&quot; +
+<i class="no-highlight">48</i>&nbsp;            &quot;VALUES (#{balanceId}, #{amount},#{currency},#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})&quot;)
+<i class="no-highlight">49</i>&nbsp;    int insertBalance(Balance balance);
+<i class="no-highlight">50</i>&nbsp;
+<i class="no-highlight">51</i>&nbsp;    @Insert({&quot;&lt;script&gt;&quot;,&quot;INSERT INTO balances (balance_id, amount, currency, account_id) VALUES&quot;,
+<i class="no-highlight">52</i>&nbsp;            &quot;&lt;foreach collection = &#39;list&#39; item=&#39;Balance&#39; open=&#39;(&#39; separator = &#39;),(&#39; close=&#39;)&#39;&gt;&quot;,
+<i class="no-highlight">53</i>&nbsp;            &quot;#{Balance.balanceId}, #{Balance.amount},#{Balance.currency},#{Balance.accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler} &lt;/foreach&gt;&quot;, &quot;&lt;/script&gt;&quot;})
+<i class="no-highlight">54</i>&nbsp;    int insertBalances(@Param(&quot;list&quot;) List&lt;Balance&gt; balanceList);
+<i class="no-highlight">55</i>&nbsp;
+<i class="no-highlight">56</i>&nbsp;    // decided to handle additions/subtractions in service layer
+<i class="no-highlight">57</i>&nbsp;    @Update(&quot;UPDATE balances SET amount = #{amount} WHERE balance_id = #{balanceId}&quot;)
+<i class="no-highlight">58</i>&nbsp;    int updateBalanceObj(Balance balance);
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;    @Update(&quot;UPDATE balances SET amount = #{amount} WHERE balance_id = #{balanceId}&quot;)
+<i class="no-highlight">61</i>&nbsp;    int updateBalanceAmount(@Param(&quot;amount&quot;) BigDecimal amount, @Param(&quot;balanceId&quot;) Long balanceId);
+<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">63</i>&nbsp;    /**
+<i class="no-highlight">64</i>&nbsp;     * Gets account balance using accountId
+<i class="no-highlight">65</i>&nbsp;     * */
+<i class="no-highlight">66</i>&nbsp;    @Select(&quot;SELECT balance_id, amount, currency, account_id FROM balances WHERE account_id = #{accountId} and currency = #{currency}&quot;)
+<i class="no-highlight">67</i>&nbsp;    @ResultMap(&quot;balanceResultMap&quot;)
+<i class="no-highlight">68</i>&nbsp;    Optional&lt;Balance&gt; getAccountBalanceByIdAndCurrency(@Param(&quot;accountId&quot;) UUID accountId, @Param(&quot;currency&quot;) String currency);
+<i class="no-highlight">69</i>&nbsp;
+<i class="no-highlight">70</i>&nbsp;    /**
+<i class="no-highlight">71</i>&nbsp;     * Gets account balance using accountId
+<i class="no-highlight">72</i>&nbsp;     * */
+<i class="no-highlight">73</i>&nbsp;    @Select(&quot;SELECT balance_id, amount, currency, account_id FROM balances WHERE balance_id = #{balanceId}&quot;)
+<i class="no-highlight">74</i>&nbsp;    @ResultMap(&quot;balanceResultMap&quot;)
+<i class="no-highlight">75</i>&nbsp;    Optional&lt;Balance&gt; getAccountBalanceByBalanceId(Long balanceId);
+<i class="no-highlight">76</i>&nbsp;
+<i class="no-highlight">77</i>&nbsp;    @Insert(&quot;INSERT INTO transactions (trx_id, amount, currency, trx_type, description, balanceAfterTrx, account_id)&quot; +
+<i class="no-highlight">78</i>&nbsp;            &quot;VALUES (#{trxId}, #{amount}, #{currency}, #{trxType}, #{description}, #{balanceAfterTrx}, &quot; +
+<i class="no-highlight">79</i>&nbsp;            &quot;#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})&quot;)
+<i class="no-highlight">80</i>&nbsp;    int insertTransaction(Transaction transaction);
+<i class="no-highlight">81</i>&nbsp;
+<i class="no-highlight">82</i>&nbsp;    /**
+<i class="no-highlight">83</i>&nbsp;     * Gets account balance list using accountId
+<i class="no-highlight">84</i>&nbsp;     * */
+<i class="no-highlight">85</i>&nbsp;    @Select(&quot;SELECT * FROM transactions WHERE account_id = #{accountId}&quot;)
+<i class="no-highlight">86</i>&nbsp;    @Results(id = &quot;transactionResultMap&quot;, value = {
+<i class="no-highlight">87</i>&nbsp;            @Result(property = &quot;trxId&quot;, column = &quot;trx_id&quot;),
+<i class="no-highlight">88</i>&nbsp;            @Result(property = &quot;trxType&quot;, column = &quot;trx_type&quot;),
+<i class="no-highlight">89</i>&nbsp;            @Result(property = &quot;amount&quot;, column = &quot;amount&quot;),
+<i class="no-highlight">90</i>&nbsp;            @Result(property = &quot;balanceAfterTrx&quot;, column = &quot;balanceAfterTrx&quot;),
+<i class="no-highlight">91</i>&nbsp;            @Result(property = &quot;accountId&quot;, column = &quot;account_id&quot;, jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
+<i class="no-highlight">92</i>&nbsp;            @Result(property = &quot;currency&quot;, column = &quot;currency&quot;),
+<i class="no-highlight">93</i>&nbsp;            @Result(property = &quot;description&quot;, column = &quot;description&quot;)
+<i class="no-highlight">94</i>&nbsp;    })
+<i class="no-highlight">95</i>&nbsp;    List&lt;Transaction&gt; getTrxByAccountId(@Param(&quot;accountId&quot;) UUID accountId);
+<i class="no-highlight">96</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-31 09:17</div>
+</div>
+</body>
+</html>

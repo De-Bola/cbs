@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - TransactionServiceTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>TransactionServiceTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.tuum.cbs.service.html">com.tuum.cbs.service</a> &gt; TransactionServiceTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">6</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.036s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">checkContextStarts()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">createTransactionShouldTakeDaoAndReturnTrxObj()</td>
+<td class="success">0.006s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">createTransactionVerifiesThatINTrxIncrementsBalance()</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">createTransactionVerifiesThatOUTTrxDecrementsBalance()</td>
+<td class="success">0.008s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getTrxByAccountIdShouldReturnMisMatch()</td>
+<td class="success">0.007s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getTrxByAccountIdShouldReturnTrx()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-08-31T09:18:47.733+03:00  INFO 11744 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.tuum.cbs.service.TransactionServiceTest]: TransactionServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-08-31T09:18:47.736+03:00  INFO 11744 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.tuum.cbs.CbsTummTaskApplication for test class com.tuum.cbs.service.TransactionServiceTest
+Given : 7919976705, Balance(balanceId=99808628, amount=600.0, currency=EUR, accountId=c97c027b-f532-4288-9c40-a0cb0c2ad769)
+Service layer: Transaction(trxId=7919976705, accountId=c97c027b-f532-4288-9c40-a0cb0c2ad769, amount=50.0, balanceAfterTrx=600.0, currency=EUR, trxType=IN, description=I am inevitable)
+Service test : Transaction(trxId=7919976705, accountId=c97c027b-f532-4288-9c40-a0cb0c2ad769, amount=50.0, balanceAfterTrx=600.0, currency=EUR, trxType=IN, description=I am inevitable)
+Service test: [Transaction(trxId=2222087346, accountId=11de6b73-557b-4b43-b5d1-09ca22e3caeb, amount=50.0, balanceAfterTrx=650.0, currency=EUR, trxType=IN, description=I am inevitable)]
+Given : 771655711, Balance(balanceId=6965687881, amount=600.0, currency=EUR, accountId=2ff74dfa-58d0-49d7-a7a9-6feec3df1e97), TransactionDao(accountId=2ff74dfa-58d0-49d7-a7a9-6feec3df1e97, amount=50.0, currency=EUR, trxType=OUT, description=I am inevitable)
+Service layer: Transaction(trxId=771655711, accountId=2ff74dfa-58d0-49d7-a7a9-6feec3df1e97, amount=50.0, balanceAfterTrx=550.0, currency=EUR, trxType=OUT, description=I am inevitable)
+Service test : Transaction(trxId=771655711, accountId=2ff74dfa-58d0-49d7-a7a9-6feec3df1e97, amount=50.0, balanceAfterTrx=550.0, currency=EUR, trxType=OUT, description=I am inevitable)
+Given : 6446418296, Balance(balanceId=8779551363, amount=600.0, currency=EUR, accountId=65be764a-d005-4b22-aaad-c29f2216640c), TransactionDao(accountId=65be764a-d005-4b22-aaad-c29f2216640c, amount=50.0, currency=EUR, trxType=IN, description=I am inevitable)
+Service layer: Transaction(trxId=6446418296, accountId=65be764a-d005-4b22-aaad-c29f2216640c, amount=50.0, balanceAfterTrx=650.0, currency=EUR, trxType=IN, description=I am inevitable)
+Service test : Transaction(trxId=6446418296, accountId=65be764a-d005-4b22-aaad-c29f2216640c, amount=50.0, balanceAfterTrx=650.0, currency=EUR, trxType=IN, description=I am inevitable)
+Service test: [Transaction(trxId=1983256620, accountId=3f837fec-63c3-4cb9-b243-a3246b94bdff, amount=50.0, balanceAfterTrx=650.0, currency=EUR, trxType=IN, description=I am inevitable)]
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.2.1</a> at Aug 31, 2023, 9:18:48 AM</p>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,212 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AccountService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.tuum.cbs.service</a>
+</div>
+
+<h1>Coverage Summary for Class: AccountService (com.tuum.cbs.service)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AccountService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (33/33)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AccountService$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (33/33)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.tuum.cbs.service;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.tuum.cbs.common.exceptions.AccountNotFoundException;
+<i class="no-highlight">4</i>&nbsp;import com.tuum.cbs.models.Account;
+<i class="no-highlight">5</i>&nbsp;import com.tuum.cbs.models.AccountDao;
+<i class="no-highlight">6</i>&nbsp;import com.tuum.cbs.models.Balance;
+<i class="no-highlight">7</i>&nbsp;import com.tuum.cbs.models.Currency;
+<i class="no-highlight">8</i>&nbsp;import com.tuum.cbs.repositories.CbsRepository;
+<i class="no-highlight">9</i>&nbsp;import lombok.RequiredArgsConstructor;
+<i class="no-highlight">10</i>&nbsp;import org.springframework.http.HttpStatus;
+<i class="no-highlight">11</i>&nbsp;import org.springframework.stereotype.Service;
+<i class="no-highlight">12</i>&nbsp;import org.springframework.transaction.annotation.Transactional;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;import java.math.BigDecimal;
+<i class="no-highlight">15</i>&nbsp;import java.math.BigInteger;
+<i class="no-highlight">16</i>&nbsp;import java.util.*;
+<i class="no-highlight">17</i>&nbsp;
+<b class="fc"><i class="no-highlight">18</i>&nbsp;@RequiredArgsConstructor</b>
+<i class="no-highlight">19</i>&nbsp;@Service
+<i class="no-highlight">20</i>&nbsp;@Transactional
+<i class="no-highlight">21</i>&nbsp;public class AccountService {
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;    private final CbsRepository repo;
+<i class="no-highlight">24</i>&nbsp;    private final BalanceService balService;
+<i class="no-highlight">25</i>&nbsp;    private final RabbitMQDESender mqDeSender;
+<i class="no-highlight">26</i>&nbsp;
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;    /**
+<i class="no-highlight">29</i>&nbsp;     * for creating a new account
+<i class="no-highlight">30</i>&nbsp;     * */
+<i class="no-highlight">31</i>&nbsp;    public Account save(AccountDao accountDao) {
+<i class="no-highlight">32</i>&nbsp;
+<b class="fc"><i class="no-highlight">33</i>&nbsp;        final UUID accountId = UUID.randomUUID();</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;        Account account = Account.builder()</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;                        .accountId(accountId)</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;                        .country(accountDao.getCountry())</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;                        .customerId(accountDao.getCustomerId())</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;                        .build();</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        List&lt;Balance&gt; balList = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        for (Currency currency : accountDao.getCurrencies()) {</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;            Balance bal = new Balance(generateRandomId(), new BigDecimal(&quot;0.00&quot;), currency, accountId);</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;            balList.add(bal);</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        account.setBalanceList(new ArrayList&lt;Balance&gt;(balList));</b>
+<b class="fc"><i class="no-highlight">45</i>&nbsp;        repo.insertAccount(account);</b>
+<b class="fc"><i class="no-highlight">46</i>&nbsp;        createBalance(balList);</b>
+<i class="no-highlight">47</i>&nbsp;        // notify consumers
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        mqDeSender.publishToCreateBalanceQueue(balList.toString());</b>
+<i class="no-highlight">49</i>&nbsp;
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        System.out.println(&quot;Service: &quot; + account);</b>
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        return account;</b>
+<i class="no-highlight">52</i>&nbsp;    }
+<i class="no-highlight">53</i>&nbsp;
+<i class="no-highlight">54</i>&nbsp;    /**
+<i class="no-highlight">55</i>&nbsp;     * for generating random ids of type Long
+<i class="no-highlight">56</i>&nbsp;     * */
+<i class="no-highlight">57</i>&nbsp;    public Long generateRandomId() {
+<i class="no-highlight">58</i>&nbsp;        // made an active decision to be generating uuid for account_id and
+<i class="no-highlight">59</i>&nbsp;        // balance_id generation will be here
+<i class="no-highlight">60</i>&nbsp;        // not for customer_id since its provided
+<i class="no-highlight">61</i>&nbsp;        // jury is still out on whether to do this at db level or here
+<i class="no-highlight">62</i>&nbsp;        // for now I prefer here
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        String format = String.format(&quot;%010d&quot;, new BigInteger(UUID.randomUUID().toString().replace(&quot;-&quot;, &quot;&quot;), 16));</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        format = format.substring(format.length() - 10);</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        return Long.valueOf(format);</b>
+<i class="no-highlight">66</i>&nbsp;    }
+<i class="no-highlight">67</i>&nbsp;
+<i class="no-highlight">68</i>&nbsp;    /**
+<i class="no-highlight">69</i>&nbsp;     * for creating new list balances
+<i class="no-highlight">70</i>&nbsp;     * */
+<i class="no-highlight">71</i>&nbsp;    public void createBalance(List&lt;Balance&gt; balances){
+<b class="fc"><i class="no-highlight">72</i>&nbsp;        repo.insertBalances(balances);</b>
+<i class="no-highlight">73</i>&nbsp;    }
+<i class="no-highlight">74</i>&nbsp;
+<i class="no-highlight">75</i>&nbsp;    /**
+<i class="no-highlight">76</i>&nbsp;     * get account by accountId
+<i class="no-highlight">77</i>&nbsp;     * */
+<i class="no-highlight">78</i>&nbsp;    public Account getByAccountId(String accountId) {
+<i class="no-highlight">79</i>&nbsp;        Account foundAccount;
+<b class="fc"><i class="no-highlight">80</i>&nbsp;        UUID accId = UUID.fromString(accountId);</b>
+<b class="fc"><i class="no-highlight">81</i>&nbsp;        Optional&lt;Account&gt; optionalAccount = repo.getAccountById(accId);</b>
+<b class="fc"><i class="no-highlight">82</i>&nbsp;         if (optionalAccount.isEmpty()) {</b>
+<i class="no-highlight">83</i>&nbsp;            // return null;
+<b class="fc"><i class="no-highlight">84</i>&nbsp;             throw new AccountNotFoundException(&quot;Account with id - &quot; + accId + &quot; not found!&quot;);</b>
+<i class="no-highlight">85</i>&nbsp;         }
+<i class="no-highlight">86</i>&nbsp;         else {
+<b class="fc"><i class="no-highlight">87</i>&nbsp;             List&lt;Balance&gt; balances = balService.getBalanceByAccountId(accId);</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;             foundAccount = Account.builder().accountId(accId)</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;                .customerId(optionalAccount.get().getCustomerId())</b>
+<b class="fc"><i class="no-highlight">90</i>&nbsp;                .country(optionalAccount.get().getCountry())</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;                .balanceList(balances)</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;                .build();</b>
+<i class="no-highlight">93</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">94</i>&nbsp;        return foundAccount;</b>
+<i class="no-highlight">95</i>&nbsp;    }
+<i class="no-highlight">96</i>&nbsp;
+<i class="no-highlight">97</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-31 09:17</div>
+</div>
+</body>
+</html>

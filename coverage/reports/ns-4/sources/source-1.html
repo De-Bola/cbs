@@ -1,0 +1,141 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > UuidTypeHandler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.tuum.cbs.common.handlers</a>
+</div>
+
+<h1>Coverage Summary for Class: UuidTypeHandler (com.tuum.cbs.common.handlers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">UuidTypeHandler</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (3/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    60%
+  </span>
+  <span class="absValue">
+    (3/5)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.tuum.cbs.common.handlers;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import org.apache.ibatis.type.BaseTypeHandler;
+<i class="no-highlight">4</i>&nbsp;import org.apache.ibatis.type.JdbcType;
+<i class="no-highlight">5</i>&nbsp;import org.apache.ibatis.type.MappedTypes;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import java.sql.CallableStatement;
+<i class="no-highlight">8</i>&nbsp;import java.sql.PreparedStatement;
+<i class="no-highlight">9</i>&nbsp;import java.sql.ResultSet;
+<i class="no-highlight">10</i>&nbsp;import java.sql.SQLException;
+<i class="no-highlight">11</i>&nbsp;import java.util.UUID;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;@MappedTypes(UUID.class)
+<b class="fc"><i class="no-highlight">14</i>&nbsp;public class UuidTypeHandler extends BaseTypeHandler&lt;UUID&gt; {</b>
+<i class="no-highlight">15</i>&nbsp;    @Override
+<i class="no-highlight">16</i>&nbsp;    public void setNonNullParameter(PreparedStatement ps, int i, UUID parameter, JdbcType jdbcType) throws SQLException {
+<b class="fc"><i class="no-highlight">17</i>&nbsp;        ps.setObject(i, parameter); // no 3rd arg</b>
+<i class="no-highlight">18</i>&nbsp;    }
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;    @Override
+<i class="no-highlight">21</i>&nbsp;    public UUID getNullableResult(ResultSet rs, String columnName) throws SQLException {
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        return rs.getObject(columnName, UUID.class);</b>
+<i class="no-highlight">23</i>&nbsp;    }
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    @Override
+<i class="no-highlight">26</i>&nbsp;    public UUID getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+<b class="nc"><i class="no-highlight">27</i>&nbsp;        return rs.getObject(columnIndex, UUID.class);</b>
+<i class="no-highlight">28</i>&nbsp;    }
+<i class="no-highlight">29</i>&nbsp;
+<i class="no-highlight">30</i>&nbsp;    @Override
+<i class="no-highlight">31</i>&nbsp;    public UUID getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+<b class="nc"><i class="no-highlight">32</i>&nbsp;        return cs.getObject(columnIndex, UUID.class);</b>
+<i class="no-highlight">33</i>&nbsp;    }
+<i class="no-highlight">34</i>&nbsp;}
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;// copied from stackoverflow here : https://stackoverflow.com/questions/60613619/how-to-use-uuid-type-handler-with-many-annotation-in-mybatis
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-31 09:17</div>
+</div>
+</body>
+</html>

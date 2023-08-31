@@ -46,8 +46,10 @@
    password: `guest`
 
 ## Test Reports
-   Test reports can be found on this [page](https://htmlpreview.github.io/?https://github.com/De-Bola/cbs/blob/master/cbs/build/reports/tests/test/index.html)
+   Build test reports can be found on this [page](https://htmlpreview.github.io/?https://github.com/De-Bola/cbs/blob/master/cbs/build/reports/tests/test/index.html)
    
    ![Screenshot of test coverage from intellij](./test_coverage.png)
 
    Screenshot of test coverage from intellij
+
+   Coverage test reports can be found on this [page](https://htmlpreview.github.io/?https://github.com/De-Bola/cbs/blob/master/cbs/build/reports/tests/test/index.html)

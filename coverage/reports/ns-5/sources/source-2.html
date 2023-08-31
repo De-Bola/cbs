@@ -1,0 +1,179 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > BalanceController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.tuum.cbs.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: BalanceController (com.tuum.cbs.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BalanceController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (1/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    5.3%
+  </span>
+  <span class="absValue">
+    (1/19)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.tuum.cbs.controller;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
+<i class="no-highlight">4</i>&nbsp;import com.tuum.cbs.controller.response.SuccessResponse;
+<i class="no-highlight">5</i>&nbsp;import com.tuum.cbs.models.Balance;
+<i class="no-highlight">6</i>&nbsp;import com.tuum.cbs.models.Currency;
+<i class="no-highlight">7</i>&nbsp;import com.tuum.cbs.service.BalanceService;
+<i class="no-highlight">8</i>&nbsp;import com.tuum.cbs.service.RabbitMQDESender;
+<i class="no-highlight">9</i>&nbsp;import lombok.RequiredArgsConstructor;
+<i class="no-highlight">10</i>&nbsp;import org.springframework.http.HttpStatus;
+<i class="no-highlight">11</i>&nbsp;import org.springframework.http.ResponseEntity;
+<i class="no-highlight">12</i>&nbsp;import org.springframework.web.bind.annotation.*;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;import java.math.BigDecimal;
+<i class="no-highlight">15</i>&nbsp;import java.util.List;
+<i class="no-highlight">16</i>&nbsp;import java.util.UUID;
+<i class="no-highlight">17</i>&nbsp;
+<b class="fc"><i class="no-highlight">18</i>&nbsp;@RequiredArgsConstructor</b>
+<i class="no-highlight">19</i>&nbsp;@RestController
+<i class="no-highlight">20</i>&nbsp;@RequestMapping(&quot;/api/balances&quot;)
+<i class="no-highlight">21</i>&nbsp;public class BalanceController {
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;    private final BalanceService service;
+<i class="no-highlight">24</i>&nbsp;    private final RabbitMQDESender mqDeSender;
+<i class="no-highlight">25</i>&nbsp;
+<i class="no-highlight">26</i>&nbsp;    @GetMapping(&quot;/balance&quot;)
+<i class="no-highlight">27</i>&nbsp;    public ResponseEntity&lt;SuccessResponse&gt; getBalance(@RequestParam(name = &quot;accountId&quot;) String accountId, @RequestParam(name = &quot;currency&quot;) Currency currency) {
+<b class="nc"><i class="no-highlight">28</i>&nbsp;        System.out.println(&quot;Params: &quot; + accountId + &quot; &quot; + currency);</b>
+<b class="nc"><i class="no-highlight">29</i>&nbsp;        Balance balance = service.getBalanceByAccountId(UUID.fromString(accountId), currency);</b>
+<b class="nc"><i class="no-highlight">30</i>&nbsp;        System.out.println(balance);</b>
+<b class="nc"><i class="no-highlight">31</i>&nbsp;        return new ResponseEntity&lt;&gt;(</b>
+<i class="no-highlight">32</i>&nbsp;                new SuccessResponse(balance, &quot;Balance found!&quot;),
+<i class="no-highlight">33</i>&nbsp;                HttpStatus.OK
+<i class="no-highlight">34</i>&nbsp;        );
+<i class="no-highlight">35</i>&nbsp;    }
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;    @GetMapping(&quot;/balances&quot;)
+<i class="no-highlight">38</i>&nbsp;    public ResponseEntity&lt;SuccessResponse&gt; getBalance(@RequestParam(name = &quot;accountId&quot;) String accountId) {
+<b class="nc"><i class="no-highlight">39</i>&nbsp;        System.out.println(&quot;Params: &quot; + accountId);</b>
+<b class="nc"><i class="no-highlight">40</i>&nbsp;        List&lt;Balance&gt; balances = service.getBalanceByAccountId(UUID.fromString(accountId));</b>
+<b class="nc"><i class="no-highlight">41</i>&nbsp;        if (balances.isEmpty()) throw new BalanceNotFoundException(&quot;Balances not found for this account!&quot;);</b>
+<b class="nc"><i class="no-highlight">42</i>&nbsp;        System.out.println(balances);</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;        return new ResponseEntity&lt;&gt;(</b>
+<i class="no-highlight">44</i>&nbsp;                new SuccessResponse(balances, &quot;Balance list found!&quot;),
+<i class="no-highlight">45</i>&nbsp;                HttpStatus.OK
+<i class="no-highlight">46</i>&nbsp;        );
+<i class="no-highlight">47</i>&nbsp;    }
+<i class="no-highlight">48</i>&nbsp;
+<i class="no-highlight">49</i>&nbsp;    @GetMapping(&quot;/balance-balanceId&quot;)
+<i class="no-highlight">50</i>&nbsp;    public ResponseEntity&lt;SuccessResponse&gt; getBalance(@RequestParam(name = &quot;balanceId&quot;) Long balanceId) {
+<b class="nc"><i class="no-highlight">51</i>&nbsp;        System.out.println(&quot;Params: &quot; + balanceId);</b>
+<b class="nc"><i class="no-highlight">52</i>&nbsp;        Balance balance = service.getBalanceByBalanceId(balanceId);</b>
+<b class="nc"><i class="no-highlight">53</i>&nbsp;        System.out.println(balance);</b>
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        return new ResponseEntity&lt;&gt;(</b>
+<i class="no-highlight">55</i>&nbsp;                new SuccessResponse(balance, &quot;Balance found!&quot;),
+<i class="no-highlight">56</i>&nbsp;                HttpStatus.OK
+<i class="no-highlight">57</i>&nbsp;        );
+<i class="no-highlight">58</i>&nbsp;    }
+<i class="no-highlight">59</i>&nbsp;
+<i class="no-highlight">60</i>&nbsp;    @PutMapping(&quot;/balance&quot;)
+<i class="no-highlight">61</i>&nbsp;    public ResponseEntity&lt;SuccessResponse&gt; updateBalance(@RequestParam(name = &quot;balanceId&quot;) Long balanceId, @RequestParam(name = &quot;amount&quot;) BigDecimal amount) {
+<b class="nc"><i class="no-highlight">62</i>&nbsp;        System.out.println(&quot;Params: &quot; + balanceId + &quot; &quot; + amount);</b>
+<b class="nc"><i class="no-highlight">63</i>&nbsp;        Balance balance = service.updateBalance(balanceId, amount);</b>
+<b class="nc"><i class="no-highlight">64</i>&nbsp;        System.out.println(balance);</b>
+<i class="no-highlight">65</i>&nbsp;        
+<i class="no-highlight">66</i>&nbsp;        // publish to queue for consumer
+<b class="nc"><i class="no-highlight">67</i>&nbsp;        mqDeSender.publishToUpdateBalanceQueue(balance.toString());</b>
+<i class="no-highlight">68</i>&nbsp;
+<b class="nc"><i class="no-highlight">69</i>&nbsp;        return new ResponseEntity&lt;&gt;(</b>
+<i class="no-highlight">70</i>&nbsp;                new SuccessResponse(balance, &quot;Balance updated!&quot;),
+<i class="no-highlight">71</i>&nbsp;                HttpStatus.OK
+<i class="no-highlight">72</i>&nbsp;        );
+<i class="no-highlight">73</i>&nbsp;    }
+<i class="no-highlight">74</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-31 09:17</div>
+</div>
+</body>
+</html>
