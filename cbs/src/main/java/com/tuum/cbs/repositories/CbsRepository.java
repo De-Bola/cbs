@@ -1,7 +1,5 @@
 package com.tuum.cbs.repositories;
 
-import com.tuum.cbs.common.exceptions.AccountNotFoundException;
-import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
 import com.tuum.cbs.common.handlers.UuidTypeHandler;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Balance;
@@ -31,7 +29,7 @@ public interface CbsRepository {
             @Result(property = "accountId", column = "account_id", jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
             @Result(property = "country", column = "country"),
     })
-    Optional<Account> getAccountById(@Param("accountId") UUID accountId) throws AccountNotFoundException;
+    Optional<Account> getAccountById(@Param("accountId") UUID accountId);
 
 
     /**
@@ -67,14 +65,14 @@ public interface CbsRepository {
      * */
     @Select("SELECT balance_id, amount, currency, account_id FROM balances WHERE account_id = #{accountId} and currency = #{currency}")
     @ResultMap("balanceResultMap")
-    Optional<Balance> getAccountBalanceByIdAndCurrency(@Param("accountId") UUID accountId, @Param("currency") String currency) throws BalanceNotFoundException;
+    Optional<Balance> getAccountBalanceByIdAndCurrency(@Param("accountId") UUID accountId, @Param("currency") String currency);
 
     /**
      * Gets account balance using accountId
      * */
     @Select("SELECT balance_id, amount, currency, account_id FROM balances WHERE balance_id = #{balanceId}")
     @ResultMap("balanceResultMap")
-    Optional<Balance> getAccountBalanceByBalanceId(Long balanceId) throws BalanceNotFoundException;
+    Optional<Balance> getAccountBalanceByBalanceId(Long balanceId);
 
     @Insert("INSERT INTO transactions (trx_id, amount, currency, trx_type, description, balanceAfterTrx, account_id)" +
             "VALUES (#{trxId}, #{amount}, #{currency}, #{trxType}, #{description}, #{balanceAfterTrx}, " +

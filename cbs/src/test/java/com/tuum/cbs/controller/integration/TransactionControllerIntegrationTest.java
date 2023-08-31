@@ -2,6 +2,7 @@ package com.tuum.cbs.controller.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tuum.cbs.controller.response.ErrorResponse;
 import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.*;
 import com.tuum.cbs.models.Currency;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -24,6 +26,7 @@ import java.util.*;
 import static com.tuum.cbs.models.Currency.EUR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TransactionControllerIntegrationTest {
@@ -98,6 +101,17 @@ public class TransactionControllerIntegrationTest {
             assertThat(getResponseEntity).isNotNull();
             assertThat(getResponseEntity.getBody()).isNotNull();
             assertEquals(getResponseEntity.getStatusCode(), HttpStatusCode.valueOf(200));
+        }
+
+        @Test()
+        public void getTransactionITestShouldReturnNotFound() {
+            Map<String, UUID> params = Collections.singletonMap("id", UUID.randomUUID());
+            // change the uri to url
+            String url = baseUrl + "/transactions/get?id={id}";
+
+            Exception exception = assertThrows(HttpClientErrorException.NotFound.class, ()->{
+                restTemplate.getForEntity(url, ErrorResponse.class, params);
+            });
         }
 
     }

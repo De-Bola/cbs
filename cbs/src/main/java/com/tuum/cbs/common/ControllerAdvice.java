@@ -1,9 +1,6 @@
 package com.tuum.cbs.common;
 
-import com.tuum.cbs.common.exceptions.BadRequestException;
-import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
-import com.tuum.cbs.common.exceptions.InsufficientFundsException;
-import com.tuum.cbs.common.exceptions.TrxZeroSumException;
+import com.tuum.cbs.common.exceptions.*;
 import com.tuum.cbs.controller.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -13,8 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -28,24 +25,24 @@ public class ControllerAdvice {
     public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({AccountNotFoundException.class, BalanceNotFoundException.class})
+    @ExceptionHandler({AccountNotFoundException.class, BalanceNotFoundException.class, TrxNotFoundException.class, HttpClientErrorException.NotFound.class})
     public ErrorResponse notFoundException(Exception e){
         LOGGER.debug(e.getMessage(), e.getCause());
-        return new ErrorResponse(String.valueOf(HttpStatus.NOT_FOUND.value()), e.getMessage(),TIMESTAMP);
+        return new ErrorResponse(String.valueOf(HttpStatus.NOT_FOUND.value()), e.getMessage(), TIMESTAMP);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({BadRequestException.class, InsufficientFundsException.class, TrxZeroSumException.class})
     public ErrorResponse badRequestException(Exception e){
         LOGGER.debug(e.getMessage(), e.getCause());
-        return new ErrorResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage(),TIMESTAMP);
+        return new ErrorResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage(), TIMESTAMP);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ErrorResponse jsonParseException(Exception e){
         LOGGER.debug(e.getMessage(), e.getCause());
-        return new ErrorResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage(),TIMESTAMP);
+        return new ErrorResponse(String.valueOf(HttpStatus.BAD_REQUEST.value()), e.getMessage(), TIMESTAMP);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

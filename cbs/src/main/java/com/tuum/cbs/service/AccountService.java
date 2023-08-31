@@ -7,15 +7,13 @@ import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.CbsRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -78,16 +76,22 @@ public class AccountService {
      * get account by accountId
      * */
     public Account getByAccountId(String accountId) {
+        Account foundAccount;
         UUID accId = UUID.fromString(accountId);
         Optional<Account> optionalAccount = repo.getAccountById(accId);
-        // if (optionalAccount.isEmpty()) throw new AccountNotFoundException("Account with id - " + accId + " not found!");
-        if (optionalAccount.isPresent()) {
-            Account foundAccount = optionalAccount.get();
-            List<Balance> foundBalances = balService.getBalanceByAccountId(accId);
-            foundAccount.setBalanceList(new ArrayList<Balance>(foundBalances));
-            return foundAccount;
+         if (optionalAccount.isEmpty()) {
+            // return null;
+             throw new AccountNotFoundException("Account with id - " + accId + " not found!");
+         }
+         else {
+             List<Balance> balances = balService.getBalanceByAccountId(accId);
+             foundAccount = Account.builder().accountId(accId)
+                .customerId(optionalAccount.get().getCustomerId())
+                .country(optionalAccount.get().getCountry())
+                .balanceList(balances)
+                .build();
         }
-        return null;
+        return foundAccount;
     }
 
 }

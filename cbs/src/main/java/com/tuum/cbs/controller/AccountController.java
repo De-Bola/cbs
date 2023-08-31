@@ -1,28 +1,23 @@
 package com.tuum.cbs.controller;
 
-import com.tuum.cbs.common.exceptions.AccountNotFoundException;
 import com.tuum.cbs.common.exceptions.BadRequestException;
 import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.service.AccountService;
 import com.tuum.cbs.service.RabbitMQFOSender;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
 
     private final AccountService service;
     private final RabbitMQFOSender mqFoSender;
-
-    public AccountController(AccountService service, RabbitMQFOSender mqFoSender) {
-        this.service = service;
-        this.mqFoSender = mqFoSender;
-    }
 
     @PostMapping("/account-open")
     public ResponseEntity<SuccessResponse> createAccount(@RequestBody AccountDao accountDao) {
@@ -61,7 +56,6 @@ public class AccountController {
     public ResponseEntity<SuccessResponse> getAccount(@RequestParam(name = "id") String accountId) {
         System.out.println(accountId);
         Account account = service.getByAccountId(accountId);
-        if (account == null) throw new AccountNotFoundException("Account with id - " + accountId + " not found!");
         System.out.println(account);
         return new ResponseEntity<>(
                 new SuccessResponse(account, "Account found!"),

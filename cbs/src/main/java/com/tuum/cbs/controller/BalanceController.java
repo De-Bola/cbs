@@ -27,7 +27,6 @@ public class BalanceController {
     public ResponseEntity<SuccessResponse> getBalance(@RequestParam(name = "accountId") String accountId, @RequestParam(name = "currency") Currency currency) {
         System.out.println("Params: " + accountId + " " + currency);
         Balance balance = service.getBalanceByAccountId(UUID.fromString(accountId), currency);
-        if (balance == null) throw new BalanceNotFoundException("Balance not found!");
         System.out.println(balance);
         return new ResponseEntity<>(
                 new SuccessResponse(balance, "Balance found!"),
@@ -51,7 +50,6 @@ public class BalanceController {
     public ResponseEntity<SuccessResponse> getBalance(@RequestParam(name = "balanceId") Long balanceId) {
         System.out.println("Params: " + balanceId);
         Balance balance = service.getBalanceByBalanceId(balanceId);
-        if (balance == null) throw new BalanceNotFoundException("Balance not found!");
         System.out.println(balance);
         return new ResponseEntity<>(
                 new SuccessResponse(balance, "Balance found!"),
@@ -63,9 +61,8 @@ public class BalanceController {
     public ResponseEntity<SuccessResponse> updateBalance(@RequestParam(name = "balanceId") Long balanceId, @RequestParam(name = "amount") BigDecimal amount) {
         System.out.println("Params: " + balanceId + " " + amount);
         Balance balance = service.updateBalance(balanceId, amount);
-        if (balance == null) throw new BalanceNotFoundException("Balance not found!");
         System.out.println(balance);
-
+        
         // publish to queue for consumer
         mqDeSender.publishToUpdateBalanceQueue(balance.toString());
 
@@ -75,5 +72,3 @@ public class BalanceController {
         );
     }
 }
-
-// todo : more controller tests for trx and bal

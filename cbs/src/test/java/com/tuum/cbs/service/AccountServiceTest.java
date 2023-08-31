@@ -9,16 +9,21 @@ import com.tuum.cbs.repositories.CbsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
+import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +33,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class AccountServiceTest {
+@RunWith(SpringJUnit4ClassRunner.class)
+@MybatisTest
+class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @InjectMocks
     private AccountService uut;
@@ -116,9 +123,10 @@ class AccountServiceTest {
     @Test
     void getAccountByIdShouldReturnAccount() {
         String accountId = String.valueOf(testAccount.getAccountId());
-        when(repo.getAccountById(testAccount.getAccountId())).thenReturn(java.util.Optional.ofNullable(testAccount));
+        when(balService.getBalanceByAccountId(UUID.fromString(accountId))).thenReturn(bal_List);
+        when(repo.getAccountById(testAccount.getAccountId())).thenReturn(Optional.ofNullable(testAccount));
         Account foundAccount = uut.getByAccountId(accountId);
-
+        System.out.println(foundAccount);
         verify(repo, times(1)).getAccountById(testAccount.getAccountId());
         assertThat(foundAccount).usingRecursiveComparison().isEqualTo(testAccount);
     }
