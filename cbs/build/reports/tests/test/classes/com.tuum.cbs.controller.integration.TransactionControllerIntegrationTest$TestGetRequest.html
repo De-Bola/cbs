@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - TestGetRequest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>TestGetRequest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.tuum.cbs.controller.integration.html">com.tuum.cbs.controller.integration</a> &gt; TransactionControllerIntegrationTest$TestGetRequest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.049s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.021s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getTransactionITest()</td>
+<td class="success">0.028s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-08-31T02:05:22.535+03:00  INFO 79724 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.tuum.cbs.controller.integration.TransactionControllerIntegrationTest$TestGetRequest]: TestGetRequest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-08-31T02:05:22.537+03:00  INFO 79724 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.tuum.cbs.CbsTummTaskApplication for test class com.tuum.cbs.controller.integration.TransactionControllerIntegrationTest$TestGetRequest
+AccountDao(country=6449635977, customerId=Sweden, currencies=[EUR])
+2023-08-31T02:05:22.548+03:00  INFO 79724 --- [o-auto-1-exec-7] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  [Balance(balanceId=4999637667, amount=0.00, currency=EUR, accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b)]
+Service: Account(accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b, customerId=Sweden, country=6449635977, balanceList=[Balance(balanceId=4999637667, amount=0.00, currency=EUR, accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b)])
+Account(accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b, customerId=Sweden, country=6449635977, balanceList=[Balance(balanceId=4999637667, amount=0.00, currency=EUR, accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b)])
+2023-08-31T02:05:22.549+03:00  INFO 79724 --- [o-auto-1-exec-7] com.tuum.cbs.service.RabbitMQFOSender    : Message sent to consumer:  Account(accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b, customerId=Sweden, country=6449635977, balanceList=[Balance(balanceId=4999637667, amount=0.00, currency=EUR, accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b)])
+Trx params: TransactionDao(accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b, amount=76.50, currency=EUR, trxType=IN, description=This is a test!)
+2023-08-31T02:05:22.560+03:00  INFO 79724 --- [o-auto-1-exec-8] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  Balance(balanceId=4999637667, amount=76.50, currency=EUR, accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b)
+Service layer: Transaction(trxId=5614966883, accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description=This is a test!)
+Transaction(trxId=5614966883, accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description=This is a test!)
+2023-08-31T02:05:22.561+03:00  INFO 79724 --- [o-auto-1-exec-8] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  Transaction(trxId=5614966883, accountId=01790b43-b8f3-49fb-8c3b-d770ef92922b, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description=This is a test!)
+01790b43-b8f3-49fb-8c3b-d770ef92922b
+Number of Trx found: 1
+AccountDao(country=1782835225, customerId=Sweden, currencies=[EUR])
+2023-08-31T02:05:22.576+03:00  INFO 79724 --- [-auto-1-exec-10] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  [Balance(balanceId=5288889443, amount=0.00, currency=EUR, accountId=031094c6-817c-4684-a045-d675130170e4)]
+Service: Account(accountId=031094c6-817c-4684-a045-d675130170e4, customerId=Sweden, country=1782835225, balanceList=[Balance(balanceId=5288889443, amount=0.00, currency=EUR, accountId=031094c6-817c-4684-a045-d675130170e4)])
+Account(accountId=031094c6-817c-4684-a045-d675130170e4, customerId=Sweden, country=1782835225, balanceList=[Balance(balanceId=5288889443, amount=0.00, currency=EUR, accountId=031094c6-817c-4684-a045-d675130170e4)])
+2023-08-31T02:05:22.577+03:00  INFO 79724 --- [-auto-1-exec-10] com.tuum.cbs.service.RabbitMQFOSender    : Message sent to consumer:  Account(accountId=031094c6-817c-4684-a045-d675130170e4, customerId=Sweden, country=1782835225, balanceList=[Balance(balanceId=5288889443, amount=0.00, currency=EUR, accountId=031094c6-817c-4684-a045-d675130170e4)])
+Trx params: TransactionDao(accountId=031094c6-817c-4684-a045-d675130170e4, amount=76.50, currency=EUR, trxType=IN, description=This is a test!)
+2023-08-31T02:05:22.586+03:00  INFO 79724 --- [o-auto-1-exec-1] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  Balance(balanceId=5288889443, amount=76.50, currency=EUR, accountId=031094c6-817c-4684-a045-d675130170e4)
+Service layer: Transaction(trxId=6464621640, accountId=031094c6-817c-4684-a045-d675130170e4, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description=This is a test!)
+Transaction(trxId=6464621640, accountId=031094c6-817c-4684-a045-d675130170e4, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description=This is a test!)
+2023-08-31T02:05:22.587+03:00  INFO 79724 --- [o-auto-1-exec-1] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  Transaction(trxId=6464621640, accountId=031094c6-817c-4684-a045-d675130170e4, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description=This is a test!)
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.2.1</a> at Aug 31, 2023, 2:05:24 AM</p>
+</div>
+</div>
+</body>
+</html>
