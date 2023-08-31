@@ -51,4 +51,4 @@
    password: `guest`
 
 ## Test Reports
-![](./build/reports/tests/test/index.html) 
+   Test reports can be found on this [page](https://htmlpreview.github.io/?https://github.com/De-Bola/cbs/blob/master/cbs/build/reports/tests/test/index.html)
