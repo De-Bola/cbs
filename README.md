@@ -15,22 +15,32 @@
 
 ## Building and Running the application
 
-1. Navigate to the project root and execute:
+1. Navigate to the project root:
    ```bash
-   gradle clean build
+   cd cbs
    ```
 
-2. To run the packaged jar:
+2. Build the jar file using gradle:
+   ```bash
+   ./gradlew clean build
+   ```
+
+3. Navigate away from project root:
+   ```bash
+   cd ..
+   ```
+
+4. Build a Docker image for the application:
    ```bash
    docker build -t cbs .
    ```
-
-3. To build a Docker image for the application:
+   
+5. Start the application using Docker Compose:
    ```bash
    docker-compose up --build
    ```
 
-4. To start the application using Docker Compose:
+6. Shutdown the application using Docker compose
    ```bash
    docker-compose down -v
    ```
