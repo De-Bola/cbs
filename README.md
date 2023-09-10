@@ -76,7 +76,7 @@
 6. I like that there are integration test
 
 #### Dislikes
-1. Could have created two mappers/repositories separately for accounts and transactions 
+1. ~~Could have created two mappers/repositories separately for accounts and transactions~~ 
 2. SuccessResponse could have used generic for data to have better type definition 
 3. What can be the dark side of using Lombok too extensively? 
 4. Endpoints are not REST-ful 
