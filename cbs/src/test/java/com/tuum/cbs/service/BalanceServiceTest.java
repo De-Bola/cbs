@@ -2,7 +2,7 @@ package com.tuum.cbs.service;
 
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
-import com.tuum.cbs.repositories.CbsRepository;
+import com.tuum.cbs.repositories.AccountsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     private BalanceService uut;
 
     @Mock
-    private CbsRepository repo;
+    private AccountsRepository repo;
 
     @Mock
     private RabbitMQDESender mqDeSender;
@@ -54,7 +54,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
         bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), Currency.EUR, accountId);
         bal_List = new ArrayList<>();
         bal_List.add(bal);
-        repo = mock(CbsRepository.class);
+        repo = mock(AccountsRepository.class);
         uut = new BalanceService(repo, mqDeSender);
     }
 
@@ -94,7 +94,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
         given(repo.updateBalanceObj(any(Balance.class))).willReturn(anyInt());
 
         Balance updatedBalance = uut.updateBalanceObj(newBal);
-        //sqlSession.update("com.tuum.cbs.repositories.CbsRepository.updateBalanceObj", bal);
+        //sqlSession.update("com.tuum.cbs.repositories.AccountsRepository.updateBalanceObj", bal);
 
         System.out.println("Service test: " + updatedBalance);
 

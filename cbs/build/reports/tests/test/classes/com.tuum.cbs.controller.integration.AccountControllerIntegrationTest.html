@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.553s</div>
+<div class="counter">1.031s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,17 +79,17 @@
 </thead>
 <tr>
 <td class="success">contextLoads()</td>
-<td class="success">0.002s</td>
+<td class="success">0.003s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">createAccountITest()</td>
-<td class="success">0.011s</td>
+<td class="success">0.010s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">getAccountITestShouldReturnNotFound()</td>
-<td class="success">0.506s</td>
+<td class="success">0.984s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -102,8 +102,8 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2023-08-31T09:18:44.819+03:00  INFO 11744 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.tuum.cbs.controller.integration.AccountControllerIntegrationTest]: AccountControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2023-08-31T09:18:44.835+03:00  INFO 11744 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.tuum.cbs.CbsTummTaskApplication for test class com.tuum.cbs.controller.integration.AccountControllerIntegrationTest
+<pre>18:42:22.209 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.tuum.cbs.controller.integration.AccountControllerIntegrationTest]: AccountControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:42:22.317 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.tuum.cbs.CbsTuumTaskApplication for test class com.tuum.cbs.controller.integration.AccountControllerIntegrationTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -113,40 +113,43 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.1.2)
 
-2023-08-31T09:18:44.923+03:00  INFO 11744 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : Starting AccountControllerIntegrationTest using Java 17 with PID 11744 (started by bhumm in C:\Users\bhumm\Downloads\cbs\cbs)
-2023-08-31T09:18:44.924+03:00  INFO 11744 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2023-08-31T09:18:45.575+03:00  INFO 11744 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
-2023-08-31T09:18:45.592+03:00  INFO 11744 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2023-08-31T09:18:45.592+03:00  INFO 11744 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
-2023-08-31T09:18:45.708+03:00  INFO 11744 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2023-08-31T09:18:45.709+03:00  INFO 11744 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 783 ms
-2023-08-31T09:18:45.715+03:00  INFO 11744 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
-2023-08-31T09:18:45.828+03:00  INFO 11744 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2023-08-31T09:18:46.186+03:00  INFO 11744 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 51389 (http) with context path ''
-2023-08-31T09:18:46.186+03:00  INFO 11744 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : Started AccountControllerIntegrationTest in 1.325 seconds (process running for 7.377)
-2023-08-31T09:18:46.371+03:00  INFO 11744 --- [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2023-08-31T09:18:46.371+03:00  INFO 11744 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2023-08-31T09:18:46.372+03:00  INFO 11744 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-AccountDao(country=0106692028, customerId=Sweden, currencies=[EUR])
-2023-08-31T09:18:46.484+03:00  INFO 11744 --- [o-auto-1-exec-1] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
-2023-08-31T09:18:46.556+03:00  INFO 11744 --- [o-auto-1-exec-1] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#435a4d2d:0/SimpleConnection@7d6849fe [delegate=amqp://guest@127.0.0.1:5672/, localPort=51391]
-2023-08-31T09:18:46.627+03:00  INFO 11744 --- [o-auto-1-exec-1] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  [Balance(balanceId=2001941420, amount=0.00, currency=EUR, accountId=3154f5c9-4405-4937-a8a6-3801766a4e0f)]
-Service: Account(accountId=3154f5c9-4405-4937-a8a6-3801766a4e0f, customerId=Sweden, country=0106692028, balanceList=[Balance(balanceId=2001941420, amount=0.00, currency=EUR, accountId=3154f5c9-4405-4937-a8a6-3801766a4e0f)])
-Account(accountId=3154f5c9-4405-4937-a8a6-3801766a4e0f, customerId=Sweden, country=0106692028, balanceList=[Balance(balanceId=2001941420, amount=0.00, currency=EUR, accountId=3154f5c9-4405-4937-a8a6-3801766a4e0f)])
-2023-08-31T09:18:46.630+03:00  INFO 11744 --- [o-auto-1-exec-1] com.tuum.cbs.service.RabbitMQFOSender    : Message sent to consumer:  Account(accountId=3154f5c9-4405-4937-a8a6-3801766a4e0f, customerId=Sweden, country=0106692028, balanceList=[Balance(balanceId=2001941420, amount=0.00, currency=EUR, accountId=3154f5c9-4405-4937-a8a6-3801766a4e0f)])
-013da64c-16df-44ef-9cf7-fc90275e620b
-AccountDao(country=0255911924, customerId=Sweden, currencies=[EUR])
-2023-08-31T09:18:46.707+03:00  INFO 11744 --- [o-auto-1-exec-3] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  [Balance(balanceId=5662299859, amount=0.00, currency=EUR, accountId=d587037e-c0eb-45fc-8903-0202a0f18da4)]
-Service: Account(accountId=d587037e-c0eb-45fc-8903-0202a0f18da4, customerId=Sweden, country=0255911924, balanceList=[Balance(balanceId=5662299859, amount=0.00, currency=EUR, accountId=d587037e-c0eb-45fc-8903-0202a0f18da4)])
-Account(accountId=d587037e-c0eb-45fc-8903-0202a0f18da4, customerId=Sweden, country=0255911924, balanceList=[Balance(balanceId=5662299859, amount=0.00, currency=EUR, accountId=d587037e-c0eb-45fc-8903-0202a0f18da4)])
-2023-08-31T09:18:46.707+03:00  INFO 11744 --- [o-auto-1-exec-3] com.tuum.cbs.service.RabbitMQFOSender    : Message sent to consumer:  Account(accountId=d587037e-c0eb-45fc-8903-0202a0f18da4, customerId=Sweden, country=0255911924, balanceList=[Balance(balanceId=5662299859, amount=0.00, currency=EUR, accountId=d587037e-c0eb-45fc-8903-0202a0f18da4)])
-d587037e-c0eb-45fc-8903-0202a0f18da4
-Account(accountId=d587037e-c0eb-45fc-8903-0202a0f18da4, customerId=Sweden, country=0255911924, balanceList=[Balance(balanceId=5662299859, amount=0.00, currency=EUR, accountId=d587037e-c0eb-45fc-8903-0202a0f18da4)])
-AccountDao(country=3139793611, customerId=Sweden, currencies=[EUR])
-2023-08-31T09:18:46.750+03:00  INFO 11744 --- [o-auto-1-exec-5] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  [Balance(balanceId=9154413636, amount=0.00, currency=EUR, accountId=42b400fd-1ac7-42d3-99d8-29aad6f6e95e)]
-Service: Account(accountId=42b400fd-1ac7-42d3-99d8-29aad6f6e95e, customerId=Sweden, country=3139793611, balanceList=[Balance(balanceId=9154413636, amount=0.00, currency=EUR, accountId=42b400fd-1ac7-42d3-99d8-29aad6f6e95e)])
-Account(accountId=42b400fd-1ac7-42d3-99d8-29aad6f6e95e, customerId=Sweden, country=3139793611, balanceList=[Balance(balanceId=9154413636, amount=0.00, currency=EUR, accountId=42b400fd-1ac7-42d3-99d8-29aad6f6e95e)])
-2023-08-31T09:18:46.751+03:00  INFO 11744 --- [o-auto-1-exec-5] com.tuum.cbs.service.RabbitMQFOSender    : Message sent to consumer:  Account(accountId=42b400fd-1ac7-42d3-99d8-29aad6f6e95e, customerId=Sweden, country=3139793611, balanceList=[Balance(balanceId=9154413636, amount=0.00, currency=EUR, accountId=42b400fd-1ac7-42d3-99d8-29aad6f6e95e)])
+2023-09-10T18:42:22.826+03:00  INFO 4668 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : Starting AccountControllerIntegrationTest using Java 17 with PID 4668 (started by bhumm in C:\Users\bhumm\Downloads\cbs\cbs)
+2023-09-10T18:42:22.828+03:00  INFO 4668 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-09-10T18:42:23.428+03:00  WARN 4668 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'accountsRepository' and 'com.tuum.cbs.repositories.AccountsRepository' mapperInterface. Bean already defined with the same name!
+2023-09-10T18:42:23.429+03:00  WARN 4668 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'transactionsRepository' and 'com.tuum.cbs.repositories.TransactionsRepository' mapperInterface. Bean already defined with the same name!
+2023-09-10T18:42:23.429+03:00  WARN 4668 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.tuum.cbs.repositories]' package. Please check your configuration.
+2023-09-10T18:42:23.810+03:00  INFO 4668 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2023-09-10T18:42:23.819+03:00  INFO 4668 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-10T18:42:23.819+03:00  INFO 4668 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-10T18:42:23.892+03:00  INFO 4668 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-10T18:42:23.894+03:00  INFO 4668 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1044 ms
+2023-09-10T18:42:23.916+03:00  INFO 4668 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2023-09-10T18:42:24.197+03:00  INFO 4668 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2023-09-10T18:42:25.537+03:00  INFO 4668 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 54010 (http) with context path ''
+2023-09-10T18:42:25.548+03:00  INFO 4668 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : Started AccountControllerIntegrationTest in 2.958 seconds (process running for 4.056)
+2023-09-10T18:42:26.240+03:00  INFO 4668 --- [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-10T18:42:26.240+03:00  INFO 4668 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-09-10T18:42:26.241+03:00  INFO 4668 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+AccountDao(country=5570203744, customerId=Sweden, currencies=[EUR])
+2023-09-10T18:42:26.332+03:00  INFO 4668 --- [o-auto-1-exec-1] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+2023-09-10T18:42:26.380+03:00  INFO 4668 --- [o-auto-1-exec-1] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#510e4d79:0/SimpleConnection@82e284b [delegate=amqp://guest@127.0.0.1:5672/, localPort=54012]
+2023-09-10T18:42:26.407+03:00  INFO 4668 --- [o-auto-1-exec-1] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  [Balance(balanceId=3047850264, amount=0.00, currency=EUR, accountId=26c1e79d-a8ef-47b6-b150-497fd0a42f70)]
+Service: Account(accountId=26c1e79d-a8ef-47b6-b150-497fd0a42f70, customerId=Sweden, country=5570203744, balanceList=[Balance(balanceId=3047850264, amount=0.00, currency=EUR, accountId=26c1e79d-a8ef-47b6-b150-497fd0a42f70)])
+Account(accountId=26c1e79d-a8ef-47b6-b150-497fd0a42f70, customerId=Sweden, country=5570203744, balanceList=[Balance(balanceId=3047850264, amount=0.00, currency=EUR, accountId=26c1e79d-a8ef-47b6-b150-497fd0a42f70)])
+2023-09-10T18:42:26.409+03:00  INFO 4668 --- [o-auto-1-exec-1] com.tuum.cbs.service.RabbitMQFOSender    : Message sent to consumer:  Account(accountId=26c1e79d-a8ef-47b6-b150-497fd0a42f70, customerId=Sweden, country=5570203744, balanceList=[Balance(balanceId=3047850264, amount=0.00, currency=EUR, accountId=26c1e79d-a8ef-47b6-b150-497fd0a42f70)])
+660eedfe-e0fa-404e-b4cb-f786e43593f3
+AccountDao(country=0768141989, customerId=Sweden, currencies=[EUR])
+2023-09-10T18:42:26.550+03:00  INFO 4668 --- [o-auto-1-exec-3] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  [Balance(balanceId=9457625136, amount=0.00, currency=EUR, accountId=9b4c6779-c267-461c-ba0e-a8a8501940df)]
+Service: Account(accountId=9b4c6779-c267-461c-ba0e-a8a8501940df, customerId=Sweden, country=0768141989, balanceList=[Balance(balanceId=9457625136, amount=0.00, currency=EUR, accountId=9b4c6779-c267-461c-ba0e-a8a8501940df)])
+Account(accountId=9b4c6779-c267-461c-ba0e-a8a8501940df, customerId=Sweden, country=0768141989, balanceList=[Balance(balanceId=9457625136, amount=0.00, currency=EUR, accountId=9b4c6779-c267-461c-ba0e-a8a8501940df)])
+2023-09-10T18:42:26.550+03:00  INFO 4668 --- [o-auto-1-exec-3] com.tuum.cbs.service.RabbitMQFOSender    : Message sent to consumer:  Account(accountId=9b4c6779-c267-461c-ba0e-a8a8501940df, customerId=Sweden, country=0768141989, balanceList=[Balance(balanceId=9457625136, amount=0.00, currency=EUR, accountId=9b4c6779-c267-461c-ba0e-a8a8501940df)])
+9b4c6779-c267-461c-ba0e-a8a8501940df
+Account(accountId=9b4c6779-c267-461c-ba0e-a8a8501940df, customerId=Sweden, country=0768141989, balanceList=[Balance(balanceId=9457625136, amount=0.00, currency=EUR, accountId=9b4c6779-c267-461c-ba0e-a8a8501940df)])
+AccountDao(country=4712784682, customerId=Sweden, currencies=[EUR])
+2023-09-10T18:42:26.584+03:00  INFO 4668 --- [o-auto-1-exec-5] com.tuum.cbs.service.RabbitMQDESender    : Message sent to consumer:  [Balance(balanceId=5267271260, amount=0.00, currency=EUR, accountId=66453286-7ac2-4425-acbc-c01a24e537b5)]
+Service: Account(accountId=66453286-7ac2-4425-acbc-c01a24e537b5, customerId=Sweden, country=4712784682, balanceList=[Balance(balanceId=5267271260, amount=0.00, currency=EUR, accountId=66453286-7ac2-4425-acbc-c01a24e537b5)])
+Account(accountId=66453286-7ac2-4425-acbc-c01a24e537b5, customerId=Sweden, country=4712784682, balanceList=[Balance(balanceId=5267271260, amount=0.00, currency=EUR, accountId=66453286-7ac2-4425-acbc-c01a24e537b5)])
+2023-09-10T18:42:26.585+03:00  INFO 4668 --- [o-auto-1-exec-5] com.tuum.cbs.service.RabbitMQFOSender    : Message sent to consumer:  Account(accountId=66453286-7ac2-4425-acbc-c01a24e537b5, customerId=Sweden, country=4712784682, balanceList=[Balance(balanceId=5267271260, amount=0.00, currency=EUR, accountId=66453286-7ac2-4425-acbc-c01a24e537b5)])
 </pre>
 </span>
 </div>
@@ -158,7 +161,7 @@ Account(accountId=42b400fd-1ac7-42d3-99d8-29aad6f6e95e, customerId=Sweden, count
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 8.2.1</a> at Aug 31, 2023, 9:18:48 AM</p>
+<a href="http://www.gradle.org">Gradle 8.2.1</a> at Sep 10, 2023, 6:42:26 PM</p>
 </div>
 </div>
 </body>

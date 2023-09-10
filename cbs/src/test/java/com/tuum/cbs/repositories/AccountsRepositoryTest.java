@@ -29,10 +29,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @MybatisTest
 @RunWith(SpringRunner.class)
 @Sql({"/templates/accounts.sql", "/templates/balance.sql"})
-class CbsRepositoryTest {
+class AccountsRepositoryTest {
 
     @Autowired
-    private CbsRepository repository;
+    private AccountsRepository repository;
 
     @Autowired
     SqlSession sqlSession;

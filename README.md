@@ -7,6 +7,7 @@
 - [Building and Running the application](#building-and-running-the-application)
 - [Endpoints Overview](#endpoints-overview)
 - [Test Reports](#test-reports)
+- [Feedbacks](#feedbacks)
 
 ## Features
 
@@ -63,3 +64,30 @@
    Screenshot of test coverage from intellij
 
    Coverage test reports can be found on this [page](https://htmlpreview.github.io/?https://github.com/De-Bola/cbs/blob/master/coverage/reports/index.html)
+   
+## Feedbacks
+   Here are the feedbacks I got for this task:
+#### Likes
+1. Nice project setup
+2. Nice error handling and error response 
+3. Validations are done 
+4. Correct data types 
+5. Nice use of enums 
+6. I like that there are integration test
+
+#### Dislikes
+1. Could have created two mappers/repositories separately for accounts and transactions 
+2. SuccessResponse could have used generic for data to have better type definition 
+3. What can be the dark side of using Lombok too extensively? 
+4. Endpoints are not REST-ful 
+5. System out is not really the best approach on logging... 
+6. Too much logic on controller level 
+7. No locking... What would happen in case of concurrent same account transactions? 
+8. Much easier and cleaner would be to use db sequence for unique id instead of a central Java function. 
+9. And even if you use Java function, create a Util class with static function for it instead of having it part of a certain service... 
+10. Quite a few TODOs still around the project and a lot of comments, which is not considered clean code. 
+11. Test coverage is not met (while the services are covered quite nicely, you have quite a bit of code on controller level, which is not covered at all)
+   
+
+## Way forward
+- Fix the dislikes majorly and handle them per commit.

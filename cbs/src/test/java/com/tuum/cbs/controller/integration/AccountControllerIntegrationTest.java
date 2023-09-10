@@ -2,7 +2,6 @@ package com.tuum.cbs.controller.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tuum.cbs.common.exceptions.AccountNotFoundException;
 import com.tuum.cbs.controller.response.ErrorResponse;
 import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Account;

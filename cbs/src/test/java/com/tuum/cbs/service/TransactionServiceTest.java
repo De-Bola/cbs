@@ -1,7 +1,8 @@
 package com.tuum.cbs.service;
 
 import com.tuum.cbs.models.*;
-import com.tuum.cbs.repositories.CbsRepository;
+import com.tuum.cbs.repositories.AccountsRepository;
+import com.tuum.cbs.repositories.TransactionsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +34,7 @@ import static org.mockito.Mockito.*;
 class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Mock
-    private CbsRepository repo;
+    private TransactionsRepository repo;
 
     @InjectMocks
     private TransactionService uut;
@@ -87,7 +88,7 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
 
         transactions.add(testTrx);
 
-        repo = mock(CbsRepository.class);
+        repo = mock(TransactionsRepository.class);
         uut = new TransactionService(repo, accountService, balanceService);
     }
 

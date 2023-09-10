@@ -5,9 +5,8 @@ import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
-import com.tuum.cbs.repositories.CbsRepository;
+import com.tuum.cbs.repositories.AccountsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,7 +19,7 @@ import java.util.*;
 @Transactional
 public class AccountService {
 
-    private final CbsRepository repo;
+    private final AccountsRepository repo;
     private final BalanceService balService;
     private final RabbitMQDESender mqDeSender;
 

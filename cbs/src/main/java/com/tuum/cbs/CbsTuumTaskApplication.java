@@ -6,13 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableRabbit
 @SpringBootApplication(scanBasePackages = {"com.tuum.cbs.*"})
-public class CbsTummTaskApplication {
+public class CbsTuumTaskApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CbsTummTaskApplication.class, args);
+		SpringApplication.run(CbsTuumTaskApplication.class, args);
 	}
 
+	//uri -> http://localhost:8080/swagger-ui.html
+
 }
-
-
-//uri -> http://localhost:8080/swagger-ui.html

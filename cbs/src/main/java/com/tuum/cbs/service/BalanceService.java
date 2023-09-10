@@ -4,7 +4,7 @@ import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
 import com.tuum.cbs.common.exceptions.InsufficientFundsException;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
-import com.tuum.cbs.repositories.CbsRepository;
+import com.tuum.cbs.repositories.AccountsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +19,7 @@ import java.util.UUID;
 @Transactional
 public class BalanceService {
 
-    private final CbsRepository repo;
+    private final AccountsRepository repo;
     private final RabbitMQDESender mqDeSender;
 
     // business logic for balances

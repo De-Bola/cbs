@@ -5,7 +5,7 @@ import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
-import com.tuum.cbs.repositories.CbsRepository;
+import com.tuum.cbs.repositories.AccountsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +41,7 @@ class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     private AccountService uut;
 
     @Mock
-    private CbsRepository repo;
+    private AccountsRepository repo;
 
     @Mock
     private RabbitMQDESender rabbitMQDESender;
@@ -87,7 +87,7 @@ class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
         testAccount = Account.builder().accountId(accountId)
                 .country("Estonia").customerId(customerId).balanceList(bal_List)
                 .build();
-        repo = mock(CbsRepository.class);
+        repo = mock(AccountsRepository.class);
         uut = new AccountService(repo, balService, rabbitMQDESender);
     }
 
