@@ -89,7 +89,7 @@ public class AccountControllerIntegrationTest {
         Map<String, UUID> params = Collections.singletonMap("id", accountId);
         // change the uri to url
         String url = baseUrl + "/accounts/account?id={id}";
-        ResponseEntity<SuccessResponse> getResponseEntity = restTemplate.getForEntity(url, SuccessResponse.class, params);
+        ResponseEntity<Account> getResponseEntity = restTemplate.getForEntity(url, Account.class, params);
         // final assertions
         assertThat(getResponseEntity).isNotNull();
         assertThat(getResponseEntity.getBody()).isNotNull();
@@ -115,7 +115,6 @@ public class AccountControllerIntegrationTest {
             restTemplate.getForEntity(url, ErrorResponse.class, params);
         });
 
-        // final assertions
     }
 
 }

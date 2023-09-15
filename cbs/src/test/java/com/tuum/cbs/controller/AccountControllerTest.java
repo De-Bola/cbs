@@ -1,6 +1,7 @@
 package com.tuum.cbs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tuum.cbs.common.exceptions.BadRequestException;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
@@ -104,30 +105,22 @@ class AccountControllerTest {
     @DisplayName("Verifies that AccountDao is sent to Service layer")
     void createAccountShouldReturnAccountDao() throws Exception {
         final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
-
         when(accountService.save(testAccountDao)).thenReturn(testAccount);
         mockMvc.perform(
                 post("/api/accounts/account-open")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonBody)
         ).andExpect(status().isCreated());
-
         verify(accountService, times(1)).save(captor.capture());
-
         final Object capturedValue = captor.getValue();
-
         assertThat(capturedValue).usingRecursiveComparison().ignoringFields("accountId").isEqualTo(testAccountDao);
-        System.out.println(capturedValue);
-        System.out.println(testAccount);
     }
 
     @Test
     @DisplayName("Verifies that AccountDetails is returned from Service layer")
     void createAccountShouldReturnAccountDetails() throws Exception {
         final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
-
         when(accountService.save(captor.capture())).thenReturn(testAccount);
-
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         MvcResult mvcResult = mockMvc.perform(
                 post("/api/accounts/account-open")
@@ -136,18 +129,15 @@ class AccountControllerTest {
         ).andExpect(status().isCreated()).andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.accountId").exists())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.data.balanceList").isArray()).andReturn();
-
         verify(accountService, times(1)).save(any(AccountDao.class));
-
-        System.out.println(mvcResult.getResponse());
     }
 
     @Test
     @DisplayName("Verifies that error response is given when something goes wrong")
     void createAccountShouldReturnErrorResponse() throws Exception {
-
         testAccountDao.setCustomerId(null);
         final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
+        when(accountService.save(captor.capture())).thenThrow(new BadRequestException("Invalid entry: customer ID cannot be blank"));
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         mockMvc.perform(
                         post("/api/accounts/account-open")
@@ -156,7 +146,6 @@ class AccountControllerTest {
                 ).andExpect(status().isBadRequest()).andDo(print())
                 .andExpect(jsonPath("$.message").exists())
                 .andReturn();
-
-        verify(accountService, times(0)).save(any(AccountDao.class));
+        verify(accountService, times(1)).save(any(AccountDao.class));
     }
 }

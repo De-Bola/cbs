@@ -4,12 +4,14 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > RabbitMQFOSender</title>
   <style type="text/css">
     @import "../../css/coverage.css";
-    @import "../../css/highlight-idea.css";
+    @import "../../css/idea.min.css";
   </style>
-  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
 </head>
 
 <body>
@@ -73,39 +75,45 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.tuum.cbs.service;
-<i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import lombok.extern.slf4j.Slf4j;
-<i class="no-highlight">4</i>&nbsp;import org.springframework.amqp.rabbit.core.RabbitTemplate;
-<i class="no-highlight">5</i>&nbsp;import org.springframework.beans.factory.annotation.Value;
-<i class="no-highlight">6</i>&nbsp;import org.springframework.stereotype.Service;
-<i class="no-highlight">7</i>&nbsp;
-<i class="no-highlight">8</i>&nbsp;@Service
-<b class="fc"><i class="no-highlight">9</i>&nbsp;@Slf4j</b>
-<i class="no-highlight">10</i>&nbsp;public class RabbitMQFOSender {
-<i class="no-highlight">11</i>&nbsp;
-<i class="no-highlight">12</i>&nbsp;    @Value(&quot;${accounts.one.queue.name}&quot;)
-<i class="no-highlight">13</i>&nbsp;    String accountQueue1;
-<i class="no-highlight">14</i>&nbsp;
-<i class="no-highlight">15</i>&nbsp;    @Value(&quot;${accounts.two.queue.name}&quot;)
-<i class="no-highlight">16</i>&nbsp;    String accountQueue2;
-<i class="no-highlight">17</i>&nbsp;
-<i class="no-highlight">18</i>&nbsp;    @Value(&quot;${accounts.exchange.name}&quot;)
-<i class="no-highlight">19</i>&nbsp;    String fanoutExchange;
-<i class="no-highlight">20</i>&nbsp;
-<i class="no-highlight">21</i>&nbsp;    private final RabbitTemplate rabbitTemplate;
-<i class="no-highlight">22</i>&nbsp;
-<b class="fc"><i class="no-highlight">23</i>&nbsp;    public RabbitMQFOSender(RabbitTemplate rabbitTemplate) {</b>
-<b class="fc"><i class="no-highlight">24</i>&nbsp;        this.rabbitTemplate = rabbitTemplate;</b>
-<i class="no-highlight">25</i>&nbsp;    }
-<i class="no-highlight">26</i>&nbsp;
-<i class="no-highlight">27</i>&nbsp;    public void sendToFanoutXchange(String message){
-<b class="fc"><i class="no-highlight">28</i>&nbsp;        String prefix = &quot;Message sent to consumer: &quot;;</b>
-<b class="fc"><i class="no-highlight">29</i>&nbsp;        rabbitTemplate.convertAndSend(fanoutExchange, &quot;&quot;, message);</b>
-<b class="fc"><i class="no-highlight">30</i>&nbsp;        LOGGER.info(prefix + &quot; &quot; + message);</b>
-<i class="no-highlight">31</i>&nbsp;    }
-<i class="no-highlight">32</i>&nbsp;}
-</div>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.tuum.cbs.service;
+&nbsp;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.amqp.rabbit.core.RabbitTemplate;
+&nbsp;import org.springframework.beans.factory.annotation.Value;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import java.time.Instant;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.time.ZoneId;
+&nbsp;
+&nbsp;@Service
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;public class RabbitMQFOSender {
+&nbsp;
+&nbsp;    @Value(&quot;${accounts.one.queue.name}&quot;)
+&nbsp;    String accountQueue1;
+&nbsp;
+&nbsp;    @Value(&quot;${accounts.two.queue.name}&quot;)
+&nbsp;    String accountQueue2;
+&nbsp;
+&nbsp;    @Value(&quot;${accounts.exchange.name}&quot;)
+&nbsp;    String fanoutExchange;
+&nbsp;
+&nbsp;    private final RabbitTemplate rabbitTemplate;
+&nbsp;    private static final String PREFIX = &quot;Message sent to consumer: &quot;;
+&nbsp;    private static final String CLASS_NAME = &quot;RabbitMQFOSender&quot;;
+<b class="fc">&nbsp;    public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();</b>
+&nbsp;
+<b class="fc">&nbsp;    public RabbitMQFOSender(RabbitTemplate rabbitTemplate) {</b>
+<b class="fc">&nbsp;        this.rabbitTemplate = rabbitTemplate;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void sendToFanoutXchange(String message){
+<b class="fc">&nbsp;        rabbitTemplate.convertAndSend(fanoutExchange, &quot;&quot;, message);</b>
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot;+ CLASS_NAME + &quot; &quot; + PREFIX + &quot; &quot; + message);</b>
+&nbsp;    }
+&nbsp;}
+</code>
 </pre>
 </div>
 
@@ -120,18 +128,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     @*/
 
     if (!msie || msie && msie9) {
-        var codeBlock = document.getElementById('sourceCode');
-
-        if (codeBlock) {
-            hljs.highlightBlock(codeBlock);
-        }
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
     }
 })();
 </script>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-08-31 09:17</div>
+    <div style="float:right;">generated on 2023-09-15 07:27</div>
 </div>
 </body>
 </html>

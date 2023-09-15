@@ -103,10 +103,7 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         when(accountService.generateRandomId()).thenReturn(testTrx.getTrxId());
         when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(balance);
         given(repo.insertTransaction(captor.capture())).willReturn(1);
-        System.out.println("Given : " + testTrx.getTrxId() +", " + balance);
-
         Transaction createdTrx = uut.createTransaction(testTrxDao);
-        System.out.println("Service test : " + createdTrx);
         assertEquals(testTrxDao.getAccountId(), createdTrx.getAccountId());
         verify(repo, times(1)).insertTransaction(captor.capture());
         assertThat(createdTrx).isNotNull();
@@ -127,14 +124,9 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         when(accountService.generateRandomId()).thenReturn(testTrx.getTrxId());
         when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(newBalance);
         given(repo.insertTransaction(any(Transaction.class))).willReturn(1);
-        System.out.println("Given : " + testTrx.getTrxId() +", " + balance +", "+ testTrxDao);
-
         Transaction createdTrx = uut.createTransaction(testTrxDao);
-        System.out.println("Service test : " + createdTrx);
-
         verify(repo, times(1)).insertTransaction(captor.capture());
         assertThat(createdTrx.getTrxType()).isEqualByComparingTo(testTrx.getTrxType());
-
         assertThat(createdTrx.getBalanceAfterTrx()).isGreaterThan(balance.getAmount());
         assertThat(captor.getValue()).usingRecursiveComparison().isEqualTo(createdTrx);
     }
@@ -152,14 +144,9 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         when(accountService.generateRandomId()).thenReturn(testTrx.getTrxId());
         when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(newBalance);
         given(repo.insertTransaction(any(Transaction.class))).willReturn(1);
-        System.out.println("Given : " + testTrx.getTrxId() +", " + balance +", "+ testTrxDao);
-
         Transaction createdTrx = uut.createTransaction(testTrxDao);
-        System.out.println("Service test : " + createdTrx);
-
         verify(repo, times(1)).insertTransaction(captor.capture());
         assertThat(createdTrx.getTrxType()).isEqualByComparingTo(testTrx.getTrxType());
-
         assertThat(createdTrx.getAmount()).isLessThan(balance.getAmount());
         assertThat(captor.getValue()).usingRecursiveComparison().isEqualTo(createdTrx);
     }
@@ -169,11 +156,8 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         UUID accountId = testTrxDao.getAccountId();
         given(repo.getTrxByAccountId(accountId)).willReturn(transactions);
         List<Transaction> foundTrx = uut.getTrxByAccountId(accountId);
-        System.out.println("Service test: " + foundTrx);
-
         assertThat(foundTrx).isNotNull();
         assertEquals(transactions.size(), foundTrx.size());
-
         assertEquals(accountId, foundTrx.get(0).getAccountId());
         verify(repo, times(1)).getTrxByAccountId(accountId);
     }
@@ -183,10 +167,7 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         UUID accountId = UUID.fromString("eb01ed99-59fc-48f2-8bcc-5f245e3a17bd");
         given(repo.getTrxByAccountId(accountId)).willReturn(transactions);
         List<Transaction> foundTrx = uut.getTrxByAccountId(accountId);
-        System.out.println("Service test: " + foundTrx);
-
         assertThat(foundTrx).isNotNull();
-
         assertNotEquals(accountId, foundTrx.get(0).getAccountId());
         verify(repo, times(1)).getTrxByAccountId(accountId);
     }

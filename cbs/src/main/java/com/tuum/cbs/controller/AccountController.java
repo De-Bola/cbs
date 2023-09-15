@@ -1,64 +1,52 @@
 package com.tuum.cbs.controller;
 
-import com.tuum.cbs.common.exceptions.BadRequestException;
 import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.service.AccountService;
 import com.tuum.cbs.service.RabbitMQFOSender;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.UUID;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/accounts")
+@Slf4j
 public class AccountController {
 
     private final AccountService service;
     private final RabbitMQFOSender mqFoSender;
+    public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
+    private static final String CLASS_NAME = "AccountController";
 
     @PostMapping("/account-open")
-    public ResponseEntity<SuccessResponse> createAccount(@RequestBody AccountDao accountDao) {
-        // if currency list is larger than 4 items or is less than 1
-        // attaching enum to currencies already handles not allowed currencies from request body
-        int currencyListSize = accountDao.getCurrencies().size();
-        if (currencyListSize > 4 ){
-            throw new BadRequestException("Invalid currency: currency list larger than allowed values");
-        }
-
-        if (accountDao.getCurrencies() == null || accountDao.getCurrencies().isEmpty()){
-            throw new BadRequestException("Invalid currency: currency list is empty");
-        }
-
-        if (accountDao.getCountry() == null || accountDao.getCountry().isEmpty()){
-            throw new BadRequestException("Invalid entry: country cannot be blank");
-        }
-
-        if (accountDao.getCustomerId() == null || accountDao.getCustomerId().isEmpty()){
-            throw new BadRequestException("Invalid entry: customer ID cannot be blank");
-        }
-
-        System.out.println(accountDao);
+    public ResponseEntity<SuccessResponse<Account>> createAccount(@RequestBody AccountDao accountDao) {
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " create account input: " + accountDao);
         Account account = service.save(accountDao);
-        System.out.println(account);
-        // publish to queue for consumers
+        String accountId = account.getAccountId().toString();
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " created new account with id: " + accountId);
         mqFoSender.sendToFanoutXchange(account.toString());
-
         return new ResponseEntity<>(
-                new SuccessResponse(account, "Account created!"),
+                new SuccessResponse<Account>(account, "Account created!"),
                 HttpStatus.CREATED
         );
     }
 
     @GetMapping("/account")
-    public ResponseEntity<SuccessResponse> getAccount(@RequestParam(name = "id") String accountId) {
-        System.out.println(accountId);
+    public ResponseEntity<SuccessResponse<Account>> getAccount(@RequestParam(name = "id") String accountId) {
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get account input: " + accountId);
         Account account = service.getByAccountId(accountId);
-        System.out.println(account);
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got account with id: " + accountId);
         return new ResponseEntity<>(
-                new SuccessResponse(account, "Account found!"),
+                new SuccessResponse<Account>(account, "Account found!"),
                 HttpStatus.OK
         );
     }

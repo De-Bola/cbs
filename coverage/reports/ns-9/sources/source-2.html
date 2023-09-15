@@ -4,12 +4,14 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > BalanceService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
-    @import "../../css/highlight-idea.css";
+    @import "../../css/idea.min.css";
   </style>
-  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
 </head>
 
 <body>
@@ -47,10 +49,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    87.9%
+    91.8%
   </span>
   <span class="absValue">
-    (29/33)
+    (45/49)
   </span>
 </td>
 </tr>
@@ -69,10 +71,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    87.9%
+    91.8%
   </span>
   <span class="absValue">
-    (29/33)
+    (45/49)
   </span>
 </td>
 </tr>
@@ -83,106 +85,123 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.tuum.cbs.service;
-<i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
-<i class="no-highlight">4</i>&nbsp;import com.tuum.cbs.common.exceptions.InsufficientFundsException;
-<i class="no-highlight">5</i>&nbsp;import com.tuum.cbs.models.Balance;
-<i class="no-highlight">6</i>&nbsp;import com.tuum.cbs.models.Currency;
-<i class="no-highlight">7</i>&nbsp;import com.tuum.cbs.repositories.AccountsRepository;
-<i class="no-highlight">8</i>&nbsp;import lombok.RequiredArgsConstructor;
-<i class="no-highlight">9</i>&nbsp;import org.springframework.stereotype.Service;
-<i class="no-highlight">10</i>&nbsp;import org.springframework.transaction.annotation.Transactional;
-<i class="no-highlight">11</i>&nbsp;
-<i class="no-highlight">12</i>&nbsp;import java.math.BigDecimal;
-<i class="no-highlight">13</i>&nbsp;import java.util.List;
-<i class="no-highlight">14</i>&nbsp;import java.util.Optional;
-<i class="no-highlight">15</i>&nbsp;import java.util.UUID;
-<i class="no-highlight">16</i>&nbsp;
-<b class="fc"><i class="no-highlight">17</i>&nbsp;@RequiredArgsConstructor</b>
-<i class="no-highlight">18</i>&nbsp;@Service
-<i class="no-highlight">19</i>&nbsp;@Transactional
-<i class="no-highlight">20</i>&nbsp;public class BalanceService {
-<i class="no-highlight">21</i>&nbsp;
-<i class="no-highlight">22</i>&nbsp;    private final CbsRepository repo;
-<i class="no-highlight">23</i>&nbsp;    private final RabbitMQDESender mqDeSender;
-<i class="no-highlight">24</i>&nbsp;
-<i class="no-highlight">25</i>&nbsp;    // business logic for balances
-<i class="no-highlight">26</i>&nbsp;    public List&lt;Balance&gt; getBalanceByAccountId(UUID accId) {
-<b class="fc"><i class="no-highlight">27</i>&nbsp;        return repo.getAccountBalance(accId);</b>
-<i class="no-highlight">28</i>&nbsp;    }
-<i class="no-highlight">29</i>&nbsp;
-<i class="no-highlight">30</i>&nbsp;    public Balance getBalanceByAccountId(UUID accountId, Currency currency) {
-<b class="fc"><i class="no-highlight">31</i>&nbsp;        Optional&lt;Balance&gt; optionalBalance = repo.getAccountBalanceByIdAndCurrency(accountId, currency.name());</b>
-<b class="fc"><i class="no-highlight">32</i>&nbsp;        if (optionalBalance.isEmpty()) throw new BalanceNotFoundException(&quot;Balance for account with id - &quot; + accountId + &quot; not found!&quot;);</b>
-<b class="fc"><i class="no-highlight">33</i>&nbsp;        return optionalBalance.get();</b>
-<i class="no-highlight">34</i>&nbsp;    }
-<i class="no-highlight">35</i>&nbsp;
-<i class="no-highlight">36</i>&nbsp;    public Balance updateBalanceObj(Balance balance){
-<b class="fc"><i class="no-highlight">37</i>&nbsp;        Balance initBalance = getBalanceByBalanceId(balance.getBalanceId());</b>
-<b class="fc"><i class="no-highlight">38</i>&nbsp;        BigDecimal updatedAmount = initBalance.getAmount().add(balance.getAmount());</b>
-<i class="no-highlight">39</i>&nbsp;
-<b class="fc"><i class="no-highlight">40</i>&nbsp;        if (updatedAmount.compareTo(initBalance.getAmount()) == 0) {</b>
-<i class="no-highlight">41</i>&nbsp;            // do nothing
-<b class="nc"><i class="no-highlight">42</i>&nbsp;            return initBalance;</b>
-<i class="no-highlight">43</i>&nbsp;        } else {
-<b class="fc"><i class="no-highlight">44</i>&nbsp;            balance.setAmount(updatedAmount);</b>
-<b class="fc"><i class="no-highlight">45</i>&nbsp;            repo.updateBalanceObj(balance);</b>
-<i class="no-highlight">46</i>&nbsp;            // notify consumers
-<b class="fc"><i class="no-highlight">47</i>&nbsp;            mqDeSender.publishToUpdateBalanceQueue(balance.toString());</b>
-<i class="no-highlight">48</i>&nbsp;        }
-<i class="no-highlight">49</i>&nbsp;        // not sure the difference between putting return outside if/else statement
-<i class="no-highlight">50</i>&nbsp;        // and putting it inside it; for now I&#39;ll leave it outside
-<b class="fc"><i class="no-highlight">51</i>&nbsp;        return balance;</b>
-<i class="no-highlight">52</i>&nbsp;    }
-<i class="no-highlight">53</i>&nbsp;
-<i class="no-highlight">54</i>&nbsp;    public Balance updateBalance(Long balanceId, BigDecimal amount){
-<i class="no-highlight">55</i>&nbsp;        // get init balance
-<b class="fc"><i class="no-highlight">56</i>&nbsp;        Balance balance = getBalanceByBalanceId(balanceId);</b>
-<i class="no-highlight">57</i>&nbsp;        // do addition {always because sign changes in trx service already}
-<b class="fc"><i class="no-highlight">58</i>&nbsp;        BigDecimal updatedAmount = balance.getAmount().add(amount);</b>
-<i class="no-highlight">59</i>&nbsp;
-<b class="fc"><i class="no-highlight">60</i>&nbsp;        if (updatedAmount.compareTo(balance.getAmount()) == 0) {</b>
-<i class="no-highlight">61</i>&nbsp;            // do nothing, maybe early return is better here
-<b class="nc"><i class="no-highlight">62</i>&nbsp;            return balance;</b>
-<i class="no-highlight">63</i>&nbsp;        } else {
-<b class="fc"><i class="no-highlight">64</i>&nbsp;            balance.setAmount(updatedAmount);</b>
-<b class="fc"><i class="no-highlight">65</i>&nbsp;            repo.updateBalanceAmount(updatedAmount, balanceId);</b>
-<i class="no-highlight">66</i>&nbsp;            // notify consumers
-<b class="fc"><i class="no-highlight">67</i>&nbsp;            mqDeSender.publishToUpdateBalanceQueue(balance.toString());</b>
-<i class="no-highlight">68</i>&nbsp;        }
-<i class="no-highlight">69</i>&nbsp;
-<b class="fc"><i class="no-highlight">70</i>&nbsp;        return balance;</b>
-<i class="no-highlight">71</i>&nbsp;    }
-<i class="no-highlight">72</i>&nbsp;
-<i class="no-highlight">73</i>&nbsp;    //Trx layer calls this
-<i class="no-highlight">74</i>&nbsp;    public Balance updateBalanceByAccountId(UUID accountId, Currency currency, BigDecimal amount){
-<i class="no-highlight">75</i>&nbsp;        // get init balance
-<b class="fc"><i class="no-highlight">76</i>&nbsp;        Balance balance = getBalanceByAccountId(accountId, currency);</b>
-<i class="no-highlight">77</i>&nbsp;        // do addition {always because sign changes in trx service already}
-<b class="fc"><i class="no-highlight">78</i>&nbsp;        BigDecimal updatedAmount = balance.getAmount().add(amount);</b>
-<i class="no-highlight">79</i>&nbsp;
-<i class="no-highlight">80</i>&nbsp;        // insufficient funds is only valid for outgoing trx at this point
-<b class="fc"><i class="no-highlight">81</i>&nbsp;        if (updatedAmount.compareTo(BigDecimal.ZERO) &lt; 0 &amp;&amp;</b>
-<b class="nc"><i class="no-highlight">82</i>&nbsp;                amount.compareTo(BigDecimal.ZERO) &lt; 0){</b>
-<b class="nc"><i class="no-highlight">83</i>&nbsp;            throw new InsufficientFundsException(&quot;Insufficient funds: account balance shouldn&#39;t goto negative&quot;);</b>
-<i class="no-highlight">84</i>&nbsp;        }
-<i class="no-highlight">85</i>&nbsp;
-<b class="fc"><i class="no-highlight">86</i>&nbsp;        balance.setAmount(updatedAmount);</b>
-<b class="fc"><i class="no-highlight">87</i>&nbsp;        repo.updateBalanceAmount(updatedAmount, balance.getBalanceId());</b>
-<i class="no-highlight">88</i>&nbsp;        // notify consumers
-<b class="fc"><i class="no-highlight">89</i>&nbsp;        mqDeSender.publishToUpdateBalanceQueue(balance.toString());</b>
-<i class="no-highlight">90</i>&nbsp;
-<b class="fc"><i class="no-highlight">91</i>&nbsp;        return balance;</b>
-<i class="no-highlight">92</i>&nbsp;    }
-<i class="no-highlight">93</i>&nbsp;
-<i class="no-highlight">94</i>&nbsp;    public Balance getBalanceByBalanceId(Long balanceId) {
-<b class="fc"><i class="no-highlight">95</i>&nbsp;        Optional&lt;Balance&gt; optionalBalance = repo.getAccountBalanceByBalanceId(balanceId);</b>
-<b class="fc"><i class="no-highlight">96</i>&nbsp;        if (optionalBalance.isEmpty()) throw new BalanceNotFoundException(&quot;Balance with id - &quot; + balanceId + &quot; not found!&quot;);</b>
-<b class="fc"><i class="no-highlight">97</i>&nbsp;        return optionalBalance.get();</b>
-<i class="no-highlight">98</i>&nbsp;    }
-<i class="no-highlight">99</i>&nbsp;}
-</div>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.tuum.cbs.service;
+&nbsp;
+&nbsp;import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
+&nbsp;import com.tuum.cbs.common.exceptions.InsufficientFundsException;
+&nbsp;import com.tuum.cbs.models.Balance;
+&nbsp;import com.tuum.cbs.models.Currency;
+&nbsp;import com.tuum.cbs.repositories.AccountsRepository;
+&nbsp;import lombok.RequiredArgsConstructor;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import org.springframework.transaction.annotation.Transactional;
+&nbsp;
+&nbsp;import java.math.BigDecimal;
+&nbsp;import java.time.Instant;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.time.ZoneId;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.UUID;
+&nbsp;
+&nbsp;@RequiredArgsConstructor
+&nbsp;@Service
+&nbsp;@Transactional
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;public class BalanceService {
+&nbsp;
+&nbsp;    private final AccountsRepository repo;
+&nbsp;    private final RabbitMQDESender mqDeSender;
+&nbsp;
+<b class="fc">&nbsp;    public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();</b>
+&nbsp;    private static final String CLASS_NAME = &quot;BalanceService&quot;;
+&nbsp;
+&nbsp;    // business logic for balances
+&nbsp;    public List&lt;Balance&gt; getBalanceByAccountId(UUID accId) {
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; get balances input: &quot; + accId);</b>
+<b class="fc">&nbsp;        List&lt;Balance&gt; balances = repo.getAccountBalance(accId);</b>
+<b class="fc">&nbsp;        if (balances.isEmpty()) throw new BalanceNotFoundException(&quot;Balances not found for this account!&quot;);</b>
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; got balances for: &quot; + accId);</b>
+<b class="fc">&nbsp;        return balances;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Balance getBalanceByAccountId(UUID accountId, Currency currency) {
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; get balance input: &quot; + accountId + &quot; &quot; + currency);</b>
+<b class="fc">&nbsp;        Optional&lt;Balance&gt; optionalBalance = repo.getAccountBalanceByIdAndCurrency(accountId, currency.name());</b>
+<b class="fc">&nbsp;        if (optionalBalance.isEmpty()) throw new BalanceNotFoundException(&quot;Balance for account with id - &quot; + accountId + &quot; not found!&quot;);</b>
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; got &quot; + currency + &quot; balance for: &quot; + accountId);</b>
+<b class="fc">&nbsp;        return optionalBalance.get();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Balance updateBalanceObj(Balance balance){
+<b class="fc">&nbsp;        Long balanceId = balance.getBalanceId();</b>
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; update balanceObj for balance id: &quot; + balanceId);</b>
+<b class="fc">&nbsp;        Balance initBalance = getBalanceByBalanceId(balanceId);</b>
+<b class="fc">&nbsp;        BigDecimal updatedAmount = initBalance.getAmount().add(balance.getAmount());</b>
+&nbsp;
+<b class="fc">&nbsp;        if (updatedAmount.compareTo(initBalance.getAmount()) == 0) {</b>
+&nbsp;            // do nothing
+<b class="nc">&nbsp;            return initBalance;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            balance.setAmount(updatedAmount);</b>
+<b class="fc">&nbsp;            repo.updateBalanceObj(balance);</b>
+&nbsp;            // notify consumers
+<b class="fc">&nbsp;            mqDeSender.publishToUpdateBalanceQueue(balance.toString());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; updated balanceObj for balance id: &quot; + balanceId);</b>
+<b class="fc">&nbsp;        return balance;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Balance updateBalance(Long balanceId, BigDecimal amount){
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; update balance for balance id: &quot; + balanceId);</b>
+&nbsp;        // get init balance
+<b class="fc">&nbsp;        Balance balance = getBalanceByBalanceId(balanceId);</b>
+&nbsp;        // do addition {always because sign changes in trx service already}
+<b class="fc">&nbsp;        BigDecimal updatedAmount = balance.getAmount().add(amount);</b>
+&nbsp;
+<b class="fc">&nbsp;        if (updatedAmount.compareTo(balance.getAmount()) == 0) {</b>
+&nbsp;            // do nothing, maybe early return is better here
+<b class="nc">&nbsp;            return balance;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            balance.setAmount(updatedAmount);</b>
+<b class="fc">&nbsp;            repo.updateBalanceAmount(updatedAmount, balanceId);</b>
+&nbsp;            // notify consumers
+<b class="fc">&nbsp;            mqDeSender.publishToUpdateBalanceQueue(balance.toString());</b>
+&nbsp;        }
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; updated balance for balance id: &quot; + balanceId);</b>
+<b class="fc">&nbsp;        return balance;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    //Trx layer calls this
+&nbsp;    public Balance updateBalanceByAccountId(UUID accountId, Currency currency, BigDecimal amount){
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; update &quot; + currency + &quot; balance for account with id: &quot; + accountId);</b>
+<b class="fc">&nbsp;        Balance balance = getBalanceByAccountId(accountId, currency);</b>
+<b class="fc">&nbsp;        BigDecimal updatedAmount = balance.getAmount().add(amount);</b>
+&nbsp;
+&nbsp;        // insufficient funds is only valid for outgoing trx at this point
+<b class="fc">&nbsp;        if (updatedAmount.compareTo(BigDecimal.ZERO) &lt; 0 &amp;&amp;</b>
+<b class="nc">&nbsp;                amount.compareTo(BigDecimal.ZERO) &lt; 0){</b>
+<b class="nc">&nbsp;            throw new InsufficientFundsException(&quot;Insufficient funds: account balance shouldn&#39;t goto negative&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        balance.setAmount(updatedAmount);</b>
+<b class="fc">&nbsp;        repo.updateBalanceAmount(updatedAmount, balance.getBalanceId());</b>
+&nbsp;        // notify consumers
+<b class="fc">&nbsp;        mqDeSender.publishToUpdateBalanceQueue(balance.toString());</b>
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; updated &quot; + currency + &quot; balance for account with id: &quot; + accountId);</b>
+<b class="fc">&nbsp;        return balance;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Balance getBalanceByBalanceId(Long balanceId) {
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; get balance for balance id: &quot; + balanceId);</b>
+<b class="fc">&nbsp;        Optional&lt;Balance&gt; optionalBalance = repo.getAccountBalanceByBalanceId(balanceId);</b>
+<b class="fc">&nbsp;        if (optionalBalance.isEmpty()) throw new BalanceNotFoundException(&quot;Balance with id - &quot; + balanceId + &quot; not found!&quot;);</b>
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; got balance for: &quot; + balanceId);</b>
+<b class="fc">&nbsp;        return optionalBalance.get();</b>
+&nbsp;    }
+&nbsp;}
+</code>
 </pre>
 </div>
 
@@ -197,18 +216,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     @*/
 
     if (!msie || msie && msie9) {
-        var codeBlock = document.getElementById('sourceCode');
-
-        if (codeBlock) {
-            hljs.highlightBlock(codeBlock);
-        }
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
     }
 })();
 </script>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-08-31 09:17</div>
+    <div style="float:right;">generated on 2023-09-15 07:27</div>
 </div>
 </body>
 </html>

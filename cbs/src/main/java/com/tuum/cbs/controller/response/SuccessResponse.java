@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class SuccessResponse {
-    private Object data;
+public class SuccessResponse<T> {
+    private T data;
     private String message;
 }

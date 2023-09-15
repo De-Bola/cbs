@@ -4,12 +4,14 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
   <title>Coverage Report > RabbitMQFOConfig</title>
   <style type="text/css">
     @import "../../css/coverage.css";
-    @import "../../css/highlight-idea.css";
+    @import "../../css/idea.min.css";
   </style>
-  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
 </head>
 
 <body>
@@ -89,72 +91,72 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.tuum.cbs.messaging;
-<i class="no-highlight">2</i>&nbsp;
-<i class="no-highlight">3</i>&nbsp;import lombok.extern.slf4j.Slf4j;
-<i class="no-highlight">4</i>&nbsp;import org.springframework.amqp.core.*;
-<i class="no-highlight">5</i>&nbsp;import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-<i class="no-highlight">6</i>&nbsp;import org.springframework.amqp.rabbit.core.RabbitTemplate;
-<i class="no-highlight">7</i>&nbsp;import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-<i class="no-highlight">8</i>&nbsp;import org.springframework.amqp.support.converter.MessageConverter;
-<i class="no-highlight">9</i>&nbsp;import org.springframework.beans.factory.annotation.Value;
-<i class="no-highlight">10</i>&nbsp;import org.springframework.context.annotation.Bean;
-<i class="no-highlight">11</i>&nbsp;import org.springframework.context.annotation.Configuration;
-<i class="no-highlight">12</i>&nbsp;
-<i class="no-highlight">13</i>&nbsp;
-<i class="no-highlight">14</i>&nbsp;@Configuration
-<b class="fc"><i class="no-highlight">15</i>&nbsp;@Slf4j</b>
-<b class="fc"><i class="no-highlight">16</i>&nbsp;public class RabbitMQFOConfig {</b>
-<i class="no-highlight">17</i>&nbsp;
-<i class="no-highlight">18</i>&nbsp;    @Value(&quot;${accounts.one.queue.name}&quot;)
-<i class="no-highlight">19</i>&nbsp;    String accountQueue1;
-<i class="no-highlight">20</i>&nbsp;
-<i class="no-highlight">21</i>&nbsp;    @Value(&quot;${accounts.two.queue.name}&quot;)
-<i class="no-highlight">22</i>&nbsp;    String accountQueue2;
-<i class="no-highlight">23</i>&nbsp;
-<i class="no-highlight">24</i>&nbsp;    @Value(&quot;${accounts.exchange.name}&quot;)
-<i class="no-highlight">25</i>&nbsp;    String accountFanoutExchange;
-<i class="no-highlight">26</i>&nbsp;
-<i class="no-highlight">27</i>&nbsp;    @Bean
-<i class="no-highlight">28</i>&nbsp;    Queue accountQueue1(){
-<b class="fc"><i class="no-highlight">29</i>&nbsp;        return new Queue(accountQueue1, true);</b>
-<i class="no-highlight">30</i>&nbsp;    }
-<i class="no-highlight">31</i>&nbsp;
-<i class="no-highlight">32</i>&nbsp;    @Bean
-<i class="no-highlight">33</i>&nbsp;    Queue accountQueue2(){
-<b class="fc"><i class="no-highlight">34</i>&nbsp;        return new Queue(accountQueue2, true);</b>
-<i class="no-highlight">35</i>&nbsp;    }
-<i class="no-highlight">36</i>&nbsp;
-<i class="no-highlight">37</i>&nbsp;    @Bean
-<i class="no-highlight">38</i>&nbsp;    FanoutExchange accountFanoutExchange(){
-<b class="fc"><i class="no-highlight">39</i>&nbsp;        return new FanoutExchange(accountFanoutExchange);</b>
-<i class="no-highlight">40</i>&nbsp;    }
-<i class="no-highlight">41</i>&nbsp;
-<i class="no-highlight">42</i>&nbsp;    @Bean
-<i class="no-highlight">43</i>&nbsp;    Binding accountBinding1(){
-<b class="fc"><i class="no-highlight">44</i>&nbsp;        return BindingBuilder.bind(accountQueue1()).to(accountFanoutExchange());</b>
-<i class="no-highlight">45</i>&nbsp;    }
-<i class="no-highlight">46</i>&nbsp;
-<i class="no-highlight">47</i>&nbsp;    @Bean
-<i class="no-highlight">48</i>&nbsp;    Binding accountBinding2(){
-<b class="fc"><i class="no-highlight">49</i>&nbsp;        return BindingBuilder.bind(accountQueue2()).to(accountFanoutExchange());</b>
-<i class="no-highlight">50</i>&nbsp;    }
-<i class="no-highlight">51</i>&nbsp;
-<i class="no-highlight">52</i>&nbsp;    @Bean
-<i class="no-highlight">53</i>&nbsp;    public MessageConverter fanoutMessageConverter(){
-<b class="fc"><i class="no-highlight">54</i>&nbsp;        return new Jackson2JsonMessageConverter();</b>
-<i class="no-highlight">55</i>&nbsp;    }
-<i class="no-highlight">56</i>&nbsp;
-<i class="no-highlight">57</i>&nbsp;    @Bean
-<i class="no-highlight">58</i>&nbsp;    public AmqpTemplate fanoutRabbitTemplate(ConnectionFactory connectionFactory){
-<b class="fc"><i class="no-highlight">59</i>&nbsp;        final RabbitTemplate template = new RabbitTemplate(connectionFactory);</b>
-<b class="fc"><i class="no-highlight">60</i>&nbsp;        template.setMessageConverter(fanoutMessageConverter());</b>
-<b class="fc"><i class="no-highlight">61</i>&nbsp;        return template;</b>
-<i class="no-highlight">62</i>&nbsp;    }
-<i class="no-highlight">63</i>&nbsp;
-<i class="no-highlight">64</i>&nbsp;}
-<i class="no-highlight">65</i>&nbsp;
-</div>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.tuum.cbs.messaging;
+&nbsp;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.amqp.core.*;
+&nbsp;import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+&nbsp;import org.springframework.amqp.rabbit.core.RabbitTemplate;
+&nbsp;import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+&nbsp;import org.springframework.amqp.support.converter.MessageConverter;
+&nbsp;import org.springframework.beans.factory.annotation.Value;
+&nbsp;import org.springframework.context.annotation.Bean;
+&nbsp;import org.springframework.context.annotation.Configuration;
+&nbsp;
+&nbsp;
+&nbsp;@Configuration
+<b class="fc">&nbsp;@Slf4j</b>
+<b class="fc">&nbsp;public class RabbitMQFOConfig {</b>
+&nbsp;
+&nbsp;    @Value(&quot;${accounts.one.queue.name}&quot;)
+&nbsp;    String accountQueue1;
+&nbsp;
+&nbsp;    @Value(&quot;${accounts.two.queue.name}&quot;)
+&nbsp;    String accountQueue2;
+&nbsp;
+&nbsp;    @Value(&quot;${accounts.exchange.name}&quot;)
+&nbsp;    String accountFanoutExchange;
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    Queue accountQueue1(){
+<b class="fc">&nbsp;        return new Queue(accountQueue1, true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    Queue accountQueue2(){
+<b class="fc">&nbsp;        return new Queue(accountQueue2, true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    FanoutExchange accountFanoutExchange(){
+<b class="fc">&nbsp;        return new FanoutExchange(accountFanoutExchange);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    Binding accountBinding1(){
+<b class="fc">&nbsp;        return BindingBuilder.bind(accountQueue1()).to(accountFanoutExchange());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    Binding accountBinding2(){
+<b class="fc">&nbsp;        return BindingBuilder.bind(accountQueue2()).to(accountFanoutExchange());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    public MessageConverter fanoutMessageConverter(){
+<b class="fc">&nbsp;        return new Jackson2JsonMessageConverter();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    public AmqpTemplate fanoutRabbitTemplate(ConnectionFactory connectionFactory){
+<b class="fc">&nbsp;        final RabbitTemplate template = new RabbitTemplate(connectionFactory);</b>
+<b class="fc">&nbsp;        template.setMessageConverter(fanoutMessageConverter());</b>
+<b class="fc">&nbsp;        return template;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+&nbsp;
+</code>
 </pre>
 </div>
 
@@ -169,18 +171,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     @*/
 
     if (!msie || msie && msie9) {
-        var codeBlock = document.getElementById('sourceCode');
-
-        if (codeBlock) {
-            hljs.highlightBlock(codeBlock);
-        }
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
     }
 })();
 </script>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-08-31 09:17</div>
+    <div style="float:right;">generated on 2023-09-15 07:27</div>
 </div>
 </body>
 </html>

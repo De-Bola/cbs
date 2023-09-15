@@ -99,9 +99,7 @@ class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Test
     void saveShouldReturnNewAccountWithBalances() {
         given(repo.insertAccount(captor.capture())).willReturn(1);
-
         Account savedAccount = uut.save(testAccountDao);
-        System.out.println("Service test : " + savedAccount);
         assertEquals(bal_List.size(), savedAccount.getBalanceList().size());
         verify(repo, times(1)).insertAccount(captor.capture());
         assertThat(savedAccount).isNotNull();
@@ -126,7 +124,6 @@ class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
         when(balService.getBalanceByAccountId(UUID.fromString(accountId))).thenReturn(bal_List);
         when(repo.getAccountById(testAccount.getAccountId())).thenReturn(Optional.ofNullable(testAccount));
         Account foundAccount = uut.getByAccountId(accountId);
-        System.out.println(foundAccount);
         verify(repo, times(1)).getAccountById(testAccount.getAccountId());
         assertThat(foundAccount).usingRecursiveComparison().isEqualTo(testAccount);
     }
