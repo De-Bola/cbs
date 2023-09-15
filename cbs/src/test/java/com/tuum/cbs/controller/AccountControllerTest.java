@@ -2,7 +2,6 @@ package com.tuum.cbs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tuum.cbs.common.exceptions.BadRequestException;
-import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
@@ -12,18 +11,13 @@ import com.tuum.cbs.service.RabbitMQFOSender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -128,7 +122,7 @@ class AccountControllerTest {
         final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
         when(accountService.save(captor.capture())).thenReturn(testAccount);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-        MvcResult mvcResult = mockMvc.perform(
+        mockMvc.perform(
                 post("/api/accounts/account-open")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonBody)
