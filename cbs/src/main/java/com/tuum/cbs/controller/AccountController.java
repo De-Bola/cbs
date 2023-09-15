@@ -5,7 +5,6 @@ import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.service.AccountService;
 import com.tuum.cbs.service.RabbitMQFOSender;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.UUID;
 
-@RequiredArgsConstructor
+
 @RestController
 @RequestMapping("/api/accounts")
 @Slf4j
@@ -26,6 +24,11 @@ public class AccountController {
     private final RabbitMQFOSender mqFoSender;
     public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
     private static final String CLASS_NAME = "AccountController";
+
+    public AccountController(AccountService service, RabbitMQFOSender mqFoSender) {
+        this.service = service;
+        this.mqFoSender = mqFoSender;
+    }
 
     @PostMapping("/account-open")
     public ResponseEntity<SuccessResponse<Account>> createAccount(@RequestBody AccountDao accountDao) {

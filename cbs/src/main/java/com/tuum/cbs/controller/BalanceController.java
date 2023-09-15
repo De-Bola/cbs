@@ -5,7 +5,6 @@ import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.service.BalanceService;
 import com.tuum.cbs.service.RabbitMQDESender;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/balances")
 @Slf4j
@@ -28,6 +26,11 @@ public class BalanceController {
     private final RabbitMQDESender mqDeSender;
     public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
     private static final String CLASS_NAME = "BalanceController";
+
+    public BalanceController(BalanceService service, RabbitMQDESender mqDeSender) {
+        this.service = service;
+        this.mqDeSender = mqDeSender;
+    }
 
     @GetMapping("/balance")
     public ResponseEntity<SuccessResponse<Balance>> getBalance(@RequestParam(name = "accountId") String accountId, @RequestParam(name = "currency") Currency currency) {

@@ -1,4 +1,4 @@
-package com.tuum.cbs.common;
+package com.tuum.cbs.controller;
 
 import com.tuum.cbs.common.exceptions.*;
 import com.tuum.cbs.controller.response.ErrorResponse;

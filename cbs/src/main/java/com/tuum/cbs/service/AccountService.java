@@ -7,7 +7,6 @@ import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.AccountsRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +16,12 @@ import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-@RequiredArgsConstructor
+
 @Service
 @Transactional
 @Slf4j
@@ -30,6 +32,12 @@ public class AccountService {
     private final RabbitMQDESender mqDeSender;
     public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
     private static final String CLASS_NAME = "AccountService";
+
+    public AccountService(AccountsRepository repo, BalanceService balService, RabbitMQDESender mqDeSender) {
+        this.repo = repo;
+        this.balService = balService;
+        this.mqDeSender = mqDeSender;
+    }
 
     /**
      * for creating a new account

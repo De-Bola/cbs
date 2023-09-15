@@ -1,6 +1,5 @@
 package com.tuum.cbs.service;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +10,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class RabbitMQDESender {
 
@@ -34,6 +32,11 @@ public class RabbitMQDESender {
     String balancesRoutingKey2;
 
     private final RabbitTemplate rabbitTemplate;
+
+    public RabbitMQDESender(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
+
     private static final String PREFIX = "Message sent to consumer: ";
     private static final String CLASS_NAME = "RabbitMQDESender";
     public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();

@@ -1,27 +1,21 @@
 package com.tuum.cbs.controller;
 
-import com.tuum.cbs.common.exceptions.BadRequestException;
-import com.tuum.cbs.common.exceptions.TrxNotFoundException;
-import com.tuum.cbs.common.exceptions.TrxZeroSumException;
 import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Transaction;
 import com.tuum.cbs.models.TransactionDao;
 import com.tuum.cbs.service.RabbitMQDESender;
 import com.tuum.cbs.service.TransactionService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/transactions")
 @Slf4j
@@ -30,6 +24,11 @@ public class TransactionController {
     private final RabbitMQDESender rabbitMQDESender;
     public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
     private static final String CLASS_NAME = "TransactionController";
+
+    public TransactionController(TransactionService transactionService, RabbitMQDESender rabbitMQDESender) {
+        this.transactionService = transactionService;
+        this.rabbitMQDESender = rabbitMQDESender;
+    }
 
     @PostMapping("/transaction-create")
     public ResponseEntity<SuccessResponse<Transaction>> createTransaction(@RequestBody TransactionDao trxDao) {
