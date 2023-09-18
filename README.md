@@ -82,7 +82,7 @@
 4. Endpoints are not REST-ful 
 5. ~~System out is not really the best approach on logging...~~ 
 6. ~~Too much logic on controller level~~ 
-7. No locking... What would happen in case of concurrent same account transactions? 
+7. ~~No locking... What would happen in case of concurrent same account transactions?~~ 
 8. Much easier and cleaner would be to use db sequence for unique id instead of a central Java function. 
 9. And even if you use Java function, create a Util class with static function for it instead of having it part of a certain service... 
 10. ~~Quite a few TODOs still around the project and a lot of comments, which is not considered clean code.~~ 

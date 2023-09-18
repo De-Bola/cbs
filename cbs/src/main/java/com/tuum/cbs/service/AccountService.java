@@ -9,6 +9,7 @@ import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.AccountsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -23,7 +24,7 @@ import java.util.UUID;
 
 
 @Service
-@Transactional
+@Transactional(isolation = Isolation.SERIALIZABLE)
 @Slf4j
 public class AccountService {
 
