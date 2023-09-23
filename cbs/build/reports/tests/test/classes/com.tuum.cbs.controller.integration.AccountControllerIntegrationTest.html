@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - AccountControllerIntegrationTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>AccountControllerIntegrationTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.tuum.cbs.controller.integration.html">com.tuum.cbs.controller.integration</a> &gt; AccountControllerIntegrationTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">4</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.803s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">createAccountITest()</td>
+<td class="success">0.014s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getAccountITestShouldReturnNotFound()</td>
+<td class="success">0.734s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getAccountITestShouldReturnSuccess()</td>
+<td class="success">0.052s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-09-23T22:47:49.084+03:00  INFO 29984 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.tuum.cbs.controller.integration.AccountControllerIntegrationTest]: AccountControllerIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-09-23T22:47:49.103+03:00  INFO 29984 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.tuum.cbs.CbsTuumTaskApplication for test class com.tuum.cbs.controller.integration.AccountControllerIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.2)
+
+2023-09-23T22:47:49.206+03:00  INFO 29984 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : Starting AccountControllerIntegrationTest using Java 17 with PID 29984 (started by bhumm in C:\Users\bhumm\Downloads\cbs\cbs)
+2023-09-23T22:47:49.207+03:00  INFO 29984 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-09-23T22:47:49.552+03:00  WARN 29984 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'accountsRepository' and 'com.tuum.cbs.repositories.AccountsRepository' mapperInterface. Bean already defined with the same name!
+2023-09-23T22:47:49.552+03:00  WARN 29984 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : Skipping MapperFactoryBean with name 'transactionsRepository' and 'com.tuum.cbs.repositories.TransactionsRepository' mapperInterface. Bean already defined with the same name!
+2023-09-23T22:47:49.552+03:00  WARN 29984 --- [    Test worker] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.tuum.cbs.repositories]' package. Please check your configuration.
+2023-09-23T22:47:49.961+03:00  INFO 29984 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 0 (http)
+2023-09-23T22:47:49.986+03:00  INFO 29984 --- [    Test worker] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-09-23T22:47:49.987+03:00  INFO 29984 --- [    Test worker] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.11]
+2023-09-23T22:47:50.124+03:00  INFO 29984 --- [    Test worker] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-09-23T22:47:50.125+03:00  INFO 29984 --- [    Test worker] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 914 ms
+2023-09-23T22:47:50.132+03:00  INFO 29984 --- [    Test worker] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2023-09-23T22:47:50.271+03:00  INFO 29984 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2023-09-23T22:47:50.719+03:00  INFO 29984 --- [    Test worker] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 54984 (http) with context path ''
+2023-09-23T22:47:50.724+03:00  INFO 29984 --- [    Test worker] t.c.c.i.AccountControllerIntegrationTest : Started AccountControllerIntegrationTest in 1.571 seconds (process running for 8.2)
+2023-09-23T22:47:50.731+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:50.731+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:50.731+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 6cb5ab43-36d2-40c2-a349-aef72d6b6cfb
+2023-09-23T22:47:50.732+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 6178098427
+2023-09-23T22:47:50.980+03:00  INFO 29984 --- [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-09-23T22:47:50.981+03:00  INFO 29984 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2023-09-23T22:47:50.982+03:00  INFO 29984 --- [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2023-09-23T22:47:50.997+03:00  INFO 29984 --- [o-auto-1-exec-1] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='6178098427', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.021+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService create account input: AccountDao{country='6178098427', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.022+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.022+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: f6de7894-ac84-48f7-a1eb-51ebace130df
+2023-09-23T22:47:51.022+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.022+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.022+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 6d3a0df1-b800-48c7-bf41-89f7c4b020d7
+2023-09-23T22:47:51.022+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 6007178455
+2023-09-23T22:47:51.062+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService create balance records with balance list
+2023-09-23T22:47:51.118+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService created balance records!
+2023-09-23T22:47:51.121+03:00  INFO 29984 --- [o-auto-1-exec-1] o.s.a.r.c.CachingConnectionFactory       : Attempting to connect to: [localhost:5672]
+2023-09-23T22:47:51.222+03:00  INFO 29984 --- [o-auto-1-exec-1] o.s.a.r.c.CachingConnectionFactory       : Created new connection: rabbitConnectionFactory#40477d52:0/SimpleConnection@37eafd [delegate=amqp://guest@127.0.0.1:5672/, localPort=54986]
+2023-09-23T22:47:51.308+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  [Balance{balanceId=6007178455, amount=0.00, currency=EUR, accountId=f6de7894-ac84-48f7-a1eb-51ebace130df}]
+2023-09-23T22:47:51.308+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService created account with id: f6de7894-ac84-48f7-a1eb-51ebace130df
+2023-09-23T22:47:51.311+03:00  INFO 29984 --- [o-auto-1-exec-1] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController created new account with id: f6de7894-ac84-48f7-a1eb-51ebace130df
+2023-09-23T22:47:51.312+03:00  INFO 29984 --- [o-auto-1-exec-1] com.tuum.cbs.service.RabbitMQFOSender    : [2023-09-23T19:47:45.607571100Z]: RabbitMQFOSender Message sent to consumer:  Account{accountId=f6de7894-ac84-48f7-a1eb-51ebace130df, customerId='Sweden', country='6178098427', balanceList=[Balance{balanceId=6007178455, amount=0.00, currency=EUR, accountId=f6de7894-ac84-48f7-a1eb-51ebace130df}]}
+2023-09-23T22:47:51.381+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.381+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 1c716b23-4440-4330-b237-5636ebd9c445
+2023-09-23T22:47:51.395+03:00  INFO 29984 --- [o-auto-1-exec-2] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController get account input: 1c716b23-4440-4330-b237-5636ebd9c445
+2023-09-23T22:47:51.396+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService get account input: 1c716b23-4440-4330-b237-5636ebd9c445
+404 : &quot;{&quot;code&quot;:&quot;404&quot;,&quot;message&quot;:&quot;Account with id - 1c716b23-4440-4330-b237-5636ebd9c445 not found!&quot;,&quot;timestamp&quot;:&quot;2023-09-23T19:47:45.617570200Z&quot;}&quot;
+2023-09-23T22:47:51.464+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.465+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.465+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 7f504e73-f889-4d93-b6d3-9ea8fd5dfc50
+2023-09-23T22:47:51.465+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 7393279056
+2023-09-23T22:47:51.469+03:00  INFO 29984 --- [o-auto-1-exec-3] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='7393279056', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.470+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService create account input: AccountDao{country='7393279056', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.470+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.471+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.471+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.471+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.471+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 8e5dbe04-c170-476b-992c-b3943f94c274
+2023-09-23T22:47:51.471+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 9610062452
+2023-09-23T22:47:51.472+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService create balance records with balance list
+2023-09-23T22:47:51.473+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService created balance records!
+2023-09-23T22:47:51.474+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  [Balance{balanceId=9610062452, amount=0.00, currency=EUR, accountId=0096612b-3a7c-421d-aa5e-de580de7c10c}]
+2023-09-23T22:47:51.474+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService created account with id: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.474+03:00  INFO 29984 --- [o-auto-1-exec-3] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController created new account with id: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.474+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.RabbitMQFOSender    : [2023-09-23T19:47:45.607571100Z]: RabbitMQFOSender Message sent to consumer:  Account{accountId=0096612b-3a7c-421d-aa5e-de580de7c10c, customerId='Sweden', country='7393279056', balanceList=[Balance{balanceId=9610062452, amount=0.00, currency=EUR, accountId=0096612b-3a7c-421d-aa5e-de580de7c10c}]}
+2023-09-23T22:47:51.496+03:00  INFO 29984 --- [o-auto-1-exec-4] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController get account input: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.497+03:00  INFO 29984 --- [o-auto-1-exec-4] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService get account input: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.501+03:00  INFO 29984 --- [o-auto-1-exec-4] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService get balances input: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.510+03:00  INFO 29984 --- [o-auto-1-exec-4] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService got balances for: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.511+03:00  INFO 29984 --- [o-auto-1-exec-4] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService got account with id: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.511+03:00  INFO 29984 --- [o-auto-1-exec-4] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController got account with id: 0096612b-3a7c-421d-aa5e-de580de7c10c
+2023-09-23T22:47:51.518+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.518+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.519+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 1c015809-539d-4d86-a503-18f6cdc3bf8b
+2023-09-23T22:47:51.519+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 8016079755
+2023-09-23T22:47:51.523+03:00  INFO 29984 --- [o-auto-1-exec-5] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='8016079755', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.524+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService create account input: AccountDao{country='8016079755', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.524+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.524+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 5cf36c9a-6361-496f-a75e-8a3f6ce20a43
+2023-09-23T22:47:51.524+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.524+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.524+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 15a513f9-7c9f-41d7-b569-1a73f33a98df
+2023-09-23T22:47:51.524+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 4294080735
+2023-09-23T22:47:51.525+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService create balance records with balance list
+2023-09-23T22:47:51.526+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService created balance records!
+2023-09-23T22:47:51.526+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  [Balance{balanceId=4294080735, amount=0.00, currency=EUR, accountId=5cf36c9a-6361-496f-a75e-8a3f6ce20a43}]
+2023-09-23T22:47:51.526+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService created account with id: 5cf36c9a-6361-496f-a75e-8a3f6ce20a43
+2023-09-23T22:47:51.526+03:00  INFO 29984 --- [o-auto-1-exec-5] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController created new account with id: 5cf36c9a-6361-496f-a75e-8a3f6ce20a43
+2023-09-23T22:47:51.527+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.RabbitMQFOSender    : [2023-09-23T19:47:45.607571100Z]: RabbitMQFOSender Message sent to consumer:  Account{accountId=5cf36c9a-6361-496f-a75e-8a3f6ce20a43, customerId='Sweden', country='8016079755', balanceList=[Balance{balanceId=4294080735, amount=0.00, currency=EUR, accountId=5cf36c9a-6361-496f-a75e-8a3f6ce20a43}]}
+2023-09-23T22:47:51.533+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.533+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.533+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 4a649b0d-26e6-49eb-9b90-8d091430a83a
+2023-09-23T22:47:51.533+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 3915644986
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.2.1</a> at Sep 23, 2023, 10:47:53 PM</p>
+</div>
+</div>
+</body>
+</html>

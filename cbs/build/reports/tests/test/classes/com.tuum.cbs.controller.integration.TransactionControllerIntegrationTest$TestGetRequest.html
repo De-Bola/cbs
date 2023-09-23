@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - TestGetRequest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>TestGetRequest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.tuum.cbs.controller.integration.html">com.tuum.cbs.controller.integration</a> &gt; TransactionControllerIntegrationTest$TestGetRequest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.107s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.025s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getTransactionITest()</td>
+<td class="success">0.043s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">getTransactionITestShouldReturnNotFound()</td>
+<td class="success">0.039s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-09-23T22:47:51.626+03:00  INFO 29984 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.tuum.cbs.controller.integration.TransactionControllerIntegrationTest$TestGetRequest]: TestGetRequest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-09-23T22:47:51.630+03:00  INFO 29984 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.tuum.cbs.CbsTuumTaskApplication for test class com.tuum.cbs.controller.integration.TransactionControllerIntegrationTest$TestGetRequest
+2023-09-23T22:47:51.636+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.636+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.637+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 9cb44fee-901d-4869-a99a-d576865ff21a
+2023-09-23T22:47:51.637+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 9558957594
+2023-09-23T22:47:51.640+03:00  INFO 29984 --- [o-auto-1-exec-9] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='9558957594', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.641+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService create account input: AccountDao{country='9558957594', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.641+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.641+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 19d3fa17-89b4-4442-8c93-437ae89c1ee0
+2023-09-23T22:47:51.641+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.641+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.641+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0884c028-ff89-40cb-9627-ff14c645cd95
+2023-09-23T22:47:51.641+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 8263105941
+2023-09-23T22:47:51.642+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService create balance records with balance list
+2023-09-23T22:47:51.644+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService created balance records!
+2023-09-23T22:47:51.645+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  [Balance{balanceId=8263105941, amount=0.00, currency=EUR, accountId=19d3fa17-89b4-4442-8c93-437ae89c1ee0}]
+2023-09-23T22:47:51.645+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService created account with id: 19d3fa17-89b4-4442-8c93-437ae89c1ee0
+2023-09-23T22:47:51.645+03:00  INFO 29984 --- [o-auto-1-exec-9] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController created new account with id: 19d3fa17-89b4-4442-8c93-437ae89c1ee0
+2023-09-23T22:47:51.646+03:00  INFO 29984 --- [o-auto-1-exec-9] com.tuum.cbs.service.RabbitMQFOSender    : [2023-09-23T19:47:45.607571100Z]: RabbitMQFOSender Message sent to consumer:  Account{accountId=19d3fa17-89b4-4442-8c93-437ae89c1ee0, customerId='Sweden', country='9558957594', balanceList=[Balance{balanceId=8263105941, amount=0.00, currency=EUR, accountId=19d3fa17-89b4-4442-8c93-437ae89c1ee0}]}
+2023-09-23T22:47:51.653+03:00  INFO 29984 --- [-auto-1-exec-10] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController create trx with input: TransactionDao{accountId=19d3fa17-89b4-4442-8c93-437ae89c1ee0, amount=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+2023-09-23T22:47:51.653+03:00  INFO 29984 --- [-auto-1-exec-10] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService create trx with input: TransactionDao{accountId=19d3fa17-89b4-4442-8c93-437ae89c1ee0, amount=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+2023-09-23T22:47:51.654+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.654+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.654+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: e6c13989-948d-4d0c-8ab1-f5d9b25ca1ad
+2023-09-23T22:47:51.654+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0421435821
+2023-09-23T22:47:51.654+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.common.util.TrxSignUtil     : [2023-09-23T19:47:51.577135600Z]: TrxSignUtil add sign to trx based on trxType
+2023-09-23T22:47:51.654+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.common.util.TrxSignUtil     : [2023-09-23T19:47:51.577135600Z]: TrxSignUtil added positive sign to trx as trxType: IN
+2023-09-23T22:47:51.654+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService update EUR balance for account with id: 19d3fa17-89b4-4442-8c93-437ae89c1ee0
+2023-09-23T22:47:51.654+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService get balance input: 19d3fa17-89b4-4442-8c93-437ae89c1ee0 EUR
+2023-09-23T22:47:51.656+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService got EUR balance for: 19d3fa17-89b4-4442-8c93-437ae89c1ee0
+2023-09-23T22:47:51.657+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  Balance{balanceId=8263105941, amount=76.50, currency=EUR, accountId=19d3fa17-89b4-4442-8c93-437ae89c1ee0}
+2023-09-23T22:47:51.657+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService updated EUR balance for account with id: 19d3fa17-89b4-4442-8c93-437ae89c1ee0
+2023-09-23T22:47:51.658+03:00  INFO 29984 --- [-auto-1-exec-10] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService created trx with id: 421435821
+2023-09-23T22:47:51.658+03:00  INFO 29984 --- [-auto-1-exec-10] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController created trx with id: 421435821
+2023-09-23T22:47:51.659+03:00  INFO 29984 --- [-auto-1-exec-10] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  Transaction{trxId=421435821, accountId=19d3fa17-89b4-4442-8c93-437ae89c1ee0, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+2023-09-23T22:47:51.662+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.662+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: a17ace1f-67ec-4a23-8292-a1f55b0e47ba
+2023-09-23T22:47:51.665+03:00  INFO 29984 --- [o-auto-1-exec-1] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController get trx(s) for account with id: a17ace1f-67ec-4a23-8292-a1f55b0e47ba
+2023-09-23T22:47:51.666+03:00  INFO 29984 --- [o-auto-1-exec-1] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService get trx(s) for account with id: a17ace1f-67ec-4a23-8292-a1f55b0e47ba
+404 : &quot;{&quot;code&quot;:&quot;404&quot;,&quot;message&quot;:&quot;No Transactions found!&quot;,&quot;timestamp&quot;:&quot;2023-09-23T19:47:45.617570200Z&quot;}&quot;
+2023-09-23T22:47:51.677+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.677+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.677+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 121efd49-d8b8-410e-8e0a-84f8a628fb18
+2023-09-23T22:47:51.677+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 6405132056
+2023-09-23T22:47:51.680+03:00  INFO 29984 --- [o-auto-1-exec-2] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='6405132056', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.681+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService create account input: AccountDao{country='6405132056', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.681+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.681+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.681+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.681+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.681+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: b5645968-520e-4296-9925-328bfb5ec397
+2023-09-23T22:47:51.682+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 3234850711
+2023-09-23T22:47:51.685+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService create balance records with balance list
+2023-09-23T22:47:51.690+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService created balance records!
+2023-09-23T22:47:51.690+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  [Balance{balanceId=3234850711, amount=0.00, currency=EUR, accountId=6e8f58b7-6b47-4efb-8982-7f07cea5f5a7}]
+2023-09-23T22:47:51.690+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService created account with id: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.691+03:00  INFO 29984 --- [o-auto-1-exec-2] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController created new account with id: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.691+03:00  INFO 29984 --- [o-auto-1-exec-2] com.tuum.cbs.service.RabbitMQFOSender    : [2023-09-23T19:47:45.607571100Z]: RabbitMQFOSender Message sent to consumer:  Account{accountId=6e8f58b7-6b47-4efb-8982-7f07cea5f5a7, customerId='Sweden', country='6405132056', balanceList=[Balance{balanceId=3234850711, amount=0.00, currency=EUR, accountId=6e8f58b7-6b47-4efb-8982-7f07cea5f5a7}]}
+2023-09-23T22:47:51.699+03:00  INFO 29984 --- [o-auto-1-exec-3] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController create trx with input: TransactionDao{accountId=6e8f58b7-6b47-4efb-8982-7f07cea5f5a7, amount=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+2023-09-23T22:47:51.700+03:00  INFO 29984 --- [o-auto-1-exec-3] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService create trx with input: TransactionDao{accountId=6e8f58b7-6b47-4efb-8982-7f07cea5f5a7, amount=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+2023-09-23T22:47:51.701+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.701+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.702+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: f6bbde15-f92e-449d-a1b3-974c6312eb22
+2023-09-23T22:47:51.702+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 4791576354
+2023-09-23T22:47:51.702+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.TrxSignUtil     : [2023-09-23T19:47:51.577135600Z]: TrxSignUtil add sign to trx based on trxType
+2023-09-23T22:47:51.702+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.common.util.TrxSignUtil     : [2023-09-23T19:47:51.577135600Z]: TrxSignUtil added positive sign to trx as trxType: IN
+2023-09-23T22:47:51.702+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService update EUR balance for account with id: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.702+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService get balance input: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7 EUR
+2023-09-23T22:47:51.704+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService got EUR balance for: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.705+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  Balance{balanceId=3234850711, amount=76.50, currency=EUR, accountId=6e8f58b7-6b47-4efb-8982-7f07cea5f5a7}
+2023-09-23T22:47:51.705+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService updated EUR balance for account with id: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.705+03:00  INFO 29984 --- [o-auto-1-exec-3] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService created trx with id: 4791576354
+2023-09-23T22:47:51.705+03:00  INFO 29984 --- [o-auto-1-exec-3] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController created trx with id: 4791576354
+2023-09-23T22:47:51.706+03:00  INFO 29984 --- [o-auto-1-exec-3] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  Transaction{trxId=4791576354, accountId=6e8f58b7-6b47-4efb-8982-7f07cea5f5a7, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+2023-09-23T22:47:51.709+03:00  INFO 29984 --- [o-auto-1-exec-4] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController get trx(s) for account with id: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.710+03:00  INFO 29984 --- [o-auto-1-exec-4] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService get trx(s) for account with id: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.711+03:00  INFO 29984 --- [o-auto-1-exec-4] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService got trx(s) for account with id: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.714+03:00  INFO 29984 --- [o-auto-1-exec-4] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController got 1 trx(s) for account with id: 6e8f58b7-6b47-4efb-8982-7f07cea5f5a7
+2023-09-23T22:47:51.721+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.721+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.721+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 675458f6-0e7c-45c9-b240-424e232d6201
+2023-09-23T22:47:51.721+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 2030765569
+2023-09-23T22:47:51.724+03:00  INFO 29984 --- [o-auto-1-exec-5] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='2030765569', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.725+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService create account input: AccountDao{country='2030765569', customerId='Sweden', currencies=[EUR]}
+2023-09-23T22:47:51.725+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.725+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: c40baac3-f247-4092-b2ef-759dd81ea682
+2023-09-23T22:47:51.725+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.725+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.725+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 934ffdda-ec00-4268-80a8-90da50f3b3aa
+2023-09-23T22:47:51.725+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0078961578
+2023-09-23T22:47:51.726+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService create balance records with balance list
+2023-09-23T22:47:51.727+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService created balance records!
+2023-09-23T22:47:51.727+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  [Balance{balanceId=78961578, amount=0.00, currency=EUR, accountId=c40baac3-f247-4092-b2ef-759dd81ea682}]
+2023-09-23T22:47:51.727+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.AccountService      : [2023-09-23T19:47:45.601571Z]: AccountService created account with id: c40baac3-f247-4092-b2ef-759dd81ea682
+2023-09-23T22:47:51.727+03:00  INFO 29984 --- [o-auto-1-exec-5] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController created new account with id: c40baac3-f247-4092-b2ef-759dd81ea682
+2023-09-23T22:47:51.728+03:00  INFO 29984 --- [o-auto-1-exec-5] com.tuum.cbs.service.RabbitMQFOSender    : [2023-09-23T19:47:45.607571100Z]: RabbitMQFOSender Message sent to consumer:  Account{accountId=c40baac3-f247-4092-b2ef-759dd81ea682, customerId='Sweden', country='2030765569', balanceList=[Balance{balanceId=78961578, amount=0.00, currency=EUR, accountId=c40baac3-f247-4092-b2ef-759dd81ea682}]}
+2023-09-23T22:47:51.735+03:00  INFO 29984 --- [o-auto-1-exec-6] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController create trx with input: TransactionDao{accountId=c40baac3-f247-4092-b2ef-759dd81ea682, amount=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService create trx with input: TransactionDao{accountId=c40baac3-f247-4092-b2ef-759dd81ea682, amount=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: eb99cfa4-1415-423a-9b61-fb127b16ee47
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0791106119
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.common.util.TrxSignUtil     : [2023-09-23T19:47:51.577135600Z]: TrxSignUtil add sign to trx based on trxType
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.common.util.TrxSignUtil     : [2023-09-23T19:47:51.577135600Z]: TrxSignUtil added positive sign to trx as trxType: IN
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService update EUR balance for account with id: c40baac3-f247-4092-b2ef-759dd81ea682
+2023-09-23T22:47:51.736+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService get balance input: c40baac3-f247-4092-b2ef-759dd81ea682 EUR
+2023-09-23T22:47:51.738+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService got EUR balance for: c40baac3-f247-4092-b2ef-759dd81ea682
+2023-09-23T22:47:51.739+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  Balance{balanceId=78961578, amount=76.50, currency=EUR, accountId=c40baac3-f247-4092-b2ef-759dd81ea682}
+2023-09-23T22:47:51.739+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.service.BalanceService      : [2023-09-23T19:47:45.582567800Z]: BalanceService updated EUR balance for account with id: c40baac3-f247-4092-b2ef-759dd81ea682
+2023-09-23T22:47:51.739+03:00  INFO 29984 --- [o-auto-1-exec-6] c.tuum.cbs.service.TransactionService    : [2023-09-23T19:47:45.630569200Z]: TransactionService created trx with id: 791106119
+2023-09-23T22:47:51.740+03:00  INFO 29984 --- [o-auto-1-exec-6] c.t.c.controller.TransactionController   : [2023-09-23T19:47:45.635570300Z]: TransactionController created trx with id: 791106119
+2023-09-23T22:47:51.740+03:00  INFO 29984 --- [o-auto-1-exec-6] com.tuum.cbs.service.RabbitMQDESender    : [2023-09-23T19:47:45.580567900Z]: RabbitMQDESender Message sent to consumer:  Transaction{trxId=791106119, accountId=c40baac3-f247-4092-b2ef-759dd81ea682, amount=76.50, balanceAfterTrx=76.50, currency=EUR, trxType=IN, description='This is a test!'}
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.2.1</a> at Sep 23, 2023, 10:47:53 PM</p>
+</div>
+</div>
+</body>
+</html>

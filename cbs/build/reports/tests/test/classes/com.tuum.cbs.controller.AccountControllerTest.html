@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - AccountControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>AccountControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.tuum.cbs.controller.html">com.tuum.cbs.controller</a> &gt; AccountControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">4</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.829s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">checkContextStarts()</td>
+<td class="success">checkContextStarts()</td>
+<td class="success">0.005s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Verifies that AccountDao is sent to Service layer</td>
+<td class="success">createAccountShouldReturn201()</td>
+<td class="success">0.153s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Verifies that AccountDetails is returned from Service layer</td>
+<td class="success">createAccountShouldReturnAccountDetails()</td>
+<td class="success">0.081s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">Verifies that error response is given when something goes wrong</td>
+<td class="success">createAccountShouldReturnErrorResponse()</td>
+<td class="success">0.590s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2023-09-23T22:47:47.468+03:00  INFO 29984 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.tuum.cbs.controller.AccountControllerTest]: AccountControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2023-09-23T22:47:47.496+03:00  INFO 29984 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.tuum.cbs.CbsTuumTaskApplication for test class com.tuum.cbs.controller.AccountControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.1.2)
+
+2023-09-23T22:47:47.537+03:00  INFO 29984 --- [    Test worker] c.t.c.controller.AccountControllerTest   : Starting AccountControllerTest using Java 17 with PID 29984 (started by bhumm in C:\Users\bhumm\Downloads\cbs\cbs)
+2023-09-23T22:47:47.537+03:00  INFO 29984 --- [    Test worker] c.t.c.controller.AccountControllerTest   : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2023-09-23T22:47:48.187+03:00  INFO 29984 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-23T22:47:48.187+03:00  INFO 29984 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-23T22:47:48.197+03:00  INFO 29984 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 2 ms
+2023-09-23T22:47:48.216+03:00  INFO 29984 --- [    Test worker] c.t.c.controller.AccountControllerTest   : Started AccountControllerTest in 0.702 seconds (process running for 5.693)
+2023-09-23T22:47:48.248+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.248+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 3d83b7d2-e371-42ca-ae5d-20a62eeab678
+2023-09-23T22:47:48.249+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.249+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.249+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 813bcdd4-6f5e-4648-bb6e-f8d0af74d3ba
+2023-09-23T22:47:48.250+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 8256544698
+2023-09-23T22:47:48.250+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.250+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.251+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 36b3d20b-5b26-4db4-901b-cf05d911fe12
+2023-09-23T22:47:48.251+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 2673609234
+2023-09-23T22:47:48.254+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.254+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.254+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 9e0f0ca4-f1c1-4e5c-abed-09633feac2f3
+2023-09-23T22:47:48.255+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 6296839923
+2023-09-23T22:47:48.255+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.255+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.255+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 22adfcd4-ad49-4a01-9138-8014ab575b1a
+2023-09-23T22:47:48.256+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0182055706
+2023-09-23T22:47:48.417+03:00  INFO 29984 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-23T22:47:48.418+03:00  INFO 29984 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-23T22:47:48.419+03:00  INFO 29984 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-23T22:47:48.627+03:00  INFO 29984 --- [    Test worker] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='Estonia', customerId='null', currencies=[EUR, SEK]}
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/accounts
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json&quot;, Content-Length:&quot;66&quot;]
+             Body = &lt;no character encoding set&gt;
+    Session Attrs = {}
+
+Handler:
+             Type = com.tuum.cbs.controller.AccountController
+           Method = com.tuum.cbs.controller.AccountController#createAccount(AccountDao)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.tuum.cbs.common.exceptions.BadRequestException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 400
+    Error message = null
+          Headers = [Content-Type:&quot;application/json&quot;]
+     Content type = application/json
+             Body = {&quot;code&quot;:&quot;400&quot;,&quot;message&quot;:&quot;Invalid entry: customer ID cannot be blank&quot;,&quot;timestamp&quot;:&quot;2023-09-23T19:47:45.617570200Z&quot;}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-09-23T22:47:48.830+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.831+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 8fee917d-2b46-46ff-93fc-f047c75bfcfd
+2023-09-23T22:47:48.831+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.831+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.831+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 3c12a67a-e5af-47e2-aebc-13a01d33cfd1
+2023-09-23T22:47:48.832+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0166030289
+2023-09-23T22:47:48.832+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.832+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.832+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: efa5caef-f302-4353-b2ac-a780c4aa7890
+2023-09-23T22:47:48.832+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 1923450000
+2023-09-23T22:47:48.832+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.832+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.833+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 6a2739b2-03eb-4a4e-bff7-56fca0a462d4
+2023-09-23T22:47:48.833+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 9542348500
+2023-09-23T22:47:48.833+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.833+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.833+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 5fe4bdeb-a40b-4948-8234-82a28e3c6b39
+2023-09-23T22:47:48.833+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 4392702777
+2023-09-23T22:47:48.845+03:00  INFO 29984 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-23T22:47:48.845+03:00  INFO 29984 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-23T22:47:48.846+03:00  INFO 29984 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2023-09-23T22:47:48.847+03:00  INFO 29984 --- [    Test worker] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='Estonia', customerId='1923450000', currencies=[EUR, SEK]}
+2023-09-23T22:47:48.850+03:00  INFO 29984 --- [    Test worker] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController created new account with id: 8fee917d-2b46-46ff-93fc-f047c75bfcfd
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/accounts
+       Parameters = {}
+          Headers = [Content-Type:&quot;application/json&quot;, Content-Length:&quot;74&quot;]
+             Body = &lt;no character encoding set&gt;
+    Session Attrs = {}
+
+Handler:
+             Type = com.tuum.cbs.controller.AccountController
+           Method = com.tuum.cbs.controller.AccountController#createAccount(AccountDao)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 201
+    Error message = null
+          Headers = [Content-Type:&quot;application/json&quot;]
+     Content type = application/json
+             Body = {&quot;data&quot;:{&quot;accountId&quot;:&quot;8fee917d-2b46-46ff-93fc-f047c75bfcfd&quot;,&quot;customerId&quot;:&quot;1923450000&quot;,&quot;country&quot;:&quot;Estonia&quot;,&quot;balanceList&quot;:[{&quot;balanceId&quot;:166030289,&quot;amount&quot;:0.00,&quot;currency&quot;:&quot;EUR&quot;,&quot;accountId&quot;:&quot;8fee917d-2b46-46ff-93fc-f047c75bfcfd&quot;},{&quot;balanceId&quot;:9542348500,&quot;amount&quot;:0.00,&quot;currency&quot;:&quot;EUR&quot;,&quot;accountId&quot;:&quot;8fee917d-2b46-46ff-93fc-f047c75bfcfd&quot;},{&quot;balanceId&quot;:4392702777,&quot;amount&quot;:0.00,&quot;currency&quot;:&quot;SEK&quot;,&quot;accountId&quot;:&quot;8fee917d-2b46-46ff-93fc-f047c75bfcfd&quot;}]}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2023-09-23T22:47:48.912+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.913+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 14bdab6f-140d-4aba-aeff-c756bb1a7406
+2023-09-23T22:47:48.913+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.913+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.913+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: ec0e3df1-9c23-437f-84d2-8958279a1615
+2023-09-23T22:47:48.913+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0544075285
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 423e24c4-f96c-4178-bb7c-4a84a5803a07
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 7776212487
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 2934d590-89e0-4fc0-b2da-39c202ee0c5a
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 9211012186
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:48.914+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:48.915+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: f0ea74c2-69b5-4e68-84da-a7e9466a6c24
+2023-09-23T22:47:48.915+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 0119617572
+2023-09-23T22:47:48.916+03:00  INFO 29984 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-09-23T22:47:48.916+03:00  INFO 29984 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-09-23T22:47:48.916+03:00  INFO 29984 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-09-23T22:47:48.917+03:00  INFO 29984 --- [    Test worker] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController create account input: AccountDao{country='Estonia', customerId='7776212487', currencies=[EUR, SEK]}
+2023-09-23T22:47:48.918+03:00  INFO 29984 --- [    Test worker] c.tuum.cbs.controller.AccountController  : [2023-09-23T19:47:45.608574800Z]: AccountController created new account with id: 14bdab6f-140d-4aba-aeff-c756bb1a7406
+2023-09-23T22:47:49.068+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:49.069+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 1a180cff-1b73-497f-81f4-8a9c58c37b8d
+2023-09-23T22:47:49.069+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:49.069+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:49.069+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 71957257-0f38-4c54-adea-9ea03e2ab3e5
+2023-09-23T22:47:49.069+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 3183623141
+2023-09-23T22:47:49.069+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:49.069+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:49.070+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 2db13d08-8f24-4793-8874-52bcd26cba28
+2023-09-23T22:47:49.070+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 9009191464
+2023-09-23T22:47:49.070+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:49.070+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:49.070+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: f358a847-ac18-41c6-9426-28ae93a8b678
+2023-09-23T22:47:49.070+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 4212092536
+2023-09-23T22:47:49.071+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random id
+2023-09-23T22:47:49.071+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil generate a random uuid
+2023-09-23T22:47:49.071+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 04a12100-d550-4eaa-be2c-69a211461a59
+2023-09-23T22:47:49.071+03:00  INFO 29984 --- [    Test worker] com.tuum.cbs.common.util.IdUtil          : [2023-09-23T19:47:48.246142900Z]: IdUtil random id generated: 5700556377
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 8.2.1</a> at Sep 23, 2023, 10:47:53 PM</p>
+</div>
+</div>
+</body>
+</html>
