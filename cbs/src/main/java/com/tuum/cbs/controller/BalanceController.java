@@ -38,7 +38,7 @@ public class BalanceController {
         Balance balance = service.getBalanceByAccountId(UUID.fromString(accountId), currency);
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got " + currency + " balance for: " + accountId);
         return new ResponseEntity<>(
-                new SuccessResponse<Balance>(balance, "Balance found!"),
+                new SuccessResponse<>(balance, "Balance found!"),
                 HttpStatus.OK
         );
     }
@@ -49,7 +49,7 @@ public class BalanceController {
         List<Balance> balances = service.getBalanceByAccountId(UUID.fromString(accountId));
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got balances for: " + accountId);
         return new ResponseEntity<>(
-                new SuccessResponse<List<Balance>>(balances, "Balance list found!"),
+                new SuccessResponse<>(balances, "Balance list found!"),
                 HttpStatus.OK
         );
     }
@@ -60,7 +60,7 @@ public class BalanceController {
         Balance balance = service.getBalanceByBalanceId(balanceId);
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got balance for: " + balanceId);
         return new ResponseEntity<>(
-                new SuccessResponse<Balance>(balance, "Balance found!"),
+                new SuccessResponse<>(balance, "Balance found!"),
                 HttpStatus.OK
         );
     }
@@ -73,7 +73,7 @@ public class BalanceController {
         mqDeSender.publishToUpdateBalanceQueue(balance.toString());
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " updated balance for balance id: " + balanceId);
         return new ResponseEntity<>(
-                new SuccessResponse<Balance>(balance, "Balance updated!"),
+                new SuccessResponse<>(balance, "Balance updated!"),
                 HttpStatus.OK
         );
     }

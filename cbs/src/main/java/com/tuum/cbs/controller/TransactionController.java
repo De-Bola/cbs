@@ -40,7 +40,7 @@ public class TransactionController {
             rabbitMQDESender.publishToTrxCreditQueue(newTrx.toString());
         } else rabbitMQDESender.publishToTrxDebitQueue(newTrx.toString());
         return new ResponseEntity<>(
-                new SuccessResponse<Transaction>(newTrx, "Transaction created!"),
+                new SuccessResponse<>(newTrx, "Transaction created!"),
                 HttpStatus.CREATED
         );
     }
@@ -51,7 +51,7 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.getTrxByAccountId(UUID.fromString(accountId));
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got " + transactions.size() + " trx(s) for account with id: " + accountId);
         return new ResponseEntity<>(
-                new SuccessResponse<List<Transaction>>(transactions, "Transactions found!"),
+                new SuccessResponse<>(transactions, "Transactions found!"),
                 HttpStatus.OK
         );
     }

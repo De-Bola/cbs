@@ -8,8 +8,6 @@ import com.tuum.cbs.common.util.TrxSignUtil;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Transaction;
 import com.tuum.cbs.models.TransactionDao;
-import com.tuum.cbs.models.TransactionType;
-import com.tuum.cbs.repositories.AccountsRepository;
 import com.tuum.cbs.repositories.TransactionsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -71,7 +69,8 @@ public class TransactionService {
         final Long transactionId = IdUtil.generateRandomId();
 
         BigDecimal newAmount = TrxSignUtil.addSignToAmount(transactionDao.getAmount(), transactionDao.getTrxType());
-        Balance newBalance = balanceService.updateBalanceByAccountId(transactionDao.getAccountId(), transactionDao.getCurrency(), newAmount);
+        Balance newBalance = balanceService
+                .updateBalanceByAccountId(transactionDao.getAccountId(), transactionDao.getCurrency(), newAmount);
 
         transaction = Transaction.builder()
                 .accountId(transactionDao.getAccountId())

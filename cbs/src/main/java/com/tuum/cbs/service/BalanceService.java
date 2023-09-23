@@ -3,7 +3,6 @@ package com.tuum.cbs.service;
 import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
 import com.tuum.cbs.common.exceptions.InsufficientFundsException;
 import com.tuum.cbs.common.util.IdUtil;
-import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.AccountsRepository;
@@ -65,7 +64,9 @@ public class BalanceService {
     public Balance getBalanceByAccountId(UUID accountId, Currency currency) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balance input: " + accountId + " " + currency);
         Optional<Balance> optionalBalance = repo.getAccountBalanceByIdAndCurrency(accountId, currency.name());
-        if (optionalBalance.isEmpty()) throw new BalanceNotFoundException("Balance for account with id - " + accountId + " not found!");
+        if (optionalBalance.isEmpty()) {
+            throw new BalanceNotFoundException("Balance for account with id - " + accountId + " not found!");
+        }
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got " + currency + " balance for: " + accountId);
         return optionalBalance.get();
     }
@@ -120,7 +121,8 @@ public class BalanceService {
      * Trx layer calls this
      * */
     public Balance updateBalanceByAccountId(UUID accountId, Currency currency, BigDecimal amount){
-        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " update " + currency + " balance for account with id: " + accountId);
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " update " + currency +
+                " balance for account with id: " + accountId);
         Balance balance = getBalanceByAccountId(accountId, currency);
         BigDecimal updatedAmount = balance.getAmount().add(amount);
 
@@ -134,7 +136,8 @@ public class BalanceService {
         repo.updateBalanceAmount(updatedAmount, balance.getBalanceId());
         // notify consumers
         mqDeSender.publishToUpdateBalanceQueue(balance.toString());
-        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " updated " + currency + " balance for account with id: " + accountId);
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " updated " + currency +
+                " balance for account with id: " + accountId);
         return balance;
     }
 
@@ -144,7 +147,9 @@ public class BalanceService {
     public Balance getBalanceByBalanceId(Long balanceId) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balance for balance id: " + balanceId);
         Optional<Balance> optionalBalance = repo.getAccountBalanceByBalanceId(balanceId);
-        if (optionalBalance.isEmpty()) throw new BalanceNotFoundException("Balance with id - " + balanceId + " not found!");
+        if (optionalBalance.isEmpty()) {
+            throw new BalanceNotFoundException("Balance with id - " + balanceId + " not found!");
+        }
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got balance for: " + balanceId);
         return optionalBalance.get();
     }

@@ -21,7 +21,6 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -114,9 +113,7 @@ class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     void getAccountByIdShouldThrowAccountNotFoundException() {
         String accountId = "d1fed854-8e94-40f5-ac03-7c663f7b3a08";
         when(repo.getAccountById(UUID.fromString(accountId))).thenThrow(AccountNotFoundException.class);
-        assertThatThrownBy(() -> {
-            uut.getByAccountId(accountId);
-        }).isInstanceOf(AccountNotFoundException.class);
+        assertThatThrownBy(() -> uut.getByAccountId(accountId)).isInstanceOf(AccountNotFoundException.class);
         verify(repo, times(1)).getAccountById(UUID.fromString(accountId));
     }
 

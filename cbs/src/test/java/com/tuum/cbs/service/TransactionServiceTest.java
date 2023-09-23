@@ -93,7 +93,8 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     @Test
     void createTransactionShouldTakeDaoAndReturnTrxObj() {
         //given this stub return number of inserts
-        when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(balance);
+        when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class)))
+                .thenReturn(balance);
         given(repo.insertTransaction(captor.capture())).willReturn(1);
         Transaction createdTrx = uut.createTransaction(testTrxDao);
         assertEquals(testTrxDao.getAccountId(), createdTrx.getAccountId());
@@ -113,7 +114,8 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
                 .currency(balance.getCurrency())
                 .build();
         //given this stub return number of inserts
-        when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(newBalance);
+        when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class)))
+                .thenReturn(newBalance);
         given(repo.insertTransaction(any(Transaction.class))).willReturn(1);
         Transaction createdTrx = uut.createTransaction(testTrxDao);
         verify(repo, times(1)).insertTransaction(captor.capture());
@@ -132,7 +134,8 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
                 .currency(balance.getCurrency())
                 .build();
         //given this stub return number of inserts
-        when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(newBalance);
+        when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class)))
+                .thenReturn(newBalance);
         given(repo.insertTransaction(any(Transaction.class))).willReturn(1);
         Transaction createdTrx = uut.createTransaction(testTrxDao);
         verify(repo, times(1)).insertTransaction(captor.capture());

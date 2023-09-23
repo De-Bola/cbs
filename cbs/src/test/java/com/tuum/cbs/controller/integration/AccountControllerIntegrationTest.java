@@ -61,7 +61,8 @@ public class AccountControllerIntegrationTest {
     public void createAccountITest() throws URISyntaxException {
         AccountDao accountDao = new AccountDao(customerId, country, currencies);
         uri = new URI(baseUrl + "/accounts/account-open");
-        ResponseEntity<SuccessResponse> responseEntity = restTemplate.postForEntity(uri, accountDao, SuccessResponse.class);
+        ResponseEntity<SuccessResponse> responseEntity = restTemplate
+                .postForEntity(uri, accountDao, SuccessResponse.class);
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getBody()).isNotNull();
         assertEquals(responseEntity.getStatusCode(), HttpStatusCode.valueOf(201));
@@ -72,7 +73,8 @@ public class AccountControllerIntegrationTest {
         // make post request first
         AccountDao accountDao = new AccountDao(customerId, country, currencies);
         uri = new URI(baseUrl + "/accounts/account-open");
-        ResponseEntity<SuccessResponse> postResponseEntity = restTemplate.postForEntity(uri, accountDao, SuccessResponse.class);
+        ResponseEntity<SuccessResponse> postResponseEntity = restTemplate
+                .postForEntity(uri, accountDao, SuccessResponse.class);
         // make sure post request was successful
         assertThat(postResponseEntity).isNotNull();
         assertThat(postResponseEntity.getBody()).isNotNull();
@@ -100,7 +102,8 @@ public class AccountControllerIntegrationTest {
         // make post request first
         AccountDao accountDao = new AccountDao(customerId, country, currencies);
         uri = new URI(baseUrl + "/accounts/account-open");
-        ResponseEntity<SuccessResponse> postResponseEntity = restTemplate.postForEntity(uri, accountDao, SuccessResponse.class);
+        ResponseEntity<SuccessResponse> postResponseEntity = restTemplate
+                .postForEntity(uri, accountDao, SuccessResponse.class);
         // make sure post request was successful
         assertThat(postResponseEntity).isNotNull();
         assertThat(postResponseEntity.getBody()).isNotNull();
@@ -110,10 +113,9 @@ public class AccountControllerIntegrationTest {
         // change the uri to url
         String url = baseUrl + "/accounts/account?id={id}";
 
-        Exception exception = assertThrows(HttpClientErrorException.NotFound.class, ()->{
-            restTemplate.getForEntity(url, ErrorResponse.class, params);
-        });
-
+        Exception exception = assertThrows(HttpClientErrorException.NotFound.class,
+                ()-> restTemplate.getForEntity(url, ErrorResponse.class, params));
+        System.out.println(exception.getMessage());
     }
 
 }

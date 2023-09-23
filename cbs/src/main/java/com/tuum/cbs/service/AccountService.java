@@ -6,15 +6,12 @@ import com.tuum.cbs.common.util.IdUtil;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
-import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.AccountsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -72,7 +69,7 @@ public class AccountService {
                         .customerId(accountDao.getCustomerId())
                         .build();
         final List<Balance> balList = balService.createBalanceList(accountDao.getCurrencies(), accountId);
-        account.setBalanceList(new ArrayList<Balance>(balList));
+        account.setBalanceList(new ArrayList<>(balList));
         repo.insertAccount(account);
         balService.createBalance(balList);
         // notify consumers

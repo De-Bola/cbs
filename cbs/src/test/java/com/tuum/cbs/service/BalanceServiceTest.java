@@ -16,7 +16,6 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -76,7 +75,8 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Test
     void getBalanceByAccountIdAndCurrencyShouldReturnBalance() {
         UUID accountId = UUID.fromString("eb01ed99-59fc-48f2-8bcc-5f245e3a17bd");
-        given(repo.getAccountBalanceByIdAndCurrency(accountId, "EUR")).willReturn(java.util.Optional.ofNullable(bal));
+        given(repo.getAccountBalanceByIdAndCurrency(accountId, "EUR"))
+                .willReturn(java.util.Optional.ofNullable(bal));
         Balance foundBalance = uut.getBalanceByAccountId(accountId, Currency.EUR);
         assertThat(foundBalance).isNotNull();
         assertThat(accountId).isNotEqualByComparingTo(foundBalance.getAccountId());
@@ -84,7 +84,7 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     }
 
     @Test
-    void updateBalanceObjShouldReturnUpdatedBalanceObj() throws SQLException {
+    void updateBalanceObjShouldReturnUpdatedBalanceObj() {
         Balance newBal = new Balance(balanceId, new BigDecimal("5.00"), Currency.EUR, bal.getAccountId());
         when(repo.getAccountBalanceByBalanceId(bal.getBalanceId())).thenReturn(java.util.Optional.of(newBal));
         given(repo.updateBalanceObj(any(Balance.class))).willReturn(anyInt());
@@ -119,12 +119,15 @@ class BalanceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Test
     void updateBalanceByAccountIdShouldReturnUpdatedBalanceObj() {
         Balance newBal = new Balance(balanceId, new BigDecimal("5.00"), Currency.EUR, bal.getAccountId());
-        when(repo.getAccountBalanceByIdAndCurrency(bal.getAccountId(), bal.getCurrency().name())).thenReturn(java.util.Optional.of(newBal));
+        when(repo.getAccountBalanceByIdAndCurrency(bal.getAccountId(), bal.getCurrency().name()))
+                .thenReturn(java.util.Optional.of(newBal));
         given(repo.updateBalanceAmount(any(BigDecimal.class), any(Long.class))).willReturn(1);
-        Balance updatedBalance = uut.updateBalanceByAccountId(newBal.getAccountId(), newBal.getCurrency(), newBal.getAmount());
+        Balance updatedBalance = uut
+                .updateBalanceByAccountId(newBal.getAccountId(), newBal.getCurrency(), newBal.getAmount());
         assertThat(updatedBalance).isNotNull();
         assertThat(balanceId).isEqualByComparingTo(updatedBalance.getBalanceId());
         assertThat(bal.getAmount()).isNotEqualByComparingTo(updatedBalance.getAmount());
-        verify(repo, times(1)).getAccountBalanceByIdAndCurrency(newBal.getAccountId(), newBal.getCurrency().name());
+        verify(repo, times(1))
+                .getAccountBalanceByIdAndCurrency(newBal.getAccountId(), newBal.getCurrency().name());
     }
 }

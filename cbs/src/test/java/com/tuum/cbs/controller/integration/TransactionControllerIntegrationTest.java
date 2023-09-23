@@ -58,7 +58,8 @@ public class TransactionControllerIntegrationTest {
 
         AccountDao accountDao = new AccountDao(customerId, country, currencies);
         uri = new URI(baseUrl + "/accounts/account-open");
-        ResponseEntity<SuccessResponse> responseEntity = restTemplate.postForEntity(uri, accountDao, SuccessResponse.class);
+        ResponseEntity<SuccessResponse> responseEntity = restTemplate
+                .postForEntity(uri, accountDao, SuccessResponse.class);
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getBody()).isNotNull();
         assertEquals(responseEntity.getStatusCode(), HttpStatusCode.valueOf(201));
@@ -84,7 +85,8 @@ public class TransactionControllerIntegrationTest {
                     currencies.get(0), TransactionType.IN, description);
 
             uri = new URI(baseUrl + "/transactions/transaction-create");
-            ResponseEntity<SuccessResponse> responseEntity = restTemplate.postForEntity(uri, trxDao, SuccessResponse.class);
+            ResponseEntity<SuccessResponse> responseEntity = restTemplate
+                    .postForEntity(uri, trxDao, SuccessResponse.class);
             assertThat(responseEntity).isNotNull();
             assertThat(responseEntity.getBody()).isNotNull();
             assertEquals(responseEntity.getStatusCode(), HttpStatusCode.valueOf(201));
@@ -95,7 +97,8 @@ public class TransactionControllerIntegrationTest {
             Map<String, UUID> params = Collections.singletonMap("id", accountId);
             // change the uri to url
             String url = baseUrl + "/transactions/get?id={id}";
-            ResponseEntity<SuccessResponse> getResponseEntity = restTemplate.getForEntity(url, SuccessResponse.class, params);
+            ResponseEntity<SuccessResponse> getResponseEntity = restTemplate
+                    .getForEntity(url, SuccessResponse.class, params);
             // final assertions
             assertThat(getResponseEntity).isNotNull();
             assertThat(getResponseEntity.getBody()).isNotNull();
@@ -108,9 +111,9 @@ public class TransactionControllerIntegrationTest {
             // change the uri to url
             String url = baseUrl + "/transactions/get?id={id}";
 
-            Exception exception = assertThrows(HttpClientErrorException.NotFound.class, ()->{
-                restTemplate.getForEntity(url, ErrorResponse.class, params);
-            });
+            Exception exception = assertThrows(HttpClientErrorException.NotFound.class,
+                    ()-> restTemplate.getForEntity(url, ErrorResponse.class, params));
+            System.out.println(exception.getMessage());
         }
 
     }
@@ -124,7 +127,8 @@ public class TransactionControllerIntegrationTest {
                 currencies.get(0), TransactionType.IN, description);
 
         uri = new URI(baseUrl + "/transactions/transaction-create");
-        ResponseEntity<SuccessResponse> responseEntity = restTemplate.postForEntity(uri, trxDao, SuccessResponse.class);
+        ResponseEntity<SuccessResponse> responseEntity = restTemplate
+                .postForEntity(uri, trxDao, SuccessResponse.class);
         assertThat(responseEntity).isNotNull();
         assertThat(responseEntity.getBody()).isNotNull();
         assertEquals(responseEntity.getStatusCode(), HttpStatusCode.valueOf(201));

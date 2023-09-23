@@ -38,7 +38,7 @@ public class AccountController {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " created new account with id: " + accountId);
         mqFoSender.sendToFanoutXchange(account.toString());
         return new ResponseEntity<>(
-                new SuccessResponse<Account>(account, "Account created!"),
+                new SuccessResponse<>(account, "Account created!"),
                 HttpStatus.CREATED
         );
     }
@@ -49,7 +49,7 @@ public class AccountController {
         Account account = service.getByAccountId(accountId);
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got account with id: " + accountId);
         return new ResponseEntity<>(
-                new SuccessResponse<Account>(account, "Account found!"),
+                new SuccessResponse<>(account, "Account found!"),
                 HttpStatus.OK
         );
     }

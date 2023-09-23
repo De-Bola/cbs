@@ -113,7 +113,9 @@ class AccountControllerTest {
         ).andExpect(status().isCreated()).andReturn();
         verify(accountService, times(1)).save(any(AccountDao.class));
         final Object capturedValue = captor.getValue();
-        assertThat(capturedValue).usingRecursiveComparison().ignoringFields("accountId").isEqualTo(testAccountDao);
+        assertThat(capturedValue).usingRecursiveComparison()
+                .ignoringFields("accountId")
+                .isEqualTo(testAccountDao);
     }
 
     @Test
@@ -137,7 +139,8 @@ class AccountControllerTest {
     void createAccountShouldReturnErrorResponse() throws Exception {
         testAccountDao.setCustomerId(null);
         final String jsonBody = objectMapper.writeValueAsString(testAccountDao);
-        when(accountService.save(captor.capture())).thenThrow(new BadRequestException("Invalid entry: customer ID cannot be blank"));
+        when(accountService.save(captor.capture()))
+                .thenThrow(new BadRequestException("Invalid entry: customer ID cannot be blank"));
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         mockMvc.perform(
                         post("/api/accounts/account-open")
