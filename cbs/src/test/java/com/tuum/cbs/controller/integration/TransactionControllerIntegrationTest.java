@@ -57,7 +57,7 @@ public class TransactionControllerIntegrationTest {
         currencies.add(EUR);
 
         AccountDao accountDao = new AccountDao(customerId, country, currencies);
-        uri = new URI(baseUrl + "/accounts/account-open");
+        uri = new URI(baseUrl + "/accounts");
         ResponseEntity<SuccessResponse> responseEntity = restTemplate
                 .postForEntity(uri, accountDao, SuccessResponse.class);
         assertThat(responseEntity).isNotNull();
@@ -84,7 +84,7 @@ public class TransactionControllerIntegrationTest {
             TransactionDao trxDao = new TransactionDao(accountId, new BigDecimal("76.50"),
                     currencies.get(0), TransactionType.IN, description);
 
-            uri = new URI(baseUrl + "/transactions/transaction-create");
+            uri = new URI(baseUrl + "/transactions");
             ResponseEntity<SuccessResponse> responseEntity = restTemplate
                     .postForEntity(uri, trxDao, SuccessResponse.class);
             assertThat(responseEntity).isNotNull();
@@ -94,11 +94,10 @@ public class TransactionControllerIntegrationTest {
 
         @Test
         public void getTransactionITest() {
-            Map<String, UUID> params = Collections.singletonMap("id", accountId);
             // change the uri to url
-            String url = baseUrl + "/transactions/get?id={id}";
+            String url = baseUrl + "/accounts/{accountId}/transactions";
             ResponseEntity<SuccessResponse> getResponseEntity = restTemplate
-                    .getForEntity(url, SuccessResponse.class, params);
+                    .getForEntity(url, SuccessResponse.class, accountId);
             // final assertions
             assertThat(getResponseEntity).isNotNull();
             assertThat(getResponseEntity.getBody()).isNotNull();
@@ -107,12 +106,11 @@ public class TransactionControllerIntegrationTest {
 
         @Test()
         public void getTransactionITestShouldReturnNotFound() {
-            Map<String, UUID> params = Collections.singletonMap("id", IdUtil.generateUUID());
             // change the uri to url
-            String url = baseUrl + "/transactions/get?id={id}";
+            String url = baseUrl + "/accounts/{accountId}/transactions";
 
             Exception exception = assertThrows(HttpClientErrorException.NotFound.class,
-                    ()-> restTemplate.getForEntity(url, ErrorResponse.class, params));
+                    ()-> restTemplate.getForEntity(url, ErrorResponse.class, IdUtil.generateUUID()));
             System.out.println(exception.getMessage());
         }
 
@@ -126,7 +124,7 @@ public class TransactionControllerIntegrationTest {
         TransactionDao trxDao = new TransactionDao(accountId, new BigDecimal("65.85"),
                 currencies.get(0), TransactionType.IN, description);
 
-        uri = new URI(baseUrl + "/transactions/transaction-create");
+        uri = new URI(baseUrl + "/transactions");
         ResponseEntity<SuccessResponse> responseEntity = restTemplate
                 .postForEntity(uri, trxDao, SuccessResponse.class);
         assertThat(responseEntity).isNotNull();

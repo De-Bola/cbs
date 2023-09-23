@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/transactions")
+@RequestMapping("/api")
 @Slf4j
 public class TransactionController {
     private final TransactionService transactionService;
@@ -30,7 +30,7 @@ public class TransactionController {
         this.rabbitMQDESender = rabbitMQDESender;
     }
 
-    @PostMapping("/transaction-create")
+    @PostMapping("/transactions")
     public ResponseEntity<SuccessResponse<Transaction>> createTransaction(@RequestBody TransactionDao trxDao) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " create trx with input: " + trxDao);
         Transaction newTrx = transactionService.createTransaction(trxDao);
@@ -45,8 +45,8 @@ public class TransactionController {
         );
     }
 
-    @GetMapping("/get")
-    public ResponseEntity<SuccessResponse<List<Transaction>>> getTransactions(@RequestParam(name = "id") String accountId){
+    @GetMapping("/accounts/{accountId}/transactions")
+    public ResponseEntity<SuccessResponse<List<Transaction>>> getTransactions(@PathVariable String accountId){
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get trx(s) for account with id: " + accountId);
         List<Transaction> transactions = transactionService.getTrxByAccountId(UUID.fromString(accountId));
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got " + transactions.size() + " trx(s) for account with id: " + accountId);

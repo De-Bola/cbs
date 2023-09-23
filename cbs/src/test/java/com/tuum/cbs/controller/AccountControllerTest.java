@@ -107,7 +107,7 @@ class AccountControllerTest {
         when(accountService.save(captor.capture())).thenReturn(testAccount);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         mockMvc.perform(
-                post("/api/accounts/account-open")
+                post("/api/accounts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonBody)
         ).andExpect(status().isCreated()).andReturn();
@@ -125,7 +125,7 @@ class AccountControllerTest {
         when(accountService.save(captor.capture())).thenReturn(testAccount);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         mockMvc.perform(
-                post("/api/accounts/account-open")
+                post("/api/accounts")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonBody)
         ).andExpect(status().isCreated()).andDo(print())
@@ -143,7 +143,7 @@ class AccountControllerTest {
                 .thenThrow(new BadRequestException("Invalid entry: customer ID cannot be blank"));
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
         mockMvc.perform(
-                        post("/api/accounts/account-open")
+                        post("/api/accounts")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonBody)
                 ).andExpect(status().isBadRequest()).andDo(print())

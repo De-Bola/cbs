@@ -60,7 +60,7 @@ public class AccountControllerIntegrationTest {
     @Test
     public void createAccountITest() throws URISyntaxException {
         AccountDao accountDao = new AccountDao(customerId, country, currencies);
-        uri = new URI(baseUrl + "/accounts/account-open");
+        uri = new URI(baseUrl + "/accounts");
         ResponseEntity<SuccessResponse> responseEntity = restTemplate
                 .postForEntity(uri, accountDao, SuccessResponse.class);
         assertThat(responseEntity).isNotNull();
@@ -72,7 +72,7 @@ public class AccountControllerIntegrationTest {
     public void getAccountITestShouldReturnSuccess() throws URISyntaxException, JsonProcessingException {
         // make post request first
         AccountDao accountDao = new AccountDao(customerId, country, currencies);
-        uri = new URI(baseUrl + "/accounts/account-open");
+        uri = new URI(baseUrl + "/accounts");
         ResponseEntity<SuccessResponse> postResponseEntity = restTemplate
                 .postForEntity(uri, accountDao, SuccessResponse.class);
         // make sure post request was successful
@@ -87,10 +87,9 @@ public class AccountControllerIntegrationTest {
         Account account = mapper.readValue(jsonStr, Account.class); // then read
         // set @RequestParams for get request
         UUID accountId = account.getAccountId();
-        Map<String, UUID> params = Collections.singletonMap("id", accountId);
         // change the uri to url
-        String url = baseUrl + "/accounts/account?id={id}";
-        ResponseEntity<Account> getResponseEntity = restTemplate.getForEntity(url, Account.class, params);
+        String url = baseUrl + "/accounts/{accountId}";
+        ResponseEntity<Account> getResponseEntity = restTemplate.getForEntity(url, Account.class, accountId);
         // final assertions
         assertThat(getResponseEntity).isNotNull();
         assertThat(getResponseEntity.getBody()).isNotNull();
@@ -101,7 +100,7 @@ public class AccountControllerIntegrationTest {
     public void getAccountITestShouldReturnNotFound() throws URISyntaxException {
         // make post request first
         AccountDao accountDao = new AccountDao(customerId, country, currencies);
-        uri = new URI(baseUrl + "/accounts/account-open");
+        uri = new URI(baseUrl + "/accounts");
         ResponseEntity<SuccessResponse> postResponseEntity = restTemplate
                 .postForEntity(uri, accountDao, SuccessResponse.class);
         // make sure post request was successful
@@ -109,12 +108,10 @@ public class AccountControllerIntegrationTest {
         assertThat(postResponseEntity.getBody()).isNotNull();
         assertEquals(postResponseEntity.getStatusCode(), HttpStatusCode.valueOf(201));
 
-        Map<String, UUID> params = Collections.singletonMap("id", UUID.randomUUID());
         // change the uri to url
-        String url = baseUrl + "/accounts/account?id={id}";
-
+        String url = baseUrl + "/accounts/{accountId}";
         Exception exception = assertThrows(HttpClientErrorException.NotFound.class,
-                ()-> restTemplate.getForEntity(url, ErrorResponse.class, params));
+                ()-> restTemplate.getForEntity(url, ErrorResponse.class, IdUtil.generateUUID()));
         System.out.println(exception.getMessage());
     }
 

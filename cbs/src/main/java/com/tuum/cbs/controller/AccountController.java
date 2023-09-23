@@ -16,7 +16,7 @@ import java.time.ZoneId;
 
 
 @RestController
-@RequestMapping("/api/accounts")
+@RequestMapping("/api")
 @Slf4j
 public class AccountController {
 
@@ -30,7 +30,7 @@ public class AccountController {
         this.mqFoSender = mqFoSender;
     }
 
-    @PostMapping("/account-open")
+    @PostMapping("/accounts")
     public ResponseEntity<SuccessResponse<Account>> createAccount(@RequestBody AccountDao accountDao) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " create account input: " + accountDao);
         Account account = service.save(accountDao);
@@ -43,8 +43,8 @@ public class AccountController {
         );
     }
 
-    @GetMapping("/account")
-    public ResponseEntity<SuccessResponse<Account>> getAccount(@RequestParam(name = "id") String accountId) {
+    @GetMapping("/accounts/{accountId}")
+    public ResponseEntity<SuccessResponse<Account>> getAccount(@PathVariable String accountId) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get account input: " + accountId);
         Account account = service.getByAccountId(accountId);
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got account with id: " + accountId);

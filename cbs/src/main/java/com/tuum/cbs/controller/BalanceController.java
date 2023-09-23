@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/balances")
+@RequestMapping("/api")
 @Slf4j
 public class BalanceController {
 
@@ -32,8 +32,8 @@ public class BalanceController {
         this.mqDeSender = mqDeSender;
     }
 
-    @GetMapping("/balance")
-    public ResponseEntity<SuccessResponse<Balance>> getBalance(@RequestParam(name = "accountId") String accountId, @RequestParam(name = "currency") Currency currency) {
+    @GetMapping("/accounts/{accountId}/balances/{currency}")
+    public ResponseEntity<SuccessResponse<Balance>> getBalance(@PathVariable String accountId, @PathVariable Currency currency) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balance input: " + accountId + " " + currency);
         Balance balance = service.getBalanceByAccountId(UUID.fromString(accountId), currency);
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got " + currency + " balance for: " + accountId);
@@ -43,8 +43,8 @@ public class BalanceController {
         );
     }
 
-    @GetMapping("/balances")
-    public ResponseEntity<SuccessResponse<List<Balance>>> getBalance(@RequestParam(name = "accountId") String accountId) {
+    @GetMapping("/accounts/{accountId}/balances")
+    public ResponseEntity<SuccessResponse<List<Balance>>> getBalance(@PathVariable String accountId) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balances input: " + accountId);
         List<Balance> balances = service.getBalanceByAccountId(UUID.fromString(accountId));
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got balances for: " + accountId);
@@ -54,8 +54,8 @@ public class BalanceController {
         );
     }
 
-    @GetMapping("/balance-balanceId")
-    public ResponseEntity<SuccessResponse<Balance>> getBalance(@RequestParam(name = "balanceId") Long balanceId) {
+    @GetMapping("/balances/{balanceId}")
+    public ResponseEntity<SuccessResponse<Balance>> getBalance(@PathVariable Long balanceId) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balance for balance id: " + balanceId);
         Balance balance = service.getBalanceByBalanceId(balanceId);
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got balance for: " + balanceId);
@@ -65,8 +65,8 @@ public class BalanceController {
         );
     }
 
-    @PutMapping("/balance")
-    public ResponseEntity<SuccessResponse<Balance>> updateBalance(@RequestParam(name = "balanceId") Long balanceId, @RequestParam(name = "amount") BigDecimal amount) {
+    @PutMapping("/balances/{balanceId}/{amount}")
+    public ResponseEntity<SuccessResponse<Balance>> updateBalance(@PathVariable Long balanceId, @PathVariable BigDecimal amount) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " update balance for balance id: " + balanceId);
         Balance balance = service.updateBalance(balanceId, amount);
         // publish to queue for consumer

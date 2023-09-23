@@ -79,7 +79,7 @@
 1. ~~Could have created two mappers/repositories separately for accounts and transactions~~ 
 2. ~~SuccessResponse could have used generic for data to have better type definition~~ 
 3. ~~What can be the dark side of using Lombok too extensively?~~ 
-4. Endpoints are not REST-ful 
+4. ~~Endpoints are not REST-ful~~ 
 5. ~~System out is not really the best approach on logging...~~ 
 6. ~~Too much logic on controller level~~ 
 7. ~~No locking... What would happen in case of concurrent same account transactions?~~ 
@@ -92,3 +92,4 @@
 ## Way forward
 - Fix the dislikes majorly and handle them per commit.
 - Implemented Dislike 9 instead of 8.
+- Build the test coverage...
