@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > AccountsRepository</title>
+  <title>Coverage Report > AccountService</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,36 +19,64 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.tuum.cbs.repositories</a>
+    <a href="../index.html">com.tuum.cbs.service</a>
 </div>
 
-<h1>Coverage Summary for Class: AccountsRepository (com.tuum.cbs.repositories)</h1>
+<h1>Coverage Summary for Class: AccountService (com.tuum.cbs.service)</h1>
 
 <table class="coverageStats">
 
 <tr>
   <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AccountService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90.5%
+  </span>
+  <span class="absValue">
+    (38/42)
+  </span>
+</td>
 </tr>
   <tr>
-    <td class="name">AccountsRepository$MockitoMock$spdy2Y1n</td>
-  </tr>
-  <tr>
-    <td class="name">AccountsRepository$MockitoMock$spdy2Y1n$auxiliary$64gxhuIF</td>
-  </tr>
-  <tr>
-    <td class="name">AccountsRepository$MockitoMock$spdy2Y1n$auxiliary$ulHLJH06</td>
-  </tr>
-  <tr>
-    <td class="name">AccountsRepository$MockitoMock$YOfRAXBV</td>
-  </tr>
-  <tr>
-    <td class="name">AccountsRepository$MockitoMock$YOfRAXBV$auxiliary$JRDwk3Ao</td>
-  </tr>
-  <tr>
-    <td class="name">AccountsRepository$MockitoMock$YOfRAXBV$auxiliary$RKo8xlxY</td>
+    <td class="name">AccountService$$SpringCGLIB$$0</td>
   </tr>
 <tr>
   <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90.5%
+  </span>
+  <span class="absValue">
+    (38/42)
+  </span>
+</td>
 </tr>
 </table>
 
@@ -57,85 +85,112 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package com.tuum.cbs.repositories;
+<code class="sourceCode" id="sourceCode">&nbsp;package com.tuum.cbs.service;
 &nbsp;
-&nbsp;import com.tuum.cbs.common.handlers.UuidTypeHandler;
+&nbsp;import com.tuum.cbs.common.exceptions.AccountNotFoundException;
+&nbsp;import com.tuum.cbs.common.exceptions.BadRequestException;
+&nbsp;import com.tuum.cbs.common.util.IdUtil;
 &nbsp;import com.tuum.cbs.models.Account;
+&nbsp;import com.tuum.cbs.models.AccountDao;
 &nbsp;import com.tuum.cbs.models.Balance;
-&nbsp;import org.apache.ibatis.annotations.*;
-&nbsp;import org.apache.ibatis.type.JdbcType;
-&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import com.tuum.cbs.models.Currency;
+&nbsp;import com.tuum.cbs.repositories.AccountsRepository;
+&nbsp;import lombok.extern.slf4j.Slf4j;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;import org.springframework.transaction.annotation.Isolation;
+&nbsp;import org.springframework.transaction.annotation.Transactional;
 &nbsp;
 &nbsp;import java.math.BigDecimal;
+&nbsp;import java.math.BigInteger;
+&nbsp;import java.time.Instant;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.time.ZoneId;
+&nbsp;import java.util.ArrayList;
 &nbsp;import java.util.List;
 &nbsp;import java.util.Optional;
 &nbsp;import java.util.UUID;
 &nbsp;
-&nbsp;@Mapper
-&nbsp;@Repository
-&nbsp;public interface AccountsRepository {
 &nbsp;
-&nbsp;    @Insert(&quot;INSERT INTO accounts (account_id, country, customer_id) &quot; +
-&nbsp;            &quot; VALUES (#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler}, #{country}, #{customerId})&quot;)
-&nbsp;    @Options(keyProperty = &quot;accountId&quot;, keyColumn = &quot;account_id&quot;)
-&nbsp;    int insertAccount(Account account);
+&nbsp;@Service
+&nbsp;@Transactional(isolation = Isolation.SERIALIZABLE)
+<b class="fc">&nbsp;@Slf4j</b>
+&nbsp;public class AccountService {
 &nbsp;
-&nbsp;    // handling inserts and get operations for account and balances separately
-&nbsp;    @Select(&quot;SELECT * FROM accounts WHERE account_id = #{accountId}&quot;)
-&nbsp;    @Results(id = &quot;accountResultMap&quot;, value = {
-&nbsp;            @Result(property = &quot;customerId&quot;, column = &quot;customer_id&quot;),
-&nbsp;            @Result(property = &quot;accountId&quot;, column = &quot;account_id&quot;, jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
-&nbsp;            @Result(property = &quot;country&quot;, column = &quot;country&quot;),
-&nbsp;    })
-&nbsp;    Optional&lt;Account&gt; getAccountById(@Param(&quot;accountId&quot;) UUID accountId);
+&nbsp;    private final AccountsRepository repo;
+&nbsp;    private final BalanceService balService;
+&nbsp;    private final RabbitMQDESender mqDeSender;
+<b class="fc">&nbsp;    public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();</b>
+&nbsp;    private static final String CLASS_NAME = &quot;AccountService&quot;;
 &nbsp;
-&nbsp;
-&nbsp;    /**
-&nbsp;     * Gets account balance list using accountId
-&nbsp;     * */
-&nbsp;    @Select(&quot;SELECT * FROM balances WHERE account_id = #{accountId}&quot;)
-&nbsp;    @Results(id = &quot;balanceResultMap&quot;, value = {
-&nbsp;            @Result(property = &quot;balanceId&quot;, column = &quot;balance_id&quot;),
-&nbsp;            @Result(property = &quot;amount&quot;, column = &quot;amount&quot;),
-&nbsp;            @Result(property = &quot;accountId&quot;, column = &quot;account_id&quot;, jdbcType = JdbcType.OTHER, typeHandler = UuidTypeHandler.class),
-&nbsp;            @Result(property = &quot;currency&quot;, column = &quot;currency&quot;)
-&nbsp;    })
-&nbsp;    List&lt;Balance&gt; getAccountBalance(@Param(&quot;accountId&quot;) UUID accountId);
-&nbsp;
-&nbsp;    @Insert(&quot;INSERT INTO balances (balance_id, amount, currency, account_id)&quot; +
-&nbsp;            &quot;VALUES (#{balanceId}, #{amount},#{currency},#{accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler})&quot;)
-&nbsp;    int insertBalance(Balance balance);
-&nbsp;
-&nbsp;    @Insert({
-&nbsp;            &quot;&lt;script&gt;&quot;,
-&nbsp;            &quot;INSERT INTO balances (balance_id, amount, currency, account_id)&quot;,
-&nbsp;            &quot;VALUES&quot;,
-&nbsp;            &quot;&lt;foreach collection = &#39;list&#39; item=&#39;Balance&#39; separator = &#39;,&#39;&gt;&quot;,
-&nbsp;            &quot;( #{Balance.balanceId}, #{Balance.amount}, #{Balance.currency}, #{Balance.accountId, typeHandler = com.tuum.cbs.common.handlers.UuidTypeHandler} )&quot;,
-&nbsp;            &quot;&lt;/foreach&gt;&quot;,
-&nbsp;            &quot;&lt;/script&gt;&quot;
-&nbsp;    })
-&nbsp;    int insertBalances(@Param(&quot;list&quot;) List&lt;Balance&gt; balanceList);
-&nbsp;
-&nbsp;    @Update(&quot;UPDATE balances SET amount = #{amount} WHERE balance_id = #{balanceId}&quot;)
-&nbsp;    int updateBalanceObj(Balance balance);
-&nbsp;
-&nbsp;    @Update(&quot;UPDATE balances SET amount = #{amount} WHERE balance_id = #{balanceId}&quot;)
-&nbsp;    int updateBalanceAmount(@Param(&quot;amount&quot;) BigDecimal amount, @Param(&quot;balanceId&quot;) Long balanceId);
+<b class="fc">&nbsp;    public AccountService(AccountsRepository repo, BalanceService balService, RabbitMQDESender mqDeSender) {</b>
+<b class="fc">&nbsp;        this.repo = repo;</b>
+<b class="fc">&nbsp;        this.balService = balService;</b>
+<b class="fc">&nbsp;        this.mqDeSender = mqDeSender;</b>
+&nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Gets account balance using accountId
+&nbsp;     * for creating a new account
 &nbsp;     * */
-&nbsp;    @Select(&quot;SELECT balance_id, amount, currency, account_id FROM balances WHERE account_id = #{accountId} and currency = #{currency}&quot;)
-&nbsp;    @ResultMap(&quot;balanceResultMap&quot;)
-&nbsp;    Optional&lt;Balance&gt; getAccountBalanceByIdAndCurrency(@Param(&quot;accountId&quot;) UUID accountId, @Param(&quot;currency&quot;) String currency);
+&nbsp;    public Account save(AccountDao accountDao) {
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; create account input: &quot; + accountDao);</b>
+&nbsp;
+<b class="fc">&nbsp;        int currencyListSize = accountDao.getCurrencies().size();</b>
+<b class="fc">&nbsp;        if (currencyListSize &gt; 4 ){</b>
+<b class="nc">&nbsp;            throw new BadRequestException(&quot;Invalid currency: currency list larger than allowed values&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (accountDao.getCurrencies().isEmpty()){</b>
+<b class="nc">&nbsp;            throw new BadRequestException(&quot;Invalid currency: currency list is empty&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (accountDao.getCountry() == null || accountDao.getCountry().isEmpty()){</b>
+<b class="nc">&nbsp;            throw new BadRequestException(&quot;Invalid entry: country cannot be blank&quot;);</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (accountDao.getCustomerId() == null || accountDao.getCustomerId().isEmpty()){</b>
+<b class="nc">&nbsp;            throw new BadRequestException(&quot;Invalid entry: customer ID cannot be blank&quot;);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;        Account account;
+<b class="fc">&nbsp;        final UUID accountId = IdUtil.generateUUID();</b>
+<b class="fc">&nbsp;        account = Account.builder()</b>
+<b class="fc">&nbsp;                        .accountId(accountId)</b>
+<b class="fc">&nbsp;                        .country(accountDao.getCountry())</b>
+<b class="fc">&nbsp;                        .customerId(accountDao.getCustomerId())</b>
+<b class="fc">&nbsp;                        .build();</b>
+<b class="fc">&nbsp;        final List&lt;Balance&gt; balList = balService.createBalanceList(accountDao.getCurrencies(), accountId);</b>
+<b class="fc">&nbsp;        account.setBalanceList(new ArrayList&lt;Balance&gt;(balList));</b>
+<b class="fc">&nbsp;        repo.insertAccount(account);</b>
+<b class="fc">&nbsp;        balService.createBalance(balList);</b>
+&nbsp;        // notify consumers
+<b class="fc">&nbsp;        mqDeSender.publishToCreateBalanceQueue(balList.toString());</b>
+&nbsp;
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; created account with id: &quot; + accountId);</b>
+<b class="fc">&nbsp;        return account;</b>
+&nbsp;    }
 &nbsp;
 &nbsp;    /**
-&nbsp;     * Gets account balance using accountId
+&nbsp;     * get account by accountId
 &nbsp;     * */
-&nbsp;    @Select(&quot;SELECT balance_id, amount, currency, account_id FROM balances WHERE balance_id = #{balanceId}&quot;)
-&nbsp;    @ResultMap(&quot;balanceResultMap&quot;)
-&nbsp;    Optional&lt;Balance&gt; getAccountBalanceByBalanceId(Long balanceId);
+&nbsp;    public Account getByAccountId(String accountId) {
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; get account input: &quot; + accountId);</b>
+&nbsp;        Account foundAccount;
+<b class="fc">&nbsp;        UUID accId = UUID.fromString(accountId);</b>
+<b class="fc">&nbsp;        Optional&lt;Account&gt; optionalAccount = repo.getAccountById(accId);</b>
+<b class="fc">&nbsp;         if (optionalAccount.isEmpty()) {</b>
+<b class="fc">&nbsp;             throw new AccountNotFoundException(&quot;Account with id - &quot; + accId + &quot; not found!&quot;);</b>
+&nbsp;         }
+&nbsp;         else {
+<b class="fc">&nbsp;             List&lt;Balance&gt; balances = balService.getBalanceByAccountId(accId);</b>
+<b class="fc">&nbsp;             foundAccount = Account.builder().accountId(accId)</b>
+<b class="fc">&nbsp;                .customerId(optionalAccount.get().getCustomerId())</b>
+<b class="fc">&nbsp;                .country(optionalAccount.get().getCountry())</b>
+<b class="fc">&nbsp;                .balanceList(balances)</b>
+<b class="fc">&nbsp;                .build();</b>
+&nbsp;        }
+<b class="fc">&nbsp;        LOGGER.info(&quot;[&quot; + TIMESTAMP + &quot;]: &quot; + CLASS_NAME + &quot; got account with id: &quot; + accountId);</b>
+<b class="fc">&nbsp;        return foundAccount;</b>
+&nbsp;    }
 &nbsp;
 &nbsp;}
 </code>
@@ -161,7 +216,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-09-15 07:27</div>
+    <div style="float:right;">generated on 2023-09-23 20:40</div>
 </div>
 </body>
 </html>

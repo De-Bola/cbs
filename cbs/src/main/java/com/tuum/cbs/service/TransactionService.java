@@ -3,6 +3,8 @@ package com.tuum.cbs.service;
 import com.tuum.cbs.common.exceptions.BadRequestException;
 import com.tuum.cbs.common.exceptions.TrxNotFoundException;
 import com.tuum.cbs.common.exceptions.TrxZeroSumException;
+import com.tuum.cbs.common.util.IdUtil;
+import com.tuum.cbs.common.util.TrxSignUtil;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Transaction;
 import com.tuum.cbs.models.TransactionDao;
@@ -27,14 +29,12 @@ import java.util.UUID;
 public class TransactionService {
 
     private final TransactionsRepository repo;
-    private final AccountService accountService;
     private final BalanceService balanceService;
     public static final Instant TIMESTAMP = LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant();
     private static final String CLASS_NAME = "TransactionService";
 
-    public TransactionService(TransactionsRepository repo, AccountService accountService, BalanceService balanceService) {
+    public TransactionService(TransactionsRepository repo, BalanceService balanceService) {
         this.repo = repo;
-        this.accountService = accountService;
         this.balanceService = balanceService;
     }
 
@@ -68,9 +68,9 @@ public class TransactionService {
         }
 
         Transaction transaction;
-        final Long transactionId = accountService.generateRandomId();
+        final Long transactionId = IdUtil.generateRandomId();
 
-        BigDecimal newAmount = addSignToAmount(transactionDao.getAmount(), transactionDao.getTrxType());
+        BigDecimal newAmount = TrxSignUtil.addSignToAmount(transactionDao.getAmount(), transactionDao.getTrxType());
         Balance newBalance = balanceService.updateBalanceByAccountId(transactionDao.getAccountId(), transactionDao.getCurrency(), newAmount);
 
         transaction = Transaction.builder()
@@ -87,22 +87,14 @@ public class TransactionService {
         return transaction;
     }
 
+    /**
+     * for getting all trx based on account id
+     * */
     public List<Transaction> getTrxByAccountId(UUID accountId) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get trx(s) for account with id: " + accountId);
         List<Transaction> transactions = repo.getTrxByAccountId(accountId);
         if (transactions.isEmpty()) throw new TrxNotFoundException("No Transactions found!");
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got trx(s) for account with id: " + accountId);
         return transactions;
-    }
-
-    public BigDecimal addSignToAmount(BigDecimal amount, TransactionType trxType){
-        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " add sign to trx based on trxType");
-        if (trxType.name().equalsIgnoreCase("IN")) {
-            LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " added positive sign to trx as trxType: " + trxType);
-            return amount;
-        } else {
-            LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " added negative sign to trx as trxType: " + trxType);
-            return amount.negate();
-        }
     }
 }

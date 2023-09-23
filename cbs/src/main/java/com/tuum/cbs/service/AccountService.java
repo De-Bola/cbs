@@ -2,6 +2,7 @@ package com.tuum.cbs.service;
 
 import com.tuum.cbs.common.exceptions.AccountNotFoundException;
 import com.tuum.cbs.common.exceptions.BadRequestException;
+import com.tuum.cbs.common.util.IdUtil;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
@@ -64,45 +65,21 @@ public class AccountService {
         }
 
         Account account;
-        final UUID accountId = UUID.randomUUID();
+        final UUID accountId = IdUtil.generateUUID();
         account = Account.builder()
                         .accountId(accountId)
                         .country(accountDao.getCountry())
                         .customerId(accountDao.getCustomerId())
                         .build();
-        List<Balance> balList = new ArrayList<>();
-        for (Currency currency : accountDao.getCurrencies()) {
-            Balance bal = new Balance(generateRandomId(), new BigDecimal("0.00"), currency, accountId);
-            balList.add(bal);
-        }
+        final List<Balance> balList = balService.createBalanceList(accountDao.getCurrencies(), accountId);
         account.setBalanceList(new ArrayList<Balance>(balList));
         repo.insertAccount(account);
-        createBalance(balList);
+        balService.createBalance(balList);
         // notify consumers
         mqDeSender.publishToCreateBalanceQueue(balList.toString());
 
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " created account with id: " + accountId);
         return account;
-    }
-
-    /**
-     * for generating random ids of type Long
-     * */
-    public Long generateRandomId() {
-        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " generate a random id");
-        String format = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
-        format = format.substring(format.length() - 10);
-        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " random id generated: " + format);
-        return Long.valueOf(format);
-    }
-
-    /**
-     * for creating new list balances
-     * */
-    public void createBalance(List<Balance> balances){
-        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " create balance records with balance list");
-        repo.insertBalances(balances);
-        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " created balance records!");
     }
 
     /**

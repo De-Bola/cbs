@@ -5,7 +5,7 @@
 <html id="htmlId">
 <head>
   <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
-  <title>Coverage Report > AccountNotFoundException</title>
+  <title>Coverage Report > UuidTypeHandler</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -19,10 +19,10 @@
 <div class="breadCrumbs">
 Current scope:     <a href="../../index.html">all classes</a>
     <span class="separator">|</span>
-    <a href="../index.html">com.tuum.cbs.common.exceptions</a>
+    <a href="../index.html">com.tuum.cbs.common.handlers</a>
 </div>
 
-<h1>Coverage Summary for Class: AccountNotFoundException (com.tuum.cbs.common.exceptions)</h1>
+<h1>Coverage Summary for Class: UuidTypeHandler (com.tuum.cbs.common.handlers)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -41,7 +41,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">AccountNotFoundException</td>
+  <td class="name">UuidTypeHandler</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -52,18 +52,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    33.3%
+    60%
   </span>
   <span class="absValue">
-    (1/3)
+    (3/5)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    33.3%
+    60%
   </span>
   <span class="absValue">
-    (1/3)
+    (3/5)
   </span>
 </td>
 </tr>
@@ -75,23 +75,42 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 
 <pre>
-<code class="sourceCode" id="sourceCode">&nbsp;package com.tuum.cbs.common.exceptions;
+<code class="sourceCode" id="sourceCode">&nbsp;package com.tuum.cbs.common.handlers;
 &nbsp;
-&nbsp;public class AccountNotFoundException extends RuntimeException {
+&nbsp;import org.apache.ibatis.type.BaseTypeHandler;
+&nbsp;import org.apache.ibatis.type.JdbcType;
+&nbsp;import org.apache.ibatis.type.MappedTypes;
 &nbsp;
-&nbsp;    public AccountNotFoundException(){
-<b class="nc">&nbsp;        super();</b>
+&nbsp;import java.sql.CallableStatement;
+&nbsp;import java.sql.PreparedStatement;
+&nbsp;import java.sql.ResultSet;
+&nbsp;import java.sql.SQLException;
+&nbsp;import java.util.UUID;
+&nbsp;
+&nbsp;@MappedTypes(UUID.class)
+<b class="fc">&nbsp;public class UuidTypeHandler extends BaseTypeHandler&lt;UUID&gt; {</b>
+&nbsp;    @Override
+&nbsp;    public void setNonNullParameter(PreparedStatement ps, int i, UUID parameter, JdbcType jdbcType) throws SQLException {
+<b class="fc">&nbsp;        ps.setObject(i, parameter); // no 3rd arg</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public AccountNotFoundException(String msg){
-<b class="fc">&nbsp;        super(msg);</b>
+&nbsp;    @Override
+&nbsp;    public UUID getNullableResult(ResultSet rs, String columnName) throws SQLException {
+<b class="fc">&nbsp;        return rs.getObject(columnName, UUID.class);</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    public AccountNotFoundException(String msg, Throwable throwable){
-<b class="nc">&nbsp;        super(msg, throwable);</b>
+&nbsp;    @Override
+&nbsp;    public UUID getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
+<b class="nc">&nbsp;        return rs.getObject(columnIndex, UUID.class);</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    @Override
+&nbsp;    public UUID getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
+<b class="nc">&nbsp;        return cs.getObject(columnIndex, UUID.class);</b>
+&nbsp;    }
 &nbsp;}
+&nbsp;
+&nbsp;// copied from stackoverflow here : https://stackoverflow.com/questions/60613619/how-to-use-uuid-type-handler-with-many-annotation-in-mybatis
 </code>
 </pre>
 </div>
@@ -115,7 +134,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-09-15 07:27</div>
+    <div style="float:right;">generated on 2023-09-23 20:40</div>
 </div>
 </body>
 </html>

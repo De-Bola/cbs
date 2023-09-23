@@ -1,6 +1,7 @@
 package com.tuum.cbs.service;
 
 import com.tuum.cbs.common.exceptions.AccountNotFoundException;
+import com.tuum.cbs.common.util.IdUtil;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
@@ -65,8 +66,8 @@ class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
         currencies.add(currency1);
         currencies.add(currency2);
 
-        String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-        customerId = customerId.substring(customerId.length() - 10);
+        final String customerId = String.valueOf(IdUtil.generateRandomId());
+        UUID accountId = IdUtil.generateUUID();
 
         testAccountDao = AccountDao.builder()
                 .customerId(customerId)
@@ -74,13 +75,11 @@ class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
                 .currencies(currencies)
                 .build();
 
-        final UUID accountId = UUID.randomUUID();
         bal_List = new ArrayList<>();
         for (Currency currency :
                 currencies) {
-            String balanceId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-            balanceId = balanceId.substring(balanceId.length() - 10);
-            Balance bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), currency, accountId);
+            Long balanceId = IdUtil.generateRandomId();
+            Balance bal = new Balance(balanceId, new BigDecimal("0.00"), currency, accountId);
             bal_List.add(bal);
         }
 
@@ -99,7 +98,10 @@ class AccountServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
     @Test
     void saveShouldReturnNewAccountWithBalances() {
         given(repo.insertAccount(captor.capture())).willReturn(1);
+        when(balService.createBalanceList(any(), any())).thenReturn(bal_List);
         Account savedAccount = uut.save(testAccountDao);
+        System.out.println(bal_List);
+        System.out.println(savedAccount.getBalanceList());
         assertEquals(bal_List.size(), savedAccount.getBalanceList().size());
         verify(repo, times(1)).insertAccount(captor.capture());
         assertThat(savedAccount).isNotNull();

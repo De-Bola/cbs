@@ -2,6 +2,7 @@ package com.tuum.cbs.controller.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tuum.cbs.common.util.IdUtil;
 import com.tuum.cbs.controller.response.ErrorResponse;
 import com.tuum.cbs.controller.response.SuccessResponse;
 import com.tuum.cbs.models.Account;
@@ -17,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -52,8 +52,7 @@ public class AccountControllerIntegrationTest {
     @BeforeEach
     public void setup() {
         baseUrl = baseUrl + ":" + port + "/api";
-        customerId = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
-        customerId = customerId.substring(customerId.length() - 10);
+        customerId = String.valueOf(IdUtil.generateRandomId());
         country = "Sweden";
         currencies.add(EUR);
     }

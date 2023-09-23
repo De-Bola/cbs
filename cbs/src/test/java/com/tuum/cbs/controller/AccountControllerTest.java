@@ -2,6 +2,7 @@ package com.tuum.cbs.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tuum.cbs.common.exceptions.BadRequestException;
+import com.tuum.cbs.common.util.IdUtil;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
@@ -23,7 +24,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -68,20 +68,21 @@ class AccountControllerTest {
     @BeforeEach
     void setUp(){
 
-        final UUID accountId = UUID.randomUUID();
+        UUID accountId = IdUtil.generateUUID();
         final List<Currency> currencies = new ArrayList<>();
         final Currency currency1 = Currency.EUR;
         final Currency currency2 = Currency.SEK;
-        String balanceId1 = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
-        balanceId1 = balanceId1.substring(balanceId1.length() - 10);
-        String customerId = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
-        customerId = customerId.substring(customerId.length() - 10);
-        Balance bal1 = new Balance(Long.valueOf(balanceId1), new BigDecimal("0.00"), Currency.EUR, accountId);
+
+        final Long balanceId1 = IdUtil.generateRandomId();
+        final String customerId = String.valueOf(IdUtil.generateRandomId());
+
+        Balance bal1 = new Balance(balanceId1, new BigDecimal("0.00"), Currency.EUR, accountId);
         List<Balance> bal_List = new ArrayList<>();
 
         bal_List.add(bal1);
         currencies.add(currency1);
         currencies.add(currency2);
+
         testAccountDao = AccountDao.builder()
                 .customerId(customerId)
                 .country("Estonia")
@@ -92,9 +93,8 @@ class AccountControllerTest {
                 .build();
 
         for (Currency currency : currencies) {
-            String balanceId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-            balanceId = balanceId.substring(balanceId.length() - 10);
-            Balance bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), currency, accountId);
+            Long balanceId = IdUtil.generateRandomId();
+            Balance bal = new Balance(balanceId, new BigDecimal("0.00"), currency, accountId);
             bal_List.add(bal);
         }
 

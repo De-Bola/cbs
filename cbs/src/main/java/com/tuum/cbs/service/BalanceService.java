@@ -2,6 +2,8 @@ package com.tuum.cbs.service;
 
 import com.tuum.cbs.common.exceptions.BalanceNotFoundException;
 import com.tuum.cbs.common.exceptions.InsufficientFundsException;
+import com.tuum.cbs.common.util.IdUtil;
+import com.tuum.cbs.models.AccountDao;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
 import com.tuum.cbs.repositories.AccountsRepository;
@@ -13,6 +15,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,6 +37,20 @@ public class BalanceService {
     }
 
     // business logic for balances
+
+    /**
+     * for creating new list balances
+     * */
+    public List<Balance> createBalance(List<Balance> balances){
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " create balance records with balance list");
+        repo.insertBalances(balances);
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " created balance records!");
+        return balances;
+    }
+
+    /**
+     * for getting all balances based on account id
+     * */
     public List<Balance> getBalanceByAccountId(UUID accId) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balances input: " + accId);
         List<Balance> balances = repo.getAccountBalance(accId);
@@ -42,6 +59,9 @@ public class BalanceService {
         return balances;
     }
 
+    /**
+     * for getting balance based on account id and currency
+     * */
     public Balance getBalanceByAccountId(UUID accountId, Currency currency) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balance input: " + accountId + " " + currency);
         Optional<Balance> optionalBalance = repo.getAccountBalanceByIdAndCurrency(accountId, currency.name());
@@ -50,6 +70,9 @@ public class BalanceService {
         return optionalBalance.get();
     }
 
+    /**
+     * for updating a balance based balance object
+     * */
     public Balance updateBalanceObj(Balance balance){
         Long balanceId = balance.getBalanceId();
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " update balanceObj for balance id: " + balanceId);
@@ -69,6 +92,9 @@ public class BalanceService {
         return balance;
     }
 
+    /**
+     * for updating a balance based on balance id and amount
+     * */
     public Balance updateBalance(Long balanceId, BigDecimal amount){
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " update balance for balance id: " + balanceId);
         // get init balance
@@ -89,7 +115,10 @@ public class BalanceService {
         return balance;
     }
 
-    //Trx layer calls this
+    /**
+     * for updating a balance based on account id, currency and amount
+     * Trx layer calls this
+     * */
     public Balance updateBalanceByAccountId(UUID accountId, Currency currency, BigDecimal amount){
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " update " + currency + " balance for account with id: " + accountId);
         Balance balance = getBalanceByAccountId(accountId, currency);
@@ -109,11 +138,26 @@ public class BalanceService {
         return balance;
     }
 
+    /**
+     * for getting balance based on balance id
+     * */
     public Balance getBalanceByBalanceId(Long balanceId) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balance for balance id: " + balanceId);
         Optional<Balance> optionalBalance = repo.getAccountBalanceByBalanceId(balanceId);
         if (optionalBalance.isEmpty()) throw new BalanceNotFoundException("Balance with id - " + balanceId + " not found!");
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " got balance for: " + balanceId);
         return optionalBalance.get();
+    }
+
+    /**
+     * creates a list of balances based on a list of currencies and accountId
+     * */
+    public List<Balance> createBalanceList(List<Currency> currencies, UUID accountId) {
+        List<Balance> balList = new ArrayList<>();
+        for (Currency currency : currencies) {
+            Balance bal = new Balance(IdUtil.generateRandomId(), new BigDecimal("0.00"), currency, accountId);
+            balList.add(bal);
+        }
+        return balList;
     }
 }

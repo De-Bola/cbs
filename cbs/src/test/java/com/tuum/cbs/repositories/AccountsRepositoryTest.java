@@ -1,5 +1,6 @@
 package com.tuum.cbs.repositories;
 
+import com.tuum.cbs.common.util.IdUtil;
 import com.tuum.cbs.models.Account;
 import com.tuum.cbs.models.Balance;
 import com.tuum.cbs.models.Currency;
@@ -54,16 +55,14 @@ class AccountsRepositoryTest {
         currencies.add(currency1);
         currencies.add(currency2);
 
-        String customerId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-        customerId = customerId.substring(customerId.length() - 10);
+        final String customerId = String.valueOf(IdUtil.generateRandomId());
 
-        final UUID accountId = UUID.randomUUID();
-        List<Balance> bal_List = new ArrayList<>();
+        UUID accountId = IdUtil.generateUUID();
+        final List<Balance> bal_List = new ArrayList<>();
         for (Currency currency :
                 currencies) {
-            String balanceId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-            balanceId = balanceId.substring(balanceId.length() - 10);
-            Balance bal = new Balance(Long.valueOf(balanceId), new BigDecimal("0.00"), currency, accountId);
+            Long balanceId = IdUtil.generateRandomId();
+            Balance bal = new Balance(balanceId, new BigDecimal("0.00"), currency, accountId);
             bal_List.add(bal);
         }
 

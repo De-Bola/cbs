@@ -49,7 +49,7 @@ public class ControllerAdvice {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     public ErrorResponse notSupportedException(HttpRequestMethodNotSupportedException ex) {
         LOGGER.debug(ex.getMessage(), ex.getCause());
-        return new ErrorResponse(String.valueOf(HttpStatus.METHOD_NOT_ALLOWED.value()),"Method Not Allowed. Please verify you request", TIMESTAMP);
+        return new ErrorResponse(String.valueOf(HttpStatus.METHOD_NOT_ALLOWED.value()),"Method Not Allowed. Please verify your request", TIMESTAMP);
     }
 
     @ExceptionHandler({Exception.class, RuntimeException.class})

@@ -1,7 +1,7 @@
 package com.tuum.cbs.service;
 
+import com.tuum.cbs.common.util.IdUtil;
 import com.tuum.cbs.models.*;
-import com.tuum.cbs.repositories.AccountsRepository;
 import com.tuum.cbs.repositories.TransactionsRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,6 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -40,9 +39,6 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     private TransactionService uut;
 
     @Mock
-    private AccountService accountService;
-
-    @Mock
     private BalanceService balanceService;
 
     @Captor
@@ -58,12 +54,9 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     @BeforeEach
     void setUp() {
         final Currency currency = Currency.EUR;
-        final UUID accountId = UUID.randomUUID();
-        String trxId = String.format("%010d",new BigInteger(UUID.randomUUID().toString().replace("-",""),16));
-        trxId = trxId.substring(trxId.length() - 10);
-
-        String balanceId = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
-        balanceId = balanceId.substring(balanceId.length() - 10);
+        UUID accountId = IdUtil.generateUUID();
+        final Long trxId = IdUtil.generateRandomId();
+        final Long balanceId = IdUtil.generateRandomId();
 
         testTrxDao = TransactionDao.builder()
                 .accountId(accountId)
@@ -73,15 +66,15 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
                 .description("I am inevitable")
                 .build();
 
-        balance = Balance.builder().balanceId(Long.valueOf(balanceId))
+        balance = Balance.builder().balanceId(balanceId)
                 .accountId(accountId).amount(new BigDecimal("600.0"))
                 .currency(currency).build();
-        Balance balanceAfterTrx = Balance.builder().balanceId(Long.valueOf(balanceId))
+        Balance balanceAfterTrx = Balance.builder().balanceId(balanceId)
                 .accountId(accountId).amount(balance.getAmount().add(testTrxDao.getAmount()))
                 .currency(currency).build();
 
         testTrx = Transaction.builder().accountId(testTrxDao.getAccountId())
-                .trxId(Long.valueOf(trxId)).trxType(testTrxDao.getTrxType())
+                .trxId(trxId).trxType(testTrxDao.getTrxType())
                 .amount(testTrxDao.getAmount()).balanceAfterTrx(balanceAfterTrx.getAmount())
                 .currency(currency).description(testTrxDao.getDescription())
                 .build();
@@ -89,7 +82,7 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
         transactions.add(testTrx);
 
         repo = mock(TransactionsRepository.class);
-        uut = new TransactionService(repo, accountService, balanceService);
+        uut = new TransactionService(repo, balanceService);
     }
 
     @Test
@@ -100,7 +93,6 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
     @Test
     void createTransactionShouldTakeDaoAndReturnTrxObj() {
         //given this stub return number of inserts
-        when(accountService.generateRandomId()).thenReturn(testTrx.getTrxId());
         when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(balance);
         given(repo.insertTransaction(captor.capture())).willReturn(1);
         Transaction createdTrx = uut.createTransaction(testTrxDao);
@@ -121,7 +113,6 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
                 .currency(balance.getCurrency())
                 .build();
         //given this stub return number of inserts
-        when(accountService.generateRandomId()).thenReturn(testTrx.getTrxId());
         when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(newBalance);
         given(repo.insertTransaction(any(Transaction.class))).willReturn(1);
         Transaction createdTrx = uut.createTransaction(testTrxDao);
@@ -141,7 +132,6 @@ class TransactionServiceTest extends AbstractTransactionalJUnit4SpringContextTes
                 .currency(balance.getCurrency())
                 .build();
         //given this stub return number of inserts
-        when(accountService.generateRandomId()).thenReturn(testTrx.getTrxId());
         when(balanceService.updateBalanceByAccountId(any(UUID.class), any(Currency.class), any(BigDecimal.class))).thenReturn(newBalance);
         given(repo.insertTransaction(any(Transaction.class))).willReturn(1);
         Transaction createdTrx = uut.createTransaction(testTrxDao);

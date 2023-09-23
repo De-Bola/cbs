@@ -2,10 +2,11 @@ package com.tuum.cbs.controller.integration;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tuum.cbs.common.util.IdUtil;
 import com.tuum.cbs.controller.response.ErrorResponse;
 import com.tuum.cbs.controller.response.SuccessResponse;
-import com.tuum.cbs.models.*;
 import com.tuum.cbs.models.Currency;
+import com.tuum.cbs.models.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -18,7 +19,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -52,8 +52,7 @@ public class TransactionControllerIntegrationTest {
     @BeforeEach // goes to inner test
     public void setup() throws URISyntaxException, JsonProcessingException {
         baseUrl = baseUrl + ":" + port + "/api";
-        String customerId = String.format("%010d", new BigInteger(UUID.randomUUID().toString().replace("-", ""), 16));
-        customerId = customerId.substring(customerId.length() - 10);
+        String customerId = String.valueOf(IdUtil.generateRandomId());
         String country = "Sweden";
         currencies.add(EUR);
 
@@ -105,7 +104,7 @@ public class TransactionControllerIntegrationTest {
 
         @Test()
         public void getTransactionITestShouldReturnNotFound() {
-            Map<String, UUID> params = Collections.singletonMap("id", UUID.randomUUID());
+            Map<String, UUID> params = Collections.singletonMap("id", IdUtil.generateUUID());
             // change the uri to url
             String url = baseUrl + "/transactions/get?id={id}";
 
