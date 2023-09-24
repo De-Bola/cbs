@@ -16,6 +16,10 @@ public class SuccessResponse<T> {
         return data;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     @Override
     public String toString() {
         return "SuccessResponse{" +
