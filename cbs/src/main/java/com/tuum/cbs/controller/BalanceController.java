@@ -32,6 +32,18 @@ public class BalanceController {
         this.mqDeSender = mqDeSender;
     }
 
+    @PostMapping("/balances")
+    public ResponseEntity<SuccessResponse<List<Balance>>> createBalance(@RequestBody List<Balance> balances) {
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " create balance list: " + balances);
+        List<Balance> balanceList = service.createBalance(balances);
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " created new balance list with " + balanceList.size());
+        mqDeSender.publishToCreateBalanceQueue(balanceList.toString());
+        return new ResponseEntity<>(
+                new SuccessResponse<>(balanceList, "Account created!"),
+                HttpStatus.CREATED
+        );
+    }
+
     @GetMapping("/accounts/{accountId}/balances/{currency}")
     public ResponseEntity<SuccessResponse<Balance>> getBalance(@PathVariable String accountId, @PathVariable Currency currency) {
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " get balance input: " + accountId + " " + currency);

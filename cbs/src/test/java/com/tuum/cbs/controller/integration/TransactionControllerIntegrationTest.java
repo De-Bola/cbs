@@ -50,7 +50,7 @@ public class TransactionControllerIntegrationTest {
         restTemplate = new TestRestTemplate();
     }
 
-    @BeforeEach // goes to inner test
+    @BeforeEach // goes to inner test as well
     public void setup() throws URISyntaxException, JsonProcessingException {
         baseUrl = baseUrl + ":" + port + "/api";
         String customerId = String.valueOf(IdUtil.generateRandomId());
@@ -73,7 +73,7 @@ public class TransactionControllerIntegrationTest {
     }
 
     @Nested
-    class TestGetRequest{
+    class TestsThatRequireCreatedTrx{
         @Test
         void contextLoads() {
         }
@@ -178,6 +178,46 @@ public class TransactionControllerIntegrationTest {
         String message = "Insufficient funds: account balance shouldn't goto negative";
 
         TransactionDao trxDao = new TransactionDao(accountId, new BigDecimal("5.85"),
+                currencies.get(0), TransactionType.OUT, description);
+
+        uri = new URI(baseUrl + "/transactions");
+
+        ResponseEntity<ErrorResponse> responseEntity = restTemplate
+                .postForEntity(uri, trxDao, ErrorResponse.class);
+
+        assertEquals(HttpStatusCode.valueOf(400), responseEntity.getStatusCode());
+        assertThat(responseEntity.getBody()).isNotNull();
+        assertThat(responseEntity.getBody()).isInstanceOf(ErrorResponse.class);
+        assertEquals("400", responseEntity.getBody().getCode());
+        assertEquals(message, responseEntity.getBody().getMessage());
+    }
+
+    @Test
+    public void createTransactionITestShouldReturnZeroSumBadRequest() throws URISyntaxException {
+        String description = "This is a test!";
+        String message = "Invalid amount: can't post zero";
+
+        TransactionDao trxDao = new TransactionDao(accountId, BigDecimal.ZERO,
+                currencies.get(0), TransactionType.OUT, description);
+
+        uri = new URI(baseUrl + "/transactions");
+
+        ResponseEntity<ErrorResponse> responseEntity = restTemplate
+                .postForEntity(uri, trxDao, ErrorResponse.class);
+
+        assertEquals(HttpStatusCode.valueOf(400), responseEntity.getStatusCode());
+        assertThat(responseEntity.getBody()).isNotNull();
+        assertThat(responseEntity.getBody()).isInstanceOf(ErrorResponse.class);
+        assertEquals("400", responseEntity.getBody().getCode());
+        assertEquals(message, responseEntity.getBody().getMessage());
+    }
+
+    @Test
+    public void createTransactionITestShouldReturnNegativeSumBadRequest() throws URISyntaxException {
+        String description = "This is a test!";
+        String message = "Invalid amount: amount cannot be negative";
+
+        TransactionDao trxDao = new TransactionDao(accountId, BigDecimal.ONE.negate(),
                 currencies.get(0), TransactionType.OUT, description);
 
         uri = new URI(baseUrl + "/transactions");

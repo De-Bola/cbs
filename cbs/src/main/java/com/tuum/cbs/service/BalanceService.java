@@ -36,14 +36,14 @@ public class BalanceService {
     }
 
     // business logic for balances
-
     /**
      * for creating new list balances
      * */
     public List<Balance> createBalance(List<Balance> balances){
         LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " create balance records with balance list");
-        repo.insertBalances(balances);
-        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " created balance records!");
+        int insertedEntries = repo.insertBalances(balances);
+        assert insertedEntries == balances.size();
+        LOGGER.info("[" + TIMESTAMP + "]: " + CLASS_NAME + " created balance with " + insertedEntries + " records!");
         return balances;
     }
 
